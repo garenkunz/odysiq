@@ -440,7 +440,7 @@
         });
       }
 
-      // Message history management
+      // Message history management - simplified
       function fadeOldMessages() {
         if (!gameState.showHistory) {
           const messageArea = document.getElementById('messageArea');
@@ -452,12 +452,7 @@
             const messagesToFade = Array.from(messages).slice(0, messages.length - maxVisibleMessages);
             messagesToFade.forEach(msg => {
               msg.classList.add('faded');
-              // Remove faded messages from DOM after animation
-              setTimeout(() => {
-                if (msg.classList.contains('faded') && !gameState.showHistory) {
-                  msg.remove();
-                }
-              }, 800); // Match the CSS transition duration
+              // Note: We don't remove messages from DOM anymore, just fade them
             });
           }
         }
@@ -469,22 +464,16 @@
         const toggle = document.getElementById('historyToggle');
         
         if (gameState.showHistory) {
-          // Show history mode - enable scrolling and show all messages
+          // Show history mode - enable scrolling and make all messages visible
           messageArea.classList.add('show-history');
           
-          // Re-add any removed messages by reloading the current scene
-          // For now, just remove faded class from existing messages
+          // Make all messages 100% opaque by removing faded class
           const messages = messageArea.querySelectorAll('.message');
           messages.forEach(msg => msg.classList.remove('faded'));
           
           toggle.textContent = 'Hide History';
-          
-          // Scroll to bottom to show recent messages
-          setTimeout(() => {
-            messageArea.scrollTop = messageArea.scrollHeight;
-          }, 100);
         } else {
-          // Hide history mode - disable scrolling and fade old messages
+          // Hide history mode - disable scrolling and fade old messages again
           messageArea.classList.remove('show-history');
           fadeOldMessages();
           toggle.textContent = 'Show History';
