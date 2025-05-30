@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Seconds - StoryPaths</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.3px;
+        }
+        
+        .story-container {
+            width: 95%;
+            max-width: 700px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .heart-rate {
+            color: #ff3b3b;
+            font-size: 12px;
+            opacity: 0.8;
+            animation: pulse 1.5s infinite;
+            letter-spacing: 0.5px;
+        }
+        
+        .trust-level {
+            color: #4dabf7;
+            font-size: 12px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+        
+        .hostage-count {
+            color: #51cf66;
+            font-size: 12px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+        
+        .scenario-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .scenario-title {
+            color: #ff3b3b;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .scenario-desc {
+            color: #aaa;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .message-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid transparent;
+        }
+        
+        .message p {
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .agent {
+            background: rgba(74, 171, 247, 0.1);
+            border-left-color: #4dabf7;
+            color: #fff;
+        }
+        
+        .suspect {
+            background: rgba(255, 107, 107, 0.1);
+            border-left-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+        
+        .system {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #666;
+            color: #999;
+            font-style: italic;
+            font-size: 13px;
+        }
+        
+        .user-choice {
+            background: rgba(81, 207, 102, 0.1);
+            border-left-color: #51cf66;
+            color: #51cf66;
+        }
+        
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .choice-button {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 16px;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fira Code', monospace;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+        
+        .choice-button:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .choice-timer {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 10px;
+            color: #ff3b3b;
+            opacity: 0.7;
+        }
+        
+        .paywall-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .paywall-container {
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            padding: 30px;
+            background-color: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .paywall-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0 0 20px 0;
+            color: #ff3b3b;
+            letter-spacing: 0.5px;
+        }
+        
+        .paywall-text {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 0 0 30px 0;
+            line-height: 1.5;
+        }
+        
+        .price {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .price-label {
+            opacity: 0.7;
+        }
+        
+        .price-amount {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .continue-button {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            padding: 14px 0;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            font-family: 'Fira Code', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .continue-button:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 59, 59, 0.2);
+        }
+        
+        .return-link {
+            display: block;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .return-link:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .outcome-summary {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .outcome-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #51cf66;
+        }
+        
+        .outcome-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+        
+        .restart-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .restart-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .typing-indicator {
+            color: #999;
+            font-style: italic;
+            opacity: 0.7;
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .story-container {
+                width: 98%;
+                height: 95vh;
+            }
+            
+            .header-info {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
+            
+            .outcome-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <div class="header-info">
+            <div class="heart-rate" id="heartRate">♥ 86 BPM</div>
+            <div class="trust-level" id="trustLevel">TRUST: HIGH</div>
+            <div class="hostage-count" id="hostageCount">HOSTAGES: 5 SAFE</div>
+        </div>
+        
+        <div class="scenario-info">
+            <div class="scenario-title">EPISODE 1: BANK ROBBERY GONE WRONG</div>
+            <div class="scenario-desc">Downtown First Unity Bank • 3 armed suspects • 5 hostages • Agent Emma Carter responding</div>
+        </div>
+        
+        <div class="message-area" id="messageArea">
+            <div class="message system">
+                <p>🔴 LIVE - Secure comm-link established with Agent Emma Carter</p>
+            </div>
+            
+            <div class="message agent">
+                <p>I'm patched in. The situation is volatile. Three suspects, armed with handguns. The leader is demanding a helicopter and $500,000 cash.</p>
+            </div>
+            
+            <div class="message suspect">
+                <p>"I'm not playing games! Get me that helicopter on the roof in 15 minutes or someone's gonna get hurt!"</p>
+            </div>
+            
+            <div class="message agent">
+                <p>He's pacing back and forth. Heart rate elevated. The other hostages look terrified. I need your guidance - do we stall by promising the helicopter, or try to negotiate something smaller first?</p>
+            </div>
+        </div>
+        
+        <div class="choices" id="choices">
+            <button class="choice-button" onclick="makeChoice('helicopter')">
+                <span class="choice-timer">15s</span>
+                Promise the helicopter to buy time
+            </button>
+            
+            <button class="choice-button" onclick="makeChoice('negotiate')">
+                <span class="choice-timer">15s</span>
+                Demand a hostage release first
+            </button>
+        </div>
+        
+        <div class="outcome-summary" id="outcomeSummary">
+            <div class="outcome-title" id="outcomeTitle">SCENARIO COMPLETE</div>
+            <div class="outcome-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="hostagesSaved">5</span>
+                    <span class="stat-label">Hostages Saved</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="finalTrust">HIGH</span>
+                    <span class="stat-label">Emma's Trust</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="finalStress">MODERATE</span>
+                    <span class="stat-label">Stress Level</span>
+                </div>
+            </div>
+            <div id="outcomeDescription"></div>
+            <button class="restart-button" onclick="restartStory()">TRY AGAIN</button>
+            <button class="restart-button" onclick="window.location.href='index.html'">OTHER STORIES</button>
+        </div>
+    </div>
+    
+    <div class="paywall-overlay" id="paywall">
+        <div class="paywall-container">
+            <h1 class="paywall-title">Continue the story</h1>
+            <p class="paywall-text">The situation is escalating. Your next decision could determine who lives and who dies.</p>
+            
+            <div class="price">
+                <span class="price-label">Full story access:</span>
+                <span class="price-amount">$4.99</span>
+            </div>
+            
+            <button class="continue-button" onclick="unlockStory()">CONTINUE FOR $4.99</button>
+            
+            <a href="index.html" class="return-link">Return to stories</a>
+        </div>
+    </div>
+    
+    <script>
+        // Game state
+        let gameState = {
+            heartRate: 86,
+            trust: 100,
+            stress: 30,
+            hostagesSafe: 5,
+            currentScene: 1,
+            choices: [],
+            isUnlocked: false
+        };
+        
+        // Story data structure
+        const storyData = {
+            1: {
+                helicopter: {
+                    nextScene: 2,
+                    heartRateChange: -5,
+                    trustChange: 5,
+                    stressChange: -10,
+                    messages: [
+                        { type: 'user-choice', text: 'Promise the helicopter to buy time' },
+                        { type: 'agent', text: 'Good call. "We\'re arranging the helicopter now. It takes time to coordinate with air traffic control and ensure safety."' },
+                        { type: 'suspect', text: '"Fine, but you better not be lying to me! I want to see progress!"' },
+                        { type: 'agent', text: 'He seems calmer. We bought ourselves some breathing room. Police snipers report they have a clean line of sight.' }
+                    ]
+                },
+                negotiate: {
+                    nextScene: 3,
+                    heartRateChange: 8,
+                    trustChange: -5,
+                    stressChange: 15,
+                    messages: [
+                        { type: 'user-choice', text: 'Demand a hostage release first' },
+                        { type: 'agent', text: '"Before we discuss transportation, I need you to show good faith. Release one hostage."' },
+                        { type: 'suspect', text: '"Are you kidding me?! I\'m the one with the gun here! You don\'t make demands!"' },
+                        { type: 'agent', text: 'He\'s getting more agitated. This might have been a mistake. His finger is getting closer to the trigger.' }
+                    ]
+                }
+            },
+            2: {
+                intimidate: {
+                    nextScene: 4,
+                    heartRateChange: 12,
+                    trustChange: -10,
+                    stressChange: 20,
+                    messages: [
+                        { type: 'user-choice', text: 'Tell suspect about snipers to intimidate him' },
+                        { type: 'agent', text: '"I should mention - we have sharpshooters positioned outside. But we want this to end peacefully."' },
+                        { type: 'suspect', text: '"SNIPERS?! You think you can intimidate me?! Everyone get down NOW!"' },
+                        { type: 'system', text: '⚠️ SITUATION ESCALATING - Suspect forcing hostages to the ground' },
+                        { type: 'agent', text: 'That backfired badly. He\'s panicking and the hostages are terrified. My stress levels are spiking.' }
+                    ]
+                },
+                conceal: {
+                    nextScene: 5,
+                    heartRateChange: -2,
+                    trustChange: 5,
+                    stressChange: -5,
+                    messages: [
+                        { type: 'user-choice', text: 'Keep snipers secret, maintain calm' },
+                        { type: 'agent', text: '"The helicopter will be here soon. In the meantime, is everyone inside okay? Do you need water or medical attention?"' },
+                        { type: 'suspect', text: '"Everyone\'s fine. Just get me that helicopter. I don\'t want to hurt anyone."' },
+                        { type: 'agent', text: "Good choice. He's staying calm and showing concern for the hostages. I trust your judgment." }
+                    ]
+                }
+            },
+            3: {
+                apologize: {
+                    nextScene: 6,
+                    heartRateChange: -3,
+                    trustChange: 0,
+                    stressChange: 5,
+                    hostageChange: 0,
+                    messages: [
+                        { type: 'user-choice', text: 'Apologize and back down slightly' },
+                        { type: 'agent', text: '"You\'re right, I apologize. We\'re here to help you get what you need safely."' },
+                        { type: 'suspect', text: '"That\'s better. Don\'t try to boss me around again. Now about that helicopter..."' },
+                        { type: 'agent', text: 'Crisis averted for now, but I can feel he doesn\'t fully trust us anymore.' }
+                    ]
+                },
+                assert: {
+                    nextScene: 7,
+                    heartRateChange: 15,
+                    trustChange: -15,
+                    stressChange: 25,
+                    hostageChange: -1,
+                    messages: [
+                        { type: 'user-choice', text: 'Assert authority to regain control' },
+                        { type: 'agent', text: '"Listen carefully - we want to help, but this needs to be a two-way street."' },
+                        { type: 'suspect', text: '"Two-way street?! I\'ll show you two-way!" *GUNSHOT*' },
+                        { type: 'system', text: '🚨 CRITICAL - One hostage wounded in shoulder' },
+                        { type: 'agent', text: 'Oh God... someone\'s hurt. I should have listened to you earlier. This is on me.' }
+                    ]
+                }
+            },
+            4: {
+                deescalate: {
+                    nextScene: 8,
+                    heartRateChange: -8,
+                    trustChange: 10,
+                    stressChange: -10,
+                    messages: [
+                        { type: 'user-choice', text: 'Calm him down and de-escalate immediately' },
+                        { type: 'agent', text: '"I\'m sorry, that came out wrong. The snipers are just protocol - they won\'t act unless lives are in immediate danger."' },
+                        { type: 'suspect', text: '"You better be telling the truth! I don\'t want anyone getting trigger happy!"' },
+                        { type: 'agent', text: 'He\'s still on edge but not pointing the gun at anyone. Good recovery call.' }
+                    ]
+                },
+                pressure: {
+                    nextScene: 9,
+                    heartRateChange: 20,
+                    trustChange: -20,
+                    stressChange: 30,
+                    hostageChange: -2,
+                    messages: [
+                        { type: 'user-choice', text: 'Use the pressure to demand surrender' },
+                        { type: 'agent', text: '"You\'re surrounded. Surrender now and no one gets hurt."' },
+                        { type: 'suspect', text: '"SURROUNDED?! Then I got nothing to lose!" *Multiple gunshots*' },
+                        { type: 'system', text: '🚨 MULTIPLE CASUALTIES - 2 hostages down' },
+                        { type: 'agent', text: 'This is a disaster. Why did I listen to you? People are dying!' }
+                    ]
+                }
+            },
+            5: {
+                medical: {
+                    nextScene: 10,
+                    heartRateChange: -5,
+                    trustChange: 8,
+                    stressChange: -8,
+                    messages: [
+                        { type: 'user-choice', text: 'Offer medical assistance to build trust' },
+                        { type: 'agent', text: '"If anyone needs medical attention, we can send in a medic. No weapons, just someone to help."' },
+                        { type: 'suspect', text: '"Actually... one of the bank employees hit her head when this started. She might need help."' },
+                        { type: 'agent', text: 'He\'s showing empathy. This is exactly what we needed to build rapport.' }
+                    ]
+                },
+                helicopter: {
+                    nextScene: 11,
+                    heartRateChange: 3,
+                    trustChange: -3,
+                    stressChange: 5,
+                    messages: [
+                        { type: 'user-choice', text: 'Push for concrete helicopter timeline' },
+                        { type: 'agent', text: '"The helicopter should arrive within the next 20 minutes. What\'s your plan for the hostages?"' },
+                        { type: 'suspect', text: '"They\'re staying with me until I\'m safely away. Then I\'ll let them go."' },
+                        { type: 'agent', text: "He's still committed to taking hostages with him. This complicates things." }
+                    ]
+                }
+            }
+        };
+        
+        // Ending scenarios
+        const endings = {
+            perfect: {
+                title: "PERFECT RESOLUTION",
+                description: "All hostages saved. Suspect surrendered peacefully. Emma's confidence in your guidance is unshakeable.",
+                hostagesSaved: 5,
+                trust: "VERY HIGH",
+                stress: "LOW"
+            },
+            good: {
+                title: "SUCCESSFUL RESOLUTION", 
+                description: "Most hostages saved with minimal casualties. Emma trusts your judgment and feels prepared for future scenarios.",
+                hostagesSaved: 5,
+                trust: "HIGH",
+                stress: "MODERATE"
+            },
+            mixed: {
+                title: "MIXED OUTCOME",
+                description: "Some hostages saved but casualties occurred. Emma questions some decisions but recognizes the difficulty of the situation.",
+                hostagesSaved: 3,
+                trust: "MODERATE",
+                stress: "HIGH"
+            },
+            poor: {
+                title: "TRAGIC OUTCOME",
+                description: "Multiple casualties. Emma's faith in your guidance is severely shaken. She may hesitate to follow your advice in future scenarios.",
+                hostagesSaved: 3,
+                trust: "LOW",
+                stress: "VERY HIGH"
+            },
+            disaster: {
+                title: "CATASTROPHIC FAILURE",
+                description: "Major casualties. Emma is traumatized and has lost all confidence in your judgment. Her career as a negotiator may be over.",
+                hostagesSaved: 1,
+                trust: "BROKEN",
+                stress: "CRITICAL"
+            }
+        };
+        
+        function updateMetrics() {
+            document.getElementById('heartRate').textContent = `♥ ${gameState.heartRate} BPM`;
+            
+            let trustLevel = 'LOW';
+            if (gameState.trust > 80) trustLevel = 'VERY HIGH';
+            else if (gameState.trust > 60) trustLevel = 'HIGH';
+            else if (gameState.trust > 40) trustLevel = 'MODERATE';
+            else if (gameState.trust > 20) trustLevel = 'LOW';
+            else trustLevel = 'BROKEN';
+            
+            document.getElementById('trustLevel').textContent = `TRUST: ${trustLevel}`;
+            document.getElementById('hostageCount').textContent = `HOSTAGES: ${gameState.hostagesSafe} SAFE`;
+        }
+        
+        function addMessage(type, text, delay = 0) {
+            setTimeout(() => {
+                const messageArea = document.getElementById('messageArea');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.innerHTML = `<p>${text}</p>`;
+                messageArea.appendChild(messageDiv);
+                messageArea.scrollTop = messageArea.scrollHeight;
+            }, delay);
+        }
+        
+        function showTypingIndicator() {
+            const messageArea = document.getElementById('messageArea');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message system typing-indicator';
+            typingDiv.id = 'typing';
+            typingDiv.innerHTML = '<p>Agent Carter is typing...</p>';
+            messageArea.appendChild(typingDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+        
+        function hideTypingIndicator() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+        
+        function makeChoice(choice) {
+            if (!gameState.isUnlocked && gameState.currentScene >= 2) {
+                showPaywall();
+                return;
+            }
+            
+            gameState.choices.push(choice);
+            
+            const currentStory = storyData[gameState.currentScene];
+            const choiceData = currentStory[choice];
+            
+            // Hide choices
+            document.getElementById('choices').style.display = 'none';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Add choice message
+            setTimeout(() => {
+                hideTypingIndicator();
+                addMessage('user-choice', choiceData.messages[0].text);
+                
+                // Add subsequent messages with delays
+                choiceData.messages.slice(1).forEach((message, index) => {
+                    addMessage(message.type, message.text, (index + 1) * 2000);
+                });
+                
+                // Update game state
+                setTimeout(() => {
+                    gameState.heartRate += choiceData.heartRateChange;
+                    gameState.trust += choiceData.trustChange;
+                    gameState.stress += choiceData.stressChange;
+                    if (choiceData.hostageChange) {
+                        gameState.hostagesSafe += choiceData.hostageChange;
+                    }
+                    
+                    // Clamp values
+                    gameState.heartRate = Math.max(60, Math.min(150, gameState.heartRate));
+                    gameState.trust = Math.max(0, Math.min(100, gameState.trust));
+                    gameState.stress = Math.max(0, Math.min(100, gameState.stress));
+                    gameState.hostagesSafe = Math.max(0, Math.min(5, gameState.hostagesSafe));
+                    
+                    updateMetrics();
+                    
+                    // Move to next scene or end
+                    gameState.currentScene = choiceData.nextScene;
+                    
+                    if (gameState.currentScene > 5 || gameState.hostagesSafe <= 1) {
+                        setTimeout(() => endScenario(), 1000);
+                    } else {
+                        setTimeout(() => showNextChoices(), 1000);
+                    }
+                }, choiceData.messages.length * 2000);
+            }, 1500);
+        }
+        
+        function showNextChoices() {
+            const currentStory = storyData[gameState.currentScene];
+            if (!currentStory) {
+                endScenario();
+                return;
+            }
+            
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            Object.keys(currentStory).forEach(choice => {
+                const button = document.createElement('button');
+                button.className = 'choice-button';
+                button.onclick = () => makeChoice(choice);
+                
+                const choiceText = getChoiceText(gameState.currentScene, choice);
+                button.innerHTML = `<span class="choice-timer">10s</span>${choiceText}`;
+                
+                choicesDiv.appendChild(button);
+            });
+            
+            choicesDiv.style.display = 'flex';
+        }
+        
+        function getChoiceText(scene, choice) {
+            const choiceTexts = {
+                2: {
+                    intimidate: "Tell suspect about snipers to intimidate him",
+                    conceal: "Keep snipers secret, maintain calm"
+                },
+                3: {
+                    apologize: "Apologize and back down slightly", 
+                    assert: "Assert authority to regain control"
+                },
+                4: {
+                    deescalate: "Calm him down and de-escalate immediately",
+                    pressure: "Use the pressure to demand surrender"
+                },
+                5: {
+                    medical: "Offer medical assistance to build trust",
+                    helicopter: "Push for concrete helicopter timeline"
+                }
+            };
+            
+            return choiceTexts[scene]?.[choice] || choice;
+        }
+        
+        function endScenario() {
+            document.getElementById('choices').style.display = 'none';
+            
+            // Determine ending based on metrics
+            let ending;
+            if (gameState.hostagesSafe === 5 && gameState.trust > 80) {
+                ending = endings.perfect;
+            } else if (gameState.hostagesSaved >= 4 && gameState.trust > 60) {
+                ending = endings.good;
+            } else if (gameState.hostagesSaved >= 3) {
+                ending = endings.mixed;
+            } else if (gameState.hostagesSaved >= 2) {
+                ending = endings.poor;
+            } else {
+                ending = endings.disaster;
+            }
+            
+            // Show outcome
+            document.getElementById('outcomeTitle').textContent = ending.title;
+            document.getElementById('hostagesSaved').textContent = gameState.hostagesSafe;
+            document.getElementById('finalTrust').textContent = ending.trust;
+            
+            let stressLevel = 'LOW';
+            if (gameState.stress > 80) stressLevel = 'CRITICAL';
+            else if (gameState.stress > 60) stressLevel = 'VERY HIGH'; 
+            else if (gameState.stress > 40) stressLevel = 'HIGH';
+            else if (gameState.stress > 20) stressLevel = 'MODERATE';
+            
+            document.getElementById('finalStress').textContent = stressLevel;
+            document.getElementById('outcomeDescription').innerHTML = `<p>${ending.description}</p>`;
+            
+            setTimeout(() => {
+                document.getElementById('outcomeSummary').style.display = 'block';
+            }, 2000);
+        }
+        
+        function restartStory() {
+            gameState = {
+                heartRate: 86,
+                trust: 100,
+                stress: 30,
+                hostagesSafe: 5,
+                currentScene: 1,
+                choices: [],
+                isUnlocked: gameState.isUnlocked
+            };
+            
+            document.getElementById('messageArea').innerHTML = `
+                <div class="message system">
+                    <p>🔴 LIVE - Secure comm-link established with Agent Emma Carter</p>
+                </div>
+                
+                <div class="message agent">
+                    <p>I'm patched in. The situation is volatile. Three suspects, armed with handguns. The leader is demanding a helicopter and $500,000 cash.</p>
+                </div>
+                
+                <div class="message suspect">
+                    <p>"I'm not playing games! Get me that helicopter on the roof in 15 minutes or someone's gonna get hurt!"</p>
+                </div>
+                
+                <div class="message agent">
+                    <p>He's pacing back and forth. Heart rate elevated. The other hostages look terrified. I need your guidance - do we stall by promising the helicopter, or try to negotiate something smaller first?</p>
+                </div>
+            `;
+            
+            document.getElementById('choices').innerHTML = `
+                <button class="choice-button" onclick="makeChoice('helicopter')">
+                    <span class="choice-timer">15s</span>
+                    Promise the helicopter to buy time
+                </button>
+                
+                <button class="choice-button" onclick="makeChoice('negotiate')">
+                    <span class="choice-timer">15s</span>
+                    Demand a hostage release first
+                </button>
+            `;
+            
+            document.getElementById('choices').style.display = 'flex';
+            document.getElementById('outcomeSummary').style.display = 'none';
+            updateMetrics();
+        }
+        
+        function showPaywall() {
+            document.getElementById('paywall').style.display = 'flex';
+        }
+        
+        function unlockStory() {
+            gameState.isUnlocked = true;
+            document.getElementById('paywall').style.display = 'none';
+            
+            // Continue with the choice they were trying to make
+            addMessage('system', 'Story unlocked! You can now experience the full narrative with all emotional consequences.');
+        }
+        
+        // Initialize the story
+        updateMetrics();
+    </script>
+</body>
+</html>

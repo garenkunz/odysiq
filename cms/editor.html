@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryPaths Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@400;500&family=Permanent+Marker&family=Share+Tech+Mono&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #222;
+        }
+        
+        .editor-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .story-list {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .story-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .story-button.active {
+            box-shadow: 0 0 0 2px #333;
+        }
+        
+        .final-seconds {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .lost-horizons {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .quantum-paradox {
+            background-color: #e8eaf6;
+            color: #3949ab;
+        }
+        
+        .node-list {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .node-item {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        
+        .node-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .node-item.active {
+            background-color: #e3f2fd;
+        }
+        
+        .editor-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .message-editor {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .message-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .message-list {
+            margin-bottom: 15px;
+        }
+        
+        .message-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        
+        .message-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .choice-editor {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .choice-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #2196f3;
+            color: white;
+            font-weight: 500;
+        }
+        
+        button.secondary {
+            background-color: #9e9e9e;
+        }
+        
+        button.danger {
+            background-color: #f44336;
+        }
+        
+        .preview-section {
+            background-color: black;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            min-height: 400px;
+        }
+        
+        .preview-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .preview-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .instructions {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #0d47a1;
+        }
+        
+        .instructions ol, .instructions ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        .export-section {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>StoryPaths Editor</h1>
+        
+        <div class="instructions">
+            <h3>How to Use This Editor</h3>
+            <ol>
+                <li>Select a story from the buttons above</li>
+                <li>Choose a node to edit or create a new one</li>
+                <li>Edit the content, messages, and choices</li>
+                <li>Save your changes</li>
+                <li>Export the JSON when finished</li>
+            </ol>
+            <p>The exported JSON file can be used to update your website.</p>
+        </div>
+        
+        <div class="editor-section">
+            <h2>Story Selection</h2>
+            <div class="story-list">
+                <button class="story-button final-seconds active">Final Seconds</button>
+                <button class="story-button lost-horizons">Lost Horizons</button>
+                <button class="story-button quantum-paradox">Quantum Paradox</button>
+            </div>
+            
+            <h3>Nodes</h3>
+            <div class="node-list">
+                <div class="node-item active">start</div>
+                <div class="node-item">paywall</div>
+                <button id="add-node">+ Add New Node</button>
+            </div>
+            
+            <div class="editor-form">
+                <div>
+                    <div class="form-group">
+                        <label for="node-id">Node ID:</label>
+                        <input type="text" id="node-id" value="start">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status-indicator">Status Indicator:</label>
+                        <input type="text" id="status-indicator" value="♥ 86 BPM">
+                    </div>
+                    
+                    <h3>Messages</h3>
+                    <div class="message-editor">
+                        <div class="message-controls">
+                            <select id="message-type">
+                                <option value="system">System</option>
+                                <option value="agent">Agent</option>
+                                <option value="suspect">Suspect</option>
+                                <option value="narrator">Narrator</option>
+                                <option value="environment">Environment</option>
+                                <option value="quantum">Quantum</option>
+                            </select>
+                            <button id="add-message">Add Message</button>
+                        </div>
+                        
+                        <div class="message-list">
+                            <div class="message-item">
+                                <strong>System:</strong> Incoming call transcript
+                                <button class="delete-btn">×</button>
+                            </div>
+                            <div class="message-item">
+                                <strong>Suspect:</strong> I need that helicopter on the roof in 15 minutes or people start dying! You understand me?
+                                <button class="delete-btn">×</button>
+                            </div>
+                            <div class="message-item">
+                                <strong>Agent:</strong> I hear you. Everyone's on edge right now. I'm working on your transportation request, but these things take time to arrange safely.
+                                <button class="delete-btn">×</button>
+                            </div>
+                            <div class="message-item">
+                                <strong>Agent:</strong> He's getting more agitated. Heart rate increasing. I need your guidance on how to proceed.
+                                <button class="delete-btn">×</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message-text">New Message Text:</label>
+                            <textarea id="message-text"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Choices</h3>
+                    <div class="choice-editor">
+                        <div class="choice-item">
+                            <div class="form-group">
+                                <label for="choice1-text">Choice 1 Text:</label>
+                                <input type="text" id="choice1-text" value="Promise the helicopter to buy time">
+                            </div>
+                            <div class="form-group">
+                                <label for="choice1-next">Next Node:</label>
+                                <input type="text" id="choice1-next" value="paywall">
+                            </div>
+                        </div>
+                        
+                        <div class="choice-item">
+                            <div class="form-group">
+                                <label for="choice2-text">Choice 2 Text:</label>
+                                <input type="text" id="choice2-text" value="Negotiate a hostage release first">
+                            </div>
+                            <div class="form-group">
+                                <label for="choice2-next">Next Node:</label>
+                                <input type="text" id="choice2-next" value="paywall">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="is-paywall">Is Paywall Node:</label>
+                        <select id="is-paywall">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                    
+                    <div id="paywall-options" style="display: none;">
+                        <div class="form-group">
+                            <label for="paywall-title">Paywall Title:</label>
+                            <input type="text" id="paywall-title" value="Continue the story">
+                        </div>
+                        <div class="form-group">
+                            <label for="paywall-text">Paywall Text:</label>
+                            <textarea id="paywall-text">The situation is escalating. Your next decision could determine who lives and who dies.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="paywall-indicator">Paywall Indicator:</label>
+                            <input type="text" id="paywall-indicator" value="CRITICAL DECISION POINT">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="save-node">Save Node</button>
+                <button id="delete-node" class="danger">Delete Node</button>
+                <button id="preview" class="secondary">Preview</button>
+            </div>
+        </div>
+        
+        <div class="export-section">
+            <h2>Export Story Data</h2>
+            <p>When you're finished editing, export the JSON file to update your website:</p>
+            <button id="export-json">Export JSON</button>
+            <div class="form-group" style="margin-top: 15px;">
+                <textarea id="json-output" style="height: 200px; font-family: monospace;" readonly></textarea>
+            </div>
+        </div>
+        
+        <div class="preview-section" style="display: none;">
+            <h2 class="preview-title">Preview</h2>
+            <div class="preview-container">
+                <!-- Preview content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // This is a simplified mockup of the editor functionality
+        // In a real implementation, this would include full JSON loading/saving
+        
+        document.getElementById('is-paywall').addEventListener('change', function() {
+            const paywallOptions = document.getElementById('paywall-options');
+            if (this.value === 'true') {
+                paywallOptions.style.display = 'block';
+            } else {
+                paywallOptions.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('export-json').addEventListener('click', function() {
+            // This would generate the actual JSON in a real implementation
+            const sampleJson = JSON.stringify({
+                "stories": [
+                    {
+                        "id": "final-seconds",
+                        "title": "Final Seconds",
+                        "description": "Guide a hostage negotiator through life-or-death decisions with every choice you make.",
+                        "theme": "final-seconds",
+                        "nodes": [
+                            {
+                                "id": "start",
+                                "content": [
+                                    {"type": "system", "text": "Incoming call transcript"},
+                                    {"type": "suspect", "text": "I need that helicopter on the roof in 15 minutes or people start dying! You understand me?"},
+                                    {"type": "agent", "text": "I hear you. Everyone's on edge right now. I'm working on your transportation request, but these things take time to arrange safely."},
+                                    {"type": "agent", "text": "He's getting more agitated. Heart rate increasing. I need your guidance on how to proceed."}
+                                ],
+                                "choices": [
+                                    {"text": "Promise the helicopter to buy time", "nextNode": "paywall"},
+                                    {"text": "Negotiate a hostage release first", "nextNode": "paywall"}
+                                ],
+                                "statusIndicator": "♥ 86 BPM"
+                            }
+                        ]
+                    }
+                ]
+            }, null, 2);
+            
+            document.getElementById('json-output').value = sampleJson;
+        });
+        
+        document.getElementById('preview').addEventListener('click', function() {
+            const previewSection = document.querySelector('.preview-section');
+            previewSection.style.display = previewSection.style.display === 'none' ? 'block' : 'none';
+            
+            if (previewSection.style.display === 'block') {
+                // In a real implementation, this would render the actual preview
+                const previewContainer = document.querySelector('.preview-container');
+                previewContainer.innerHTML = `
+                    <div style="position: absolute; top: 20px; left: 20px; color: #ff3b3b; font-size: 12px; font-family: 'Fira Code', monospace;">♥ 86 BPM</div>
+                    <button style="position: absolute; top: 20px; right: 20px; background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-family: 'Fira Code', monospace;">SHOW HISTORY</button>
+                    
+                    <div style="margin-top: 80px; font-family: 'Fira Code', monospace;">
+                        <div style="margin-bottom: 15px; color: #4dabf7; font-style: italic; font-size: 14px; opacity: 0.7;">
+                            <p>Incoming call transcript</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; color: #ff6b6b;">
+                            <p>I need that helicopter on the roof in 15 minutes or people start dying! You understand me?</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; color: #fff;">
+                            <p>I hear you. Everyone's on edge right now. I'm working on your transportation request, but these things take time to arrange safely.</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; color: #fff;">
+                            <p>He's getting more agitated. Heart rate increasing. I need your guidance on how to proceed.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 40px;">
+                        <button style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 16px; color: #fff; text-align: left; cursor: pointer; font-family: 'Fira Code', monospace;">
+                            Promise the helicopter to buy time
+                        </button>
+                        
+                        <button style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 16px; color: #fff; text-align: left; cursor: pointer; font-family: 'Fira Code', monospace;">
+                            Negotiate a hostage release first
+                        </button>
+                    </div>
+                `;
+            }
+        });
+        
+        // Story selection buttons
+        document.querySelectorAll('.story-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.story-button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                // In a real implementation, this would load the selected story data
+            });
+        });
+    </script>
+</body>
+</html>

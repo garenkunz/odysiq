@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoryPaths - Choose Your Adventure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@400;500&family=Permanent+Marker&family=Share+Tech+Mono&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .story-button {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 22px;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .story-button:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .story-button:hover:before {
+            opacity: 1;
+        }
+        
+        .story-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0 0 10px 0;
+        }
+        
+        .story-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            margin: 0;
+        }
+        
+        /* Final Seconds - Urgent, tense style */
+        .final-seconds {
+            font-family: 'Fira Code', monospace;
+        }
+        .final-seconds .story-title {
+            letter-spacing: 0.5px;
+        }
+        .final-seconds:before {
+            background-color: #ff3b3b;
+        }
+        
+        /* Lost Horizons - Adventure style */
+        .lost-horizons {
+            font-family: 'Permanent Marker', cursive;
+        }
+        .lost-horizons .story-title {
+            letter-spacing: 1px;
+        }
+        .lost-horizons .story-desc {
+            font-family: 'Special Elite', cursive;
+        }
+        .lost-horizons:before {
+            background-color: #4ade80;
+        }
+        
+        /* Quantum Paradox - Sci-fi style */
+        .quantum-paradox {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .quantum-paradox .story-title {
+            letter-spacing: 1px;
+        }
+        .quantum-paradox .story-desc {
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .quantum-paradox:before {
+            background-color: #818cf8;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <button class="story-button final-seconds" onclick="window.location.href='final-seconds.html'">
+            <h2 class="story-title">Final Seconds</h2>
+            <p class="story-desc">Guide a hostage negotiator through life-or-death decisions with every choice you make.</p>
+        </button>
+        
+        <button class="story-button lost-horizons" onclick="window.location.href='lost-horizons.html'">
+            <h2 class="story-title">Lost Horizons</h2>
+            <p class="story-desc">Navigate an uncharted island's mysteries as you search for a way back to civilization.</p>
+        </button>
+        
+        <button class="story-button quantum-paradox" onclick="window.location.href='quantum-paradox.html'">
+            <h2 class="story-title">Quantum Paradox</h2>
+            <p class="story-desc">Make choices that alter reality as you travel through parallel universes and temporal anomalies.</p>
+        </button>
+    </div>
+</body>
+</html>

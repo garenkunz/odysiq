@@ -1,0 +1,154 @@
+{
+  "stories": [
+    {
+      "id": "final-seconds",
+      "title": "Final Seconds",
+      "description": "Guide a hostage negotiator through life-or-death decisions with every choice you make.",
+      "theme": "final-seconds",
+      "font": "Fira Code, monospace",
+      "titleFont": "Fira Code, monospace",
+      "accentColor": "#ff3b3b",
+      "nodes": [
+        {
+          "id": "start",
+          "content": [
+            {
+              "type": "system",
+              "text": "Incoming call transcript"
+            },
+            {
+              "type": "suspect",
+              "text": "I need that helicopter on the roof in 15 minutes or people start dying! You understand me?"
+            },
+            {
+              "type": "agent",
+              "text": "I hear you. Everyone's on edge right now. I'm working on your transportation request, but these things take time to arrange safely."
+            },
+            {
+              "type": "agent",
+              "text": "He's getting more agitated. Heart rate increasing. I need your guidance on how to proceed."
+            }
+          ],
+          "choices": [
+            {
+              "text": "Promise the helicopter to buy time",
+              "nextNode": "paywall"
+            },
+            {
+              "text": "Negotiate a hostage release first",
+              "nextNode": "paywall"
+            }
+          ],
+          "statusIndicator": "♥ 86 BPM"
+        },
+        {
+          "id": "paywall",
+          "isPaywall": true,
+          "paywallTitle": "Continue the story",
+          "paywallText": "The situation is escalating. Your next decision could determine who lives and who dies.",
+          "paywallIndicator": "CRITICAL DECISION POINT"
+        }
+      ]
+    },
+    {
+      "id": "lost-horizons",
+      "title": "Lost Horizons",
+      "description": "Navigate an uncharted island's mysteries as you search for a way back to civilization.",
+      "theme": "lost-horizons",
+      "font": "Special Elite, cursive",
+      "titleFont": "Permanent Marker, cursive",
+      "accentColor": "#4ade80",
+      "nodes": [
+        {
+          "id": "start",
+          "content": [
+            {
+              "type": "system",
+              "text": "Day 1 - After the crash"
+            },
+            {
+              "type": "environment",
+              "text": "The roar of waves crashes against the shore. Salt water stings your eyes as you regain consciousness, sprawled on unfamiliar sand."
+            },
+            {
+              "type": "narrator",
+              "text": "Your head throbs as memories slowly return. The charter plane. The storm. The terrifying descent. Now, only wreckage scattered across the beach and an unforgiving jungle beyond."
+            },
+            {
+              "type": "narrator",
+              "text": "You're alone. The others must have washed up elsewhere—if they survived at all. The sun is beginning to set, and you need to make a decision quickly."
+            }
+          ],
+          "choices": [
+            {
+              "text": "Search the beach for other survivors and supplies",
+              "nextNode": "paywall"
+            },
+            {
+              "text": "Head inland to find shelter before nightfall",
+              "nextNode": "paywall"
+            }
+          ],
+          "statusIndicator": "COMPASS: UNKNOWN"
+        },
+        {
+          "id": "paywall",
+          "isPaywall": true,
+          "paywallTitle": "Continue the adventure",
+          "paywallText": "Night approaches quickly on this mysterious island. Your next decision could determine your survival.",
+          "paywallIndicator": "CRITICAL CHOICE AHEAD"
+        }
+      ]
+    },
+    {
+      "id": "quantum-paradox",
+      "title": "Quantum Paradox",
+      "description": "Make choices that alter reality as you travel through parallel universes and temporal anomalies.",
+      "theme": "quantum-paradox",
+      "font": "Share Tech Mono, monospace",
+      "titleFont": "Orbitron, sans-serif",
+      "accentColor": "#818cf8",
+      "nodes": [
+        {
+          "id": "start",
+          "content": [
+            {
+              "type": "system",
+              "text": "Quantum Breach Detected"
+            },
+            {
+              "type": "quantum",
+              "text": "Reality fluctuation at 78%. Temporal stability compromised. Multiple timelines converging."
+            },
+            {
+              "type": "narrator",
+              "text": "The laboratory alarms blare as you stare at the quantum computer. The experiment wasn't supposed to do this—create a tear in reality itself. Through the shimmering portal, you can see glimpses of other versions of yourself, other choices you might have made."
+            },
+            {
+              "type": "narrator",
+              "text": "Dr. Chen rushes in, face pale. \"What have you done? The quantum entanglement is spreading! We need to stabilize it before the timelines collapse completely!\""
+            }
+          ],
+          "choices": [
+            {
+              "text": "Attempt to close the portal by reversing the quantum algorithm",
+              "nextNode": "paywall"
+            },
+            {
+              "text": "Step through the portal to investigate the alternate timeline",
+              "nextNode": "paywall"
+            }
+          ],
+          "statusIndicator": "TIMELINE: ALPHA-7"
+        },
+        {
+          "id": "paywall",
+          "isPaywall": true,
+          "paywallTitle": "Continue the paradox",
+          "paywallText": "Reality itself hangs in the balance. Your next decision will alter the fabric of multiple universes.",
+          "paywallIndicator": "TIMELINE DIVERGENCE POINT"
+        }
+      ]
+    }
+  ]
+}
