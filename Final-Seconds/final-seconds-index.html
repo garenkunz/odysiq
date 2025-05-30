@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Seconds – StoryPaths</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ─── ALL YOUR EXISTING CSS ─────────────────────────────────────────────────── -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fira Code', monospace;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.3px;
+    }
+
+    .story-container {
+      width: 95%;
+      max-width: 800px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .message-area {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      padding: 20px 10px 20px 0;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      animation: fadeIn 0.5s;
+      padding: 12px;
+      border-radius: 4px;
+      border-left: 3px solid transparent;
+      position: relative;
+    }
+
+    .message p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .agent {
+      background: rgba(74, 171, 247, 0.1);
+      border-left-color: #4dabf7;
+      color: #fff;
+    }
+
+    .suspect {
+      background: rgba(255, 107, 107, 0.1);
+      border-left-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .system {
+      background: rgba(255, 255, 255, 0.05);
+      border-left-color: #666;
+      color: #999;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .user-choice {
+      background: rgba(81, 207, 102, 0.1);
+      border-left-color: #51cf66;
+      color: #51cf66;
+    }
+
+    .narrator {
+      background: rgba(255, 212, 59, 0.1);
+      border-left-color: #ffd43b;
+      color: #ffd43b;
+      font-style: italic;
+    }
+
+    .waiting-message {
+      background: rgba(255, 212, 59, 0.1);
+      border-left-color: #ffd43b;
+      color: #ffd43b;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .waiting-dots {
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+
+    .character-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 11px;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .message.faded {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      background-color: #fff;
+      width: 2px;
+      height: 1em;
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .choice-button {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 16px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Fira Code', monospace;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+
+    .choice-button:hover {
+      background-color: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .choice-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .history-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .history-toggle:hover {
+      background: rgba(40, 40, 40, 0.9);
+    }
+
+    .admin-controls {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 12px;
+      display: none;
+    }
+
+    .admin-toggle {
+      margin-bottom: 10px;
+    }
+
+    .admin-toggle input {
+      margin-right: 5px;
+    }
+
+    .paywall-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .paywall-container {
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      padding: 30px;
+      background-color: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .paywall-title {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0 0 20px 0;
+      color: #ff3b3b;
+      letter-spacing: 0.5px;
+    }
+
+    .paywall-text {
+      font-size: 16px;
+      opacity: 0.9;
+      margin: 0 0 30px 0;
+      line-height: 1.5;
+    }
+
+    .continue-button {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      padding: 14px 0;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      font-family: 'Fira Code', monospace;
+      letter-spacing: 1px;
+    }
+
+    .continue-button:hover {
+      background-color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 59, 59, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.6;
+      }
+    }
+
+    @keyframes blink {
+      0%,
+      50% {
+        opacity: 1;
+      }
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .typing-indicator {
+      color: #999;
+      font-style: italic;
+      opacity: 0.7;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .story-container {
+        width: 98%;
+        height: 95vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ─── Admin Controls ───────────────────────────────────────────────────────── -->
+  <div class="admin-controls" id="adminControls">
+    <div class="admin-toggle">
+      <input type="checkbox" id="adminMode" onchange="toggleAdminMode()" />
+      <label for="adminMode">Admin Mode</label>
+    </div>
+    <div class="admin-toggle">
+      <input type="checkbox" id="skipTimer" disabled />
+      <label for="skipTimer">Skip Timers</label>
+    </div>
+    <button onclick="resetStory()" style="margin-top: 10px; padding: 5px 10px; font-size: 10px;">
+      Reset Story
+    </button>
+  </div>
+
+  <!-- ─── Story Container ───────────────────────────────────────────────────────── -->
+  <div class="story-container">
+    <div class="message-area" id="messageArea">
+      <div class="message system">
+        <p>🔴 LIVE – Secure comm-link established with Agent Emma Carter</p>
+      </div>
+    </div>
+
+    <div class="choices" id="choices">
+      <button class="choice-button" onclick="startStory()">Begin Mission</button>
+    </div>
+  </div>
+
+  <!-- ─── History Toggle ────────────────────────────────────────────────────────── -->
+  <div class="history-toggle" id="historyToggle" onclick="toggleHistory()">Show History</div>
+
+  <!-- ─── Paywall Overlay ─────────────────────────────────────────────────────── -->
+  <div class="paywall-overlay" id="paywall">
+    <div class="paywall-container">
+      <h1 class="paywall-title">Continue Emma's Story</h1>
+      <p class="paywall-text">
+        The situation is becoming more complex. Your bond with Emma deepens as you guide her through
+        increasingly difficult choices.
+      </p>
+
+      <div
+        style="display: flex; justify-content: space-between; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);"
+      >
+        <span style="opacity: 0.7;">Full story access:</span>
+        <span style="font-size: 18px; font-weight: 500;">$4.99</span>
+      </div>
+
+      <button class="continue-button" onclick="unlockStory()">CONTINUE FOR $4.99</button>
+      <a
+        href="index.html"
+        style="display: block; text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none;"
+        >← Return to stories</a
+      >
+    </div>
+  </div>
+
+  <!-- ─── Module-Based Script ─────────────────────────────────────────────────── -->
+  <script type="module">
+    // 1️⃣ Load Scene 1 (and later you can import scene2, scene3, … the same way)
+    import { scenes as scene1 } from './scene1.js';
+
+    // 2️⃣ Build the master database
+    const storyDatabase = {};
+    Object.assign(storyDatabase, scene1);
+
+    // 3️⃣ Game state (unchanged)
+    let gameState = {
+      currentScene: 'start',
+      isUnlocked: false,
+      decisions: [],
+      waitingFor: null,
+      waitingUntil: null,
+      adminMode: false,
+      skipTimers: false,
+      showHistory: false
+    };
+
+        // Typing effect system
+        function typeMessage(element, text, speed = 30) {
+            return new Promise(resolve => {
+                element.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                element.appendChild(cursor);
+                
+                let i = 0;
+                const typeChar = () => {
+                    if (i < text.length) {
+                        element.insertBefore(document.createTextNode(text[i]), cursor);
+                        i++;
+                        setTimeout(typeChar, speed + Math.random() * 20);
+                    } else {
+                        cursor.remove();
+                        resolve();
+                    }
+                };
+                typeChar();
+            });
+        }
+
+        // Message history management
+        function fadeOldMessages() {
+            if (!gameState.showHistory) {
+                const messages = document.querySelectorAll('.message:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3))');
+                messages.forEach(msg => msg.classList.add('faded'));
+            }
+        }
+
+        function toggleHistory() {
+            gameState.showHistory = !gameState.showHistory;
+            const messages = document.querySelectorAll('.message');
+            const toggle = document.getElementById('historyToggle');
+            
+            if (gameState.showHistory) {
+                messages.forEach(msg => msg.classList.remove('faded'));
+                toggle.textContent = 'Hide History';
+            } else {
+                fadeOldMessages();
+                toggle.textContent = 'Show History';
+            }
+        }
+
+        // Enhanced message system with proper sequencing
+        let messageQueue = [];
+        let isTyping = false;
+        let choicesReady = false;
+
+        function addMessage(type, text, speaker = null, delay = 0) {
+            messageQueue.push({ type, text, speaker, delay });
+            if (!isTyping) {
+                processMessageQueue();
+            }
+        }
+
+        async function processMessageQueue() {
+            if (messageQueue.length === 0) {
+                isTyping = false;
+                if (choicesReady) {
+                    showPendingChoices();
+                }
+                return;
+            }
+
+            isTyping = true;
+            const { type, text, speaker, delay } = messageQueue.shift();
+
+            // Wait for the delay before starting this message
+            if (delay > 0) {
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+
+            const messageArea = document.getElementById('messageArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            let messageHTML = '';
+            if (speaker) {
+                messageHTML += `<div class="character-name">${speaker}</div>`;
+            }
+            messageHTML += `<p></p>`;
+            
+            messageDiv.innerHTML = messageHTML;
+            messageArea.appendChild(messageDiv);
+            
+            const textElement = messageDiv.querySelector('p');
+            
+            // Type out the message and wait for it to complete
+            await typeMessage(textElement, text);
+            
+            messageArea.scrollTop = messageArea.scrollHeight;
+            fadeOldMessages();
+
+            // Process the next message in the queue
+            processMessageQueue();
+        }
+
+        // Waiting system for time-based actions
+        function addWaitingMessage(description, estimatedTime) {
+            const messageArea = document.getElementById('messageArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message waiting-message';
+            messageDiv.id = 'waitingMessage';
+            messageDiv.innerHTML = `<p>${description} <span class="waiting-dots">...</span> (estimated ${estimatedTime})</p>`;
+            messageArea.appendChild(messageDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        function removeWaitingMessage() {
+            const waitingMsg = document.getElementById('waitingMessage');
+            if (waitingMsg) {
+                waitingMsg.remove();
+            }
+        }
+
+        // Enhanced wait timer
+        function startWaitTimer(minutes, acknowledgment, callback) {
+            // Character acknowledges the action first
+            addMessage('agent', acknowledgment, 'Emma Carter');
+            
+            setTimeout(() => {
+                if (gameState.skipTimers && gameState.adminMode) {
+                    callback();
+                    return;
+                }
+
+                const timeText = minutes >= 60 ? `${Math.floor(minutes/60)}h ${minutes%60}m` : `${minutes}m`;
+                addWaitingMessage('Waiting for response', timeText);
+                
+                gameState.waitingFor = callback;
+                gameState.waitingUntil = Date.now() + (minutes * 60 * 1000);
+                
+                setTimeout(() => {
+                    removeWaitingMessage();
+                    callback();
+                }, minutes * 60 * 1000);
+            }, 2000);
+        }
+
+        // Admin controls
+        function toggleAdminMode() {
+            gameState.adminMode = document.getElementById('adminMode').checked;
+            document.getElementById('skipTimer').disabled = !gameState.adminMode;
+            if (gameState.adminMode) {
+                document.getElementById('adminControls').style.display = 'block';
+                gameState.skipTimers = document.getElementById('skipTimer').checked;
+            } else {
+                document.getElementById('adminControls').style.display = 'none';
+                document.getElementById('skipTimer').checked = false;
+                gameState.skipTimers = false;
+            }
+        }
+
+        // Enhanced choice handling
+        let pendingChoices = null;
+
+        function showScene(sceneId) {
+            const scene = storyDatabase[sceneId];
+            if (!scene) return;
+
+            gameState.currentScene = sceneId;
+            document.getElementById('choices').style.display = 'none';
+            choicesReady = false;
+            pendingChoices = scene.choices;
+            
+            if (scene.messages) {
+                // Clear message queue and add all messages
+                messageQueue = [];
+                scene.messages.forEach((message) => {
+                    addMessage(message.type, message.text, message.speaker, message.delay || 0);
+                });
+                
+                // Set flag that choices are ready to be shown
+                choicesReady = true;
+            } else {
+                // Show choices immediately if no messages
+                showChoices(scene.choices);
+            }
+        }
+
+        function showPendingChoices() {
+            if (pendingChoices) {
+                showChoices(pendingChoices);
+                pendingChoices = null;
+                choicesReady = false;
+            }
+        }
+
+        function showChoices(choices) {
+            if (!choices) return;
+            
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            choices.forEach(choice => {
+                const button = document.createElement('button');
+                button.className = 'choice-button';
+                button.onclick = () => makeChoice(choice);
+                button.textContent = choice.text;
+                choicesDiv.appendChild(button);
+            });
+            
+            choicesDiv.style.display = 'flex';
+        }
+
+        function makeChoice(choice) {
+            if (!gameState.isUnlocked && gameState.decisions.length >= 3) {
+                showPaywall();
+                return;
+            }
+            
+            gameState.decisions.push(choice);
+            
+            // Clear the message queue and add the user choice with natural dialogue
+            messageQueue = [];
+            addMessage('user-choice', choice.userResponse);
+            document.getElementById('choices').style.display = 'none';
+            choicesReady = false;
+            
+            if (choice.waitTime && choice.waitTime > 0) {
+                const acknowledgments = [
+                    "Understood. This will take some time, but I'll get it done right.",
+                    "Copy that. Give me a few minutes to handle this properly.",
+                    "Good call. I'll need some time for this, but it's worth doing right.",
+                    "Roger. This is going to take a while, but I trust your judgment."
+                ];
+                const acknowledgment = acknowledgments[Math.floor(Math.random() * acknowledgments.length)];
+                
+                // Wait for user choice to finish typing, then start wait timer
+                setTimeout(() => {
+                    startWaitTimer(choice.waitTime, acknowledgment, () => showScene(choice.nextScene));
+                }, choice.userResponse.length * 35 + 500);
+            } else {
+                // Wait for user choice to finish typing, then continue
+                setTimeout(() => {
+                    showScene(choice.nextScene);
+                }, choice.userResponse.length * 35 + 500);
+            }
+        }
+
+        function startStory() {
+            showScene('start');
+        }
+
+        function showPaywall() {
+            document.getElementById('paywall').style.display = 'flex';
+        }
+
+        function unlockStory() {
+            gameState.isUnlocked = true;
+            document.getElementById('paywall').style.display = 'none';
+            addMessage('system', '🔓 Story unlocked! Continue guiding Emma through complex decisions with lasting consequences.');
+        }
+
+        function resetStory() {
+            if (confirm('Reset the entire story? This will lose all progress.')) {
+                location.reload();
+            }
+        }
+
+        // Initialize game
+        if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
+            document.getElementById('adminMode').checked = true;
+            toggleAdminMode();
+        }
+
+    // 5️⃣ Kick it off
+    initializeGame();
+  </script>
+</body>
+</html>
