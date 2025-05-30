@@ -58,7 +58,7 @@
     /* When history is shown, allow scrolling */
     .message-area.show-history {
       overflow-y: auto;
-      justify-content: flex-start; /* Reset to normal flow when scrolling */
+      /* Keep messages at bottom - don't change justify-content */
     }
 
     .message {
@@ -76,15 +76,11 @@
       line-height: 1.6;
     }
 
-    /* Messages that are pushed out of view fade and slide up */
+    /* Messages that are pushed out of view fade but maintain their space */
     .message.faded {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.8s ease-out;
-      margin-bottom: 0;
-      height: 0;
-      padding: 0;
-      overflow: hidden;
+      opacity: 0.1; /* Very faded but still visible */
+      transition: opacity 0.8s ease-out;
+      /* Don't collapse height or change layout */
     }
 
     /* New animation for messages appearing */
