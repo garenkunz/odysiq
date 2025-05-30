@@ -552,8 +552,13 @@
         let pendingChoices = null;
 
         function showScene(sceneId) {
+            console.log('showScene() called with sceneId:', sceneId);
             const scene = storyDatabase[sceneId];
-            if (!scene) return;
+            console.log('Found scene:', scene);
+            if (!scene) {
+                console.error('Scene not found:', sceneId);
+                return;
+            }
 
             gameState.currentScene = sceneId;
             document.getElementById('choices').style.display = 'none';
@@ -636,6 +641,9 @@
         }
 
         function startStory() {
+            console.log('startStory() called');
+            console.log('storyDatabase:', storyDatabase);
+            console.log('scene1:', scene1);
             showScene('start');
         }
 
@@ -661,8 +669,15 @@
             toggleAdminMode();
         }
 
-    // 5️⃣ Kick it off
-    initializeGame();
+        // Make functions available globally for HTML onclick handlers
+        window.startStory = startStory;
+        window.showPaywall = showPaywall;
+        window.unlockStory = unlockStory;
+        window.resetStory = resetStory;
+        window.toggleAdminMode = toggleAdminMode;
+        window.toggleHistory = toggleHistory;
+
+    // 5️⃣ Kick it off - REMOVED: initializeGame() call since function doesn't exist
   </script>
 </body>
 </html>
