@@ -392,339 +392,356 @@
 
   <!-- ─── Module-Based Script ─────────────────────────────────────────────────── -->
   <script type="module">
-    // 1️⃣ Load Scene 1 (and later you can import scene2, scene3, … the same way)
-    import { scenes as scene1 } from './scene1.js';
+    console.log('Module script started');
+    
+    try {
+      // 1️⃣ Load Scene 1 (and later you can import scene2, scene3, … the same way)
+      const sceneModule = await import('./scene1.js');
+      const scene1 = sceneModule.scenes;
+      console.log('Scene1 loaded:', scene1);
 
-    // 2️⃣ Build the master database
-    const storyDatabase = {};
-    Object.assign(storyDatabase, scene1);
+      // 2️⃣ Build the master database
+      const storyDatabase = {};
+      Object.assign(storyDatabase, scene1);
+      console.log('StoryDatabase created:', storyDatabase);
 
-    // 3️⃣ Game state (unchanged)
-    let gameState = {
-      currentScene: 'start',
-      isUnlocked: false,
-      decisions: [],
-      waitingFor: null,
-      waitingUntil: null,
-      adminMode: false,
-      skipTimers: false,
-      showHistory: false
-    };
+      // 3️⃣ Game state (unchanged)
+      let gameState = {
+        currentScene: 'start',
+        isUnlocked: false,
+        decisions: [],
+        waitingFor: null,
+        waitingUntil: null,
+        adminMode: false,
+        skipTimers: false,
+        showHistory: false
+      };
 
-        // Typing effect system
-        function typeMessage(element, text, speed = 30) {
-            return new Promise(resolve => {
-                element.innerHTML = '';
-                const cursor = document.createElement('span');
-                cursor.className = 'typing-cursor';
-                element.appendChild(cursor);
-                
-                let i = 0;
-                const typeChar = () => {
-                    if (i < text.length) {
-                        element.insertBefore(document.createTextNode(text[i]), cursor);
-                        i++;
-                        setTimeout(typeChar, speed + Math.random() * 20);
-                    } else {
-                        cursor.remove();
-                        resolve();
-                    }
-                };
-                typeChar();
+      // Typing effect system
+      function typeMessage(element, text, speed = 30) {
+        return new Promise(resolve => {
+          element.innerHTML = '';
+          const cursor = document.createElement('span');
+          cursor.className = 'typing-cursor';
+          element.appendChild(cursor);
+          
+          let i = 0;
+          const typeChar = () => {
+            if (i < text.length) {
+              element.insertBefore(document.createTextNode(text[i]), cursor);
+              i++;
+              setTimeout(typeChar, speed + Math.random() * 20);
+            } else {
+              cursor.remove();
+              resolve();
+            }
+          };
+          typeChar();
+        });
+      }
+
+      // Message history management
+      function fadeOldMessages() {
+        if (!gameState.showHistory) {
+          const messageArea = document.getElementById('messageArea');
+          const messages = messageArea.querySelectorAll('.message');
+          const maxVisibleMessages = 4; // Keep last 4 messages visible
+          
+          // If we have more than maxVisibleMessages, fade the older ones
+          if (messages.length > maxVisibleMessages) {
+            const messagesToFade = Array.from(messages).slice(0, messages.length - maxVisibleMessages);
+            messagesToFade.forEach(msg => {
+              msg.classList.add('faded');
+              // Remove faded messages from DOM after animation
+              setTimeout(() => {
+                if (msg.classList.contains('faded') && !gameState.showHistory) {
+                  msg.remove();
+                }
+              }, 800); // Match the CSS transition duration
             });
+          }
+        }
+      }
+
+      function toggleHistory() {
+        gameState.showHistory = !gameState.showHistory;
+        const messageArea = document.getElementById('messageArea');
+        const toggle = document.getElementById('historyToggle');
+        
+        if (gameState.showHistory) {
+          // Show history mode - enable scrolling and show all messages
+          messageArea.classList.add('show-history');
+          
+          // Re-add any removed messages by reloading the current scene
+          // For now, just remove faded class from existing messages
+          const messages = messageArea.querySelectorAll('.message');
+          messages.forEach(msg => msg.classList.remove('faded'));
+          
+          toggle.textContent = 'Hide History';
+          
+          // Scroll to bottom to show recent messages
+          setTimeout(() => {
+            messageArea.scrollTop = messageArea.scrollHeight;
+          }, 100);
+        } else {
+          // Hide history mode - disable scrolling and fade old messages
+          messageArea.classList.remove('show-history');
+          fadeOldMessages();
+          toggle.textContent = 'Show History';
+        }
+      }
+
+      // Enhanced message system with proper sequencing
+      let messageQueue = [];
+      let isTyping = false;
+      let choicesReady = false;
+
+      function addMessage(type, text, speaker = null, delay = 0) {
+        messageQueue.push({ type, text, speaker, delay });
+        if (!isTyping) {
+          processMessageQueue();
+        }
+      }
+
+      async function processMessageQueue() {
+        if (messageQueue.length === 0) {
+          isTyping = false;
+          if (choicesReady) {
+            showPendingChoices();
+          }
+          return;
         }
 
-        // Message history management
-        function fadeOldMessages() {
-            if (!gameState.showHistory) {
-                const messageArea = document.getElementById('messageArea');
-                const messages = messageArea.querySelectorAll('.message');
-                const maxVisibleMessages = 4; // Keep last 4 messages visible
-                
-                // If we have more than maxVisibleMessages, fade the older ones
-                if (messages.length > maxVisibleMessages) {
-                    const messagesToFade = Array.from(messages).slice(0, messages.length - maxVisibleMessages);
-                    messagesToFade.forEach(msg => {
-                        msg.classList.add('faded');
-                        // Remove faded messages from DOM after animation
-                        setTimeout(() => {
-                            if (msg.classList.contains('faded') && !gameState.showHistory) {
-                                msg.remove();
-                            }
-                        }, 800); // Match the CSS transition duration
-                    });
-                }
-            }
+        isTyping = true;
+        const { type, text, speaker, delay } = messageQueue.shift();
+
+        // Wait for the delay before starting this message
+        if (delay > 0) {
+          await new Promise(resolve => setTimeout(resolve, delay));
         }
 
-        function toggleHistory() {
-            gameState.showHistory = !gameState.showHistory;
-            const messageArea = document.getElementById('messageArea');
-            const toggle = document.getElementById('historyToggle');
-            
-            if (gameState.showHistory) {
-                // Show history mode - enable scrolling and show all messages
-                messageArea.classList.add('show-history');
-                
-                // Re-add any removed messages by reloading the current scene
-                // For now, just remove faded class from existing messages
-                const messages = messageArea.querySelectorAll('.message');
-                messages.forEach(msg => msg.classList.remove('faded'));
-                
-                toggle.textContent = 'Hide History';
-                
-                // Scroll to bottom to show recent messages
-                setTimeout(() => {
-                    messageArea.scrollTop = messageArea.scrollHeight;
-                }, 100);
-            } else {
-                // Hide history mode - disable scrolling and fade old messages
-                messageArea.classList.remove('show-history');
-                fadeOldMessages();
-                toggle.textContent = 'Show History';
-            }
+        const messageArea = document.getElementById('messageArea');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        
+        let messageHTML = '';
+        if (speaker) {
+          messageHTML += `<div class="character-name">${speaker}</div>`;
+        }
+        messageHTML += `<p></p>`;
+        
+        messageDiv.innerHTML = messageHTML;
+        messageArea.appendChild(messageDiv);
+        
+        const textElement = messageDiv.querySelector('p');
+        
+        // Type out the message and wait for it to complete
+        await typeMessage(textElement, text);
+        
+        // No more automatic scrolling - messages will naturally appear at bottom
+        // Only fade old messages if not in history mode
+        if (!gameState.showHistory) {
+          fadeOldMessages();
         }
 
-        // Enhanced message system with proper sequencing
-        let messageQueue = [];
-        let isTyping = false;
-        let choicesReady = false;
+        // Process the next message in the queue
+        processMessageQueue();
+      }
 
-        function addMessage(type, text, speaker = null, delay = 0) {
-            messageQueue.push({ type, text, speaker, delay });
-            if (!isTyping) {
-                processMessageQueue();
-            }
+      // Waiting system for time-based actions
+      function addWaitingMessage(description, estimatedTime) {
+        const messageArea = document.getElementById('messageArea');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message waiting-message';
+        messageDiv.id = 'waitingMessage';
+        messageDiv.innerHTML = `<p>${description} <span class="waiting-dots">...</span> (estimated ${estimatedTime})</p>`;
+        messageArea.appendChild(messageDiv);
+        // No automatic scrolling needed
+      }
+
+      function removeWaitingMessage() {
+        const waitingMsg = document.getElementById('waitingMessage');
+        if (waitingMsg) {
+          waitingMsg.remove();
+        }
+      }
+
+      // Enhanced wait timer
+      function startWaitTimer(minutes, acknowledgment, callback) {
+        // Character acknowledges the action first
+        addMessage('agent', acknowledgment, 'Emma Carter');
+        
+        setTimeout(() => {
+          if (gameState.skipTimers && gameState.adminMode) {
+            callback();
+            return;
+          }
+
+          const timeText = minutes >= 60 ? `${Math.floor(minutes/60)}h ${minutes%60}m` : `${minutes}m`;
+          addWaitingMessage('Waiting for response', timeText);
+          
+          gameState.waitingFor = callback;
+          gameState.waitingUntil = Date.now() + (minutes * 60 * 1000);
+          
+          setTimeout(() => {
+            removeWaitingMessage();
+            callback();
+          }, minutes * 60 * 1000);
+        }, 2000);
+      }
+
+      // Admin controls
+      function toggleAdminMode() {
+        gameState.adminMode = document.getElementById('adminMode').checked;
+        document.getElementById('skipTimer').disabled = !gameState.adminMode;
+        if (gameState.adminMode) {
+          document.getElementById('adminControls').style.display = 'block';
+          gameState.skipTimers = document.getElementById('skipTimer').checked;
+        } else {
+          document.getElementById('adminControls').style.display = 'none';
+          document.getElementById('skipTimer').checked = false;
+          gameState.skipTimers = false;
+        }
+      }
+
+      // Enhanced choice handling
+      let pendingChoices = null;
+
+      function showScene(sceneId) {
+        console.log('showScene() called with sceneId:', sceneId);
+        const scene = storyDatabase[sceneId];
+        console.log('Found scene:', scene);
+        if (!scene) {
+          console.error('Scene not found:', sceneId);
+          return;
         }
 
-        async function processMessageQueue() {
-            if (messageQueue.length === 0) {
-                isTyping = false;
-                if (choicesReady) {
-                    showPendingChoices();
-                }
-                return;
-            }
-
-            isTyping = true;
-            const { type, text, speaker, delay } = messageQueue.shift();
-
-            // Wait for the delay before starting this message
-            if (delay > 0) {
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-
-            const messageArea = document.getElementById('messageArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
-            
-            let messageHTML = '';
-            if (speaker) {
-                messageHTML += `<div class="character-name">${speaker}</div>`;
-            }
-            messageHTML += `<p></p>`;
-            
-            messageDiv.innerHTML = messageHTML;
-            messageArea.appendChild(messageDiv);
-            
-            const textElement = messageDiv.querySelector('p');
-            
-            // Type out the message and wait for it to complete
-            await typeMessage(textElement, text);
-            
-            // No more automatic scrolling - messages will naturally appear at bottom
-            // Only fade old messages if not in history mode
-            if (!gameState.showHistory) {
-                fadeOldMessages();
-            }
-
-            // Process the next message in the queue
-            processMessageQueue();
+        gameState.currentScene = sceneId;
+        document.getElementById('choices').style.display = 'none';
+        choicesReady = false;
+        pendingChoices = scene.choices;
+        
+        if (scene.messages) {
+          // Clear message queue and add all messages
+          messageQueue = [];
+          scene.messages.forEach((message) => {
+            addMessage(message.type, message.text, message.speaker, message.delay || 0);
+          });
+          
+          // Set flag that choices are ready to be shown
+          choicesReady = true;
+        } else {
+          // Show choices immediately if no messages
+          showChoices(scene.choices);
         }
+      }
 
-        // Waiting system for time-based actions
-        function addWaitingMessage(description, estimatedTime) {
-            const messageArea = document.getElementById('messageArea');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message waiting-message';
-            messageDiv.id = 'waitingMessage';
-            messageDiv.innerHTML = `<p>${description} <span class="waiting-dots">...</span> (estimated ${estimatedTime})</p>`;
-            messageArea.appendChild(messageDiv);
-            // No automatic scrolling needed
+      function showPendingChoices() {
+        if (pendingChoices) {
+          showChoices(pendingChoices);
+          pendingChoices = null;
+          choicesReady = false;
         }
+      }
 
-        function removeWaitingMessage() {
-            const waitingMsg = document.getElementById('waitingMessage');
-            if (waitingMsg) {
-                waitingMsg.remove();
-            }
+      function showChoices(choices) {
+        if (!choices) return;
+        
+        const choicesDiv = document.getElementById('choices');
+        choicesDiv.innerHTML = '';
+        
+        choices.forEach(choice => {
+          const button = document.createElement('button');
+          button.className = 'choice-button';
+          button.onclick = () => makeChoice(choice);
+          button.textContent = choice.text;
+          choicesDiv.appendChild(button);
+        });
+        
+        choicesDiv.style.display = 'flex';
+      }
+
+      function makeChoice(choice) {
+        if (!gameState.isUnlocked && gameState.decisions.length >= 3) {
+          showPaywall();
+          return;
         }
-
-        // Enhanced wait timer
-        function startWaitTimer(minutes, acknowledgment, callback) {
-            // Character acknowledges the action first
-            addMessage('agent', acknowledgment, 'Emma Carter');
-            
-            setTimeout(() => {
-                if (gameState.skipTimers && gameState.adminMode) {
-                    callback();
-                    return;
-                }
-
-                const timeText = minutes >= 60 ? `${Math.floor(minutes/60)}h ${minutes%60}m` : `${minutes}m`;
-                addWaitingMessage('Waiting for response', timeText);
-                
-                gameState.waitingFor = callback;
-                gameState.waitingUntil = Date.now() + (minutes * 60 * 1000);
-                
-                setTimeout(() => {
-                    removeWaitingMessage();
-                    callback();
-                }, minutes * 60 * 1000);
-            }, 2000);
+        
+        gameState.decisions.push(choice);
+        
+        // Clear the message queue and add the user choice with natural dialogue
+        messageQueue = [];
+        addMessage('user-choice', choice.userResponse);
+        document.getElementById('choices').style.display = 'none';
+        choicesReady = false;
+        
+        if (choice.waitTime && choice.waitTime > 0) {
+          const acknowledgments = [
+            "Understood. This will take some time, but I'll get it done right.",
+            "Copy that. Give me a few minutes to handle this properly.",
+            "Good call. I'll need some time for this, but it's worth doing right.",
+            "Roger. This is going to take a while, but I trust your judgment."
+          ];
+          const acknowledgment = acknowledgments[Math.floor(Math.random() * acknowledgments.length)];
+          
+          // Wait for user choice to finish typing, then start wait timer
+          setTimeout(() => {
+            startWaitTimer(choice.waitTime, acknowledgment, () => showScene(choice.nextScene));
+          }, choice.userResponse.length * 35 + 500);
+        } else {
+          // Wait for user choice to finish typing, then continue
+          setTimeout(() => {
+            showScene(choice.nextScene);
+          }, choice.userResponse.length * 35 + 500);
         }
+      }
 
-        // Admin controls
-        function toggleAdminMode() {
-            gameState.adminMode = document.getElementById('adminMode').checked;
-            document.getElementById('skipTimer').disabled = !gameState.adminMode;
-            if (gameState.adminMode) {
-                document.getElementById('adminControls').style.display = 'block';
-                gameState.skipTimers = document.getElementById('skipTimer').checked;
-            } else {
-                document.getElementById('adminControls').style.display = 'none';
-                document.getElementById('skipTimer').checked = false;
-                gameState.skipTimers = false;
-            }
+      function startStory() {
+        console.log('startStory() called');
+        console.log('storyDatabase:', storyDatabase);
+        showScene('start');
+      }
+
+      function showPaywall() {
+        document.getElementById('paywall').style.display = 'flex';
+      }
+
+      function unlockStory() {
+        gameState.isUnlocked = true;
+        document.getElementById('paywall').style.display = 'none';
+        addMessage('system', '🔓 Story unlocked! Continue guiding Emma through complex decisions with lasting consequences.');
+      }
+
+      function resetStory() {
+        if (confirm('Reset the entire story? This will lose all progress.')) {
+          location.reload();
         }
+      }
 
-        // Enhanced choice handling
-        let pendingChoices = null;
+      // Initialize game
+      if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
+        document.getElementById('adminMode').checked = true;
+        toggleAdminMode();
+      }
 
-        function showScene(sceneId) {
-            console.log('showScene() called with sceneId:', sceneId);
-            const scene = storyDatabase[sceneId];
-            console.log('Found scene:', scene);
-            if (!scene) {
-                console.error('Scene not found:', sceneId);
-                return;
-            }
+      // Make functions available globally for HTML onclick handlers
+      window.startStory = startStory;
+      window.showPaywall = showPaywall;
+      window.unlockStory = unlockStory;
+      window.resetStory = resetStory;
+      window.toggleAdminMode = toggleAdminMode;
+      window.toggleHistory = toggleHistory;
 
-            gameState.currentScene = sceneId;
-            document.getElementById('choices').style.display = 'none';
-            choicesReady = false;
-            pendingChoices = scene.choices;
-            
-            if (scene.messages) {
-                // Clear message queue and add all messages
-                messageQueue = [];
-                scene.messages.forEach((message) => {
-                    addMessage(message.type, message.text, message.speaker, message.delay || 0);
-                });
-                
-                // Set flag that choices are ready to be shown
-                choicesReady = true;
-            } else {
-                // Show choices immediately if no messages
-                showChoices(scene.choices);
-            }
-        }
+      console.log('Functions attached to window:', {
+        startStory: typeof window.startStory,
+        showPaywall: typeof window.showPaywall,
+        unlockStory: typeof window.unlockStory
+      });
 
-        function showPendingChoices() {
-            if (pendingChoices) {
-                showChoices(pendingChoices);
-                pendingChoices = null;
-                choicesReady = false;
-            }
-        }
-
-        function showChoices(choices) {
-            if (!choices) return;
-            
-            const choicesDiv = document.getElementById('choices');
-            choicesDiv.innerHTML = '';
-            
-            choices.forEach(choice => {
-                const button = document.createElement('button');
-                button.className = 'choice-button';
-                button.onclick = () => makeChoice(choice);
-                button.textContent = choice.text;
-                choicesDiv.appendChild(button);
-            });
-            
-            choicesDiv.style.display = 'flex';
-        }
-
-        function makeChoice(choice) {
-            if (!gameState.isUnlocked && gameState.decisions.length >= 3) {
-                showPaywall();
-                return;
-            }
-            
-            gameState.decisions.push(choice);
-            
-            // Clear the message queue and add the user choice with natural dialogue
-            messageQueue = [];
-            addMessage('user-choice', choice.userResponse);
-            document.getElementById('choices').style.display = 'none';
-            choicesReady = false;
-            
-            if (choice.waitTime && choice.waitTime > 0) {
-                const acknowledgments = [
-                    "Understood. This will take some time, but I'll get it done right.",
-                    "Copy that. Give me a few minutes to handle this properly.",
-                    "Good call. I'll need some time for this, but it's worth doing right.",
-                    "Roger. This is going to take a while, but I trust your judgment."
-                ];
-                const acknowledgment = acknowledgments[Math.floor(Math.random() * acknowledgments.length)];
-                
-                // Wait for user choice to finish typing, then start wait timer
-                setTimeout(() => {
-                    startWaitTimer(choice.waitTime, acknowledgment, () => showScene(choice.nextScene));
-                }, choice.userResponse.length * 35 + 500);
-            } else {
-                // Wait for user choice to finish typing, then continue
-                setTimeout(() => {
-                    showScene(choice.nextScene);
-                }, choice.userResponse.length * 35 + 500);
-            }
-        }
-
-        function startStory() {
-            console.log('startStory() called');
-            console.log('storyDatabase:', storyDatabase);
-            showScene('start');
-        }
-
-        function showPaywall() {
-            document.getElementById('paywall').style.display = 'flex';
-        }
-
-        function unlockStory() {
-            gameState.isUnlocked = true;
-            document.getElementById('paywall').style.display = 'none';
-            addMessage('system', '🔓 Story unlocked! Continue guiding Emma through complex decisions with lasting consequences.');
-        }
-
-        function resetStory() {
-            if (confirm('Reset the entire story? This will lose all progress.')) {
-                location.reload();
-            }
-        }
-
-        // Initialize game
-        if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
-            document.getElementById('adminMode').checked = true;
-            toggleAdminMode();
-        }
-
-        // Make functions available globally for HTML onclick handlers
-        window.startStory = startStory;
-        window.showPaywall = showPaywall;
-        window.unlockStory = unlockStory;
-        window.resetStory = resetStory;
-        window.toggleAdminMode = toggleAdminMode;
-        window.toggleHistory = toggleHistory;
+    } catch (error) {
+      console.error('Error loading game:', error);
+      alert('Error loading game: ' + error.message);
+    }
 
     // 5️⃣ Kick it off - REMOVED: initializeGame() call since function doesn't exist
   </script>
