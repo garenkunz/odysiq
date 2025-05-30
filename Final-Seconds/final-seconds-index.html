@@ -46,23 +46,57 @@
 
     .message-area {
       flex-grow: 1;
-      overflow-y: auto;
+      overflow: hidden; /* Hide overflow by default - no scrollbar */
       margin-bottom: 20px;
       padding: 20px 10px 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Align messages to bottom */
+      position: relative;
+    }
+
+    /* When history is shown, allow scrolling */
+    .message-area.show-history {
+      overflow-y: auto;
+      justify-content: flex-start; /* Reset to normal flow when scrolling */
     }
 
     .message {
       margin-bottom: 15px;
-      animation: fadeIn 0.5s;
+      animation: slideInFromBottom 0.5s ease-out;
       padding: 12px;
       border-radius: 4px;
       border-left: 3px solid transparent;
       position: relative;
+      flex-shrink: 0; /* Prevent messages from shrinking */
     }
 
     .message p {
       margin: 0;
       line-height: 1.6;
+    }
+
+    /* Messages that are pushed out of view fade and slide up */
+    .message.faded {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.8s ease-out;
+      margin-bottom: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* New animation for messages appearing */
+    @keyframes slideInFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .agent {
@@ -118,11 +152,6 @@
       opacity: 0.7;
       text-transform: uppercase;
       letter-spacing: 1px;
-    }
-
-    .message.faded {
-      opacity: 0;
-      transition: opacity 0.5s ease;
     }
 
     .typing-cursor {
@@ -262,17 +291,6 @@
       background-color: #fff;
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(255, 59, 59, 0.2);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @keyframes pulse {
@@ -419,20 +437,49 @@
         // Message history management
         function fadeOldMessages() {
             if (!gameState.showHistory) {
-                const messages = document.querySelectorAll('.message:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3))');
-                messages.forEach(msg => msg.classList.add('faded'));
+                const messageArea = document.getElementById('messageArea');
+                const messages = messageArea.querySelectorAll('.message');
+                const maxVisibleMessages = 4; // Keep last 4 messages visible
+                
+                // If we have more than maxVisibleMessages, fade the older ones
+                if (messages.length > maxVisibleMessages) {
+                    const messagesToFade = Array.from(messages).slice(0, messages.length - maxVisibleMessages);
+                    messagesToFade.forEach(msg => {
+                        msg.classList.add('faded');
+                        // Remove faded messages from DOM after animation
+                        setTimeout(() => {
+                            if (msg.classList.contains('faded') && !gameState.showHistory) {
+                                msg.remove();
+                            }
+                        }, 800); // Match the CSS transition duration
+                    });
+                }
             }
         }
 
         function toggleHistory() {
             gameState.showHistory = !gameState.showHistory;
-            const messages = document.querySelectorAll('.message');
+            const messageArea = document.getElementById('messageArea');
             const toggle = document.getElementById('historyToggle');
             
             if (gameState.showHistory) {
+                // Show history mode - enable scrolling and show all messages
+                messageArea.classList.add('show-history');
+                
+                // Re-add any removed messages by reloading the current scene
+                // For now, just remove faded class from existing messages
+                const messages = messageArea.querySelectorAll('.message');
                 messages.forEach(msg => msg.classList.remove('faded'));
+                
                 toggle.textContent = 'Hide History';
+                
+                // Scroll to bottom to show recent messages
+                setTimeout(() => {
+                    messageArea.scrollTop = messageArea.scrollHeight;
+                }, 100);
             } else {
+                // Hide history mode - disable scrolling and fade old messages
+                messageArea.classList.remove('show-history');
                 fadeOldMessages();
                 toggle.textContent = 'Show History';
             }
@@ -485,8 +532,11 @@
             // Type out the message and wait for it to complete
             await typeMessage(textElement, text);
             
-            messageArea.scrollTop = messageArea.scrollHeight;
-            fadeOldMessages();
+            // No more automatic scrolling - messages will naturally appear at bottom
+            // Only fade old messages if not in history mode
+            if (!gameState.showHistory) {
+                fadeOldMessages();
+            }
 
             // Process the next message in the queue
             processMessageQueue();
@@ -500,7 +550,7 @@
             messageDiv.id = 'waitingMessage';
             messageDiv.innerHTML = `<p>${description} <span class="waiting-dots">...</span> (estimated ${estimatedTime})</p>`;
             messageArea.appendChild(messageDiv);
-            messageArea.scrollTop = messageArea.scrollHeight;
+            // No automatic scrolling needed
         }
 
         function removeWaitingMessage() {
