@@ -390,33 +390,26 @@
   <script type="module">
     console.log('Module script started');
     
+    // Import the scenes from both files
+    import { scenes as scene0Scenes } from './scene0.js';
+    import { scenes as scene1Scenes } from './scene1.js';
+
+    // Combine all scenes
+    const storyDatabase = {
+      ...scene0Scenes,
+      ...scene1Scenes
+    };
+
     try {
-      // 1️⃣ Load Scene 1 (and later you can import scene2, scene3, … the same way)
-      const [scene0Module, scene1Module] = await Promise.all([
-        import('./scene0.js'),
-        import('./scene1.js')
-      ]);
-
-      const scene0 = scene0Module.scenes;
-      const scene1 = scene1Module.scenes;
-
-      console.log('Scene1 loaded:', scene1);
-
-      // 2️⃣ Build the master database
-      const storyDatabase = {};
-      Object.assign(storyDatabase, scene0, scene1);
-      console.log('StoryDatabase created:', storyDatabase);
-
-      // 3️⃣ Game state (unchanged)
-      let gameState = {
-        currentScene: 'intro',
-        isUnlocked: false,
+      // Game state management
+      const gameState = {
+        currentScene: null,
         decisions: [],
-        waitingFor: null,
-        waitingUntil: null,
         adminMode: false,
         skipTimers: false,
-        showHistory: false
+        isUnlocked: false,
+        waitingFor: null,
+        waitingUntil: null
       };
 
       // Typing effect system
@@ -690,7 +683,7 @@
       function startStory() {
         console.log('startStory() called');
         console.log('storyDatabase:', storyDatabase);
-        showScene('start');
+        showScene('intro');  // Start with the intro scene from scene0
       }
 
       function showPaywall() {
