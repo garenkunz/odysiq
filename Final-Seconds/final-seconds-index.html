@@ -392,18 +392,24 @@
     
     try {
       // 1️⃣ Load Scene 1 (and later you can import scene2, scene3, … the same way)
-      const sceneModule = await import('./scene1.js');
-      const scene1 = sceneModule.scenes;
+      const [scene0Module, scene1Module] = await Promise.all([
+        import('./scene0.js'),
+        import('./scene1.js')
+      ]);
+
+      const scene0 = scene0Module.scenes;
+      const scene1 = scene1Module.scenes;
+
       console.log('Scene1 loaded:', scene1);
 
       // 2️⃣ Build the master database
       const storyDatabase = {};
-      Object.assign(storyDatabase, scene1);
+      Object.assign(storyDatabase, scene0, scene1);
       console.log('StoryDatabase created:', storyDatabase);
 
       // 3️⃣ Game state (unchanged)
       let gameState = {
-        currentScene: 'start',
+        currentScene: 'intro',
         isUnlocked: false,
         decisions: [],
         waitingFor: null,
