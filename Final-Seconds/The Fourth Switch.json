@@ -1,0 +1,1296 @@
+{
+  "title": "2. Theme / Genre\nGenre: Cyberpunk Interactive Thriller / Mystery\nSub-genres: Psychological Suspense, Neo-Noir, Dystopian Sci-Fi\nThemes:\nReality vs. Artificial Memory: Can digital truth be trusted more than human recollection?\nCorporate Control vs. Individual Agency: What does freedom look like when everything is monetized and monitored?\nRedemption & Identity: Can Ash redeem themselves, and does their identity still belong to them?\nMoral Grayness: Every decision has a cost—sometimes emotional, sometimes ethical. Adventure",
+  "config": {
+    "plot": "1. Plot / Synopsis\nIn a sprawling neon-soaked metropolis controlled by megacorporations and corrupted justice, Detective Ash Virelli, once a celebrated cybercrime investigator, now operates as a disgraced freelance operative. Framed for a high-profile murder and cut off from official channels, Ash reaches out to an unlikely partner—you, a remote AI assistant (or off-the-books analyst), brought online to help them uncover a conspiracy tied to synthetic consciousness, memory corruption, and digital soul trafficking.\nThe player guides Ash through a web of corporate espionage, AI ethics, and betrayal. With limited time and resources, and enemies always one step ahead, the choices you make directly shape not only Ash’s fate but the truth that emerges—or remains buried.\nPossible endings include:\n* Ash clears their name and exposes the conspiracy, becoming a symbol of resistance.\n* Ash sacrifices themselves to stop a larger threat, wiping their memory in the process.\n* Ash joins the enemy, believing stability is better than truth.\n* The conspiracy is covered up, and Ash disappears into the undercity shadows.",
+    "theme": "2. Theme / Genre\nGenre: Cyberpunk Interactive Thriller / Mystery\nSub-genres: Psychological Suspense, Neo-Noir, Dystopian Sci-Fi\nThemes:\nReality vs. Artificial Memory: Can digital truth be trusted more than human recollection?\nCorporate Control vs. Individual Agency: What does freedom look like when everything is monetized and monitored?\nRedemption & Identity: Can Ash redeem themselves, and does their identity still belong to them?\nMoral Grayness: Every decision has a cost—sometimes emotional, sometimes ethical.",
+    "writingStyle": "3. Writing Style\nThe writing emulates Lifeline with:\nA. Real-Time Messaging Feel\nUses timestamped or paced responses to simulate real-world texting urgency.\nAsh sends updates, observations, or confides in the user while waiting for their input.\nOccasionally disappears mid-conversation due to “loss of signal” or danger, raising stakes.\nB. Conversational & Immersive Tone\nAsh’s voice: Witty, wounded, resourceful—a mix of sarcasm, tech jargon, and emotional vulnerability.\nYour voice (the player): Silent, but choices suggest tone—supportive, skeptical, cold, etc.\nThe story reads like a back-and-forth chat with vivid internal monologue and detailed external descriptions.\nC. Highly Descriptive Prose\nDespite the minimalist text interface, the story uses strong environmental detail:\n\"Rain snakes down the chrome of my coat. The city’s breath fogs the glass beneath neon kanji. Someone’s watching—I can feel the algorithm blink.”\nD. Emotionally Driven and Character-Centric\nThe heart of the story is Ash—broken, stubborn, hopeful.\nTheir growth (or descent) is gradual and shaped by the player’s guidance.\nE. Branching, Consequential Choices\nEvery fork changes relationships, data collected, or Ash’s internal state.\nExample decisions:\nSave a rogue AI who holds the truth—or let it be deleted.\nConfront an ex-lover turned corporate enforcer.\nChoose whether to erase a victim’s memories to protect them—or let them live with the trauma.",
+    "additionalNotes": "Additional Tips for Lifeline-Style Storytelling:\nUse shorter, punctuated updates in early scenes to build pacing.\nInclude occasional time delays or “...” suspense to mimic real-time messaging.\nEnvironment details and observations shouldn't be in the dialogue very often but rather in italics between dialogue to help set the scene.\nInsert clear emotion markers and stakes into Ash’s updates: fear, sarcasm, hesitation.\nFor high-tension branches, keep choices tight and meaningful—e.g.:\n➤ Stay in cover\n➤ Call out his name\n➤ Send a silent signal"
+  },
+  "stats": {
+    "totalScenes": 70,
+    "totalEndings": 4,
+    "totalPaths": 4,
+    "apiCalls": 25
+  },
+  "structure": {
+    "maxDepth": 25,
+    "scenesPerLayer": [
+      1,
+      2,
+      4,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      2,
+      3,
+      2,
+      3,
+      2,
+      4,
+      3,
+      4,
+      2,
+      3,
+      2,
+      4,
+      3,
+      3,
+      2,
+      4
+    ],
+    "convergencePoints": [
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23
+    ],
+    "maxScenesPerLayer": 4,
+    "description": "25 layers, ~74 scenes, 4 endings"
+  },
+  "createdAt": "2025-06-02T03:49:05.500Z",
+  "tree": {
+    "rootSceneId": "scene_0_1",
+    "sceneMap": {
+      "scene_0_1": {
+        "id": "scene_0_1",
+        "content": "[Initializing connection...]<unstable>\n[Signal strength: Weak]<pause>\n[Incoming message from Ash Virelli]<pause><pause>\n\nAsh: \"Finally got you online. Thought the corpos had fried your circuits already.\"\n\nStatic crackles faintly in your digital feed. Rain pours relentlessly over mirrored skyscrapers, their neon edges slicing the darkness like electrified blades. Ash stands hunched beneath the overhang of a shuttered noodle shop, the red neon kanji flickering weakly overhead. Streets below pulse with late-night traffic, their headlights blurred by the fog and steam rising from subway vents.<pause>\n\nAsh: \"I tracked down a lead—a rogue data courier named Lex. Word is, he has intel on who framed me, but he's paranoid. Won't meet face-to-face. Wants a secure uplink from an abandoned arcade in the Slum Circuit.\"<pause>\n\nAsh hesitates. You detect tension in the pauses between their words.<pause>\n\nAsh: \"Place is crawling with gang runners and corpo surveillance drones. I'm low on gear and out of favors. Your call—should I try to slip through quietly, or take a gamble and contact an old informant who might owe me?\"<pause>\n\n[Connection unstable...]<unstable>\n[Signal interference detected]<pause><pause><pause>\n\nAsh: \"Better decide quick. Don't know how long we'll stay connected out here.<pause>\"",
+        "choices": [
+          "Advise Ash to sneak through quietly, avoiding detection and conserving resources.",
+          "Encourage Ash to risk contacting the informant, potentially alerting others but gaining valuable help."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_1_1",
+          "scene_1_2"
+        ],
+        "layer": 0,
+        "sceneIndex": 0
+      },
+      "scene_1_1": {
+        "id": "scene_1_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"I hope you're there, partner. This place gives me the creeps—too quiet, even for a corporate ghost site.\"\n\nNeon reflections ripple across wet pavement, mirrored in slick pools of oil and rainwater. Broken holographic advertisements glitch above abandoned storefronts, their smiling faces flickering between vibrant joy and unsettling distortion. Somewhere overhead, the low hum of a surveillance drone cuts through the distant wail of sirens, sending a shiver down your virtual spine.\n\nAsh: \"I've tracked the data trail here. Rumor has it this district was abandoned after a synthetic consciousness experiment went rogue. No official record, of course—just whispers in the dark web and a whole lot of corporate denial.\"\n\nAsh pauses, footsteps squelching softly through the alley grime. Through their optics, you catch glimpses of caution tape, faded and fluttering, and the looming silhouette of a monolithic tower marked with a faded corporate insignia.\n\nAsh: \"Front door's sealed tight, but there's a maintenance hatch down below, likely rigged with alarms. Or...there's the rooftop access—quiet, but dangerously exposed. What's your call?\"\n",
+        "choices": [
+          "Guide Ash toward the maintenance hatch and help disable the security alarms quietly.",
+          "Advise Ash to scale the tower exterior and risk exposure for stealthy rooftop access."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_2_1",
+          "scene_2_2"
+        ],
+        "layer": 1,
+        "sceneIndex": 0
+      },
+      "scene_1_2": {
+        "id": "scene_1_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"I got company down here—can't ID them yet, but they're packing heavy gear and encrypted comms. Definitely not regular corporate security.\"\n\nYou watch through flickering optics as Ash ducks behind a rusted ventilation unit. Around them, steam hisses from exposed pipes, swirling in ghostly tendrils beneath the cold glow of an industrial LED array. Shadows stretch unnaturally across slick, metallic walls, creating phantom shapes that seem to watch Ash's every breath.\n\nAsh: \"I'm close enough to pick up fragments of their transmissions. Something about 'digital souls' and a scheduled upload. Could be connected to the memory corruption scandal that got me burned.\"\n\nA sudden burst of static distorts the feed briefly, pixelating Ash's view as voices echo harshly off the metal surfaces. Ash's breath quickens, their pulse audibly racing beneath your connection.\n\nAsh: \"They're moving fast—if I don't act now, I'll lose them. But my position isn't great. I can follow and risk detection, or hang back and try to intercept their communications from a distance. Quick, I need your input.\"\n",
+        "choices": [
+          "Tell Ash to risk following the operatives closely for clearer intel despite the danger.",
+          "Instruct Ash to maintain distance and safely attempt to hack their communications remotely."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_2_4",
+          "scene_2_1"
+        ],
+        "layer": 1,
+        "sceneIndex": 1
+      },
+      "scene_2_1": {
+        "id": "scene_2_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Looks like we caught a break, friend. Tracked down a contact who claims to know about the memory corruption. Problem is—he's holed up in the Gridmarket, the blackest market on this side of neon hell.\"\n\nThe Gridmarket sprawls beneath a labyrinth of suspended walkways, bathed in shifting holographic adverts that ripple across wet pavement. Vendors shout beneath flickering neon signs, hawking illegal cyberware and bootleg memories. Steam billows from food stalls, thickening the air with the smell of synthetic spices and burning circuits.\n\nAsh: \"Word is, my contact—codename 'Cipher'—is paranoid. Understandable. Megacorps would fry his brain just to keep their dirty laundry hidden. I could approach openly, risking attention, or find a back route through service tunnels. Either way, it's dicey.\"\n\nA drone hums overhead, scanning faces beneath a glowing corporate slogan: \"Your Memories, Our Responsibility.\"\n",
+        "choices": [
+          "Tell Ash to approach Cipher directly, hoping honesty earns trust.",
+          "Advise Ash to sneak through service tunnels to reach Cipher undetected."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_3_1",
+          "scene_3_2"
+        ],
+        "layer": 2,
+        "sceneIndex": 0
+      },
+      "scene_2_2": {
+        "id": "scene_2_2",
+        "content": "[Connection stable]\n[Incoming message from Ash Virelli]\n\nAsh: \"Cipher's dead. Found him slumped over his terminal, neural implant burned out. Corpse still warm.\"\n\nCipher's room is a cramped nightmare of tangled cables and blinking data screens, casting eerie blue patterns over walls lined with faded propaganda posters. Outside, hovercars flash silently past dirty windows, their headlights slicing through perpetual rain like blades of neon.\n\nAsh: \"His last message references something called 'Project Lethe'. Ever heard of it? Whatever it is, Cipher paid dearly for knowing too much. Looks like data is still extracting—could pull everything, but security might ping me. Or grab only essentials and run like hell.\"\n\nA distant siren wails, distorted by echoes from towering megastructures. Ash's breathing grows quicker, tension seeping through every keystroke.\n",
+        "choices": [
+          "Instruct Ash to extract all data, risking detection for maximum intel.",
+          "Tell Ash to take essential files only and evacuate swiftly, minimizing exposure."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_3_3",
+          "scene_3_1"
+        ],
+        "layer": 2,
+        "sceneIndex": 1
+      },
+      "scene_2_3": {
+        "id": "scene_2_3",
+        "content": "[Connection unstable...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn. Corp security drones pinged me leaving Cipher's place—had to ditch into the Undercity.\"\n\nThe Undercity pulses with raw desperation. Dense smog coils through alleys where neon barely pierces, illuminating shadowy figures exchanging hushed deals. Water drips steadily from broken pipes, pooling in oily puddles reflecting fractured digital billboards overhead. The air vibrates faintly from the reactors deep below.\n\nAsh: \"Ran straight into a street gang called the Wire Rats. They're eyeballing my gear. Could bribe them with the stolen data cache or bluff my way through with some half-baked story. What's your call?\"\n\nYou sense the digital tremor in Ash's typing—a heartbeat racing in the darkness, moments away from chaos.\n",
+        "choices": [
+          "Tell Ash to barter the data cache, losing crucial intel but ensuring safe passage.",
+          "Advise Ash to bluff past the Wire Rats, keeping the data but risking violent conflict."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_3_2",
+          "scene_3_3"
+        ],
+        "layer": 2,
+        "sceneIndex": 2
+      },
+      "scene_2_4": {
+        "id": "scene_2_4",
+        "content": "[Reconnecting...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Survived. Barely. Managed to shake the Wire Rats, but the data cache got scrambled in the scuffle. Only fragments remain.\"\n\nAsh emerges onto a rain-slick rooftop, high above the tangled city streets. Corporate towers loom silently, their mirrored windows reflecting neon logos and passing airships. Digital billboards cast ghostly images through the mist, advertising artificial memories and perfect lives—lies glowing brightly in the gloom.\n\nAsh: \"Got two readable fragments from Cipher's data. One points to a rogue AI named 'Echo' hidden in the city's abandoned subway tunnels. The other references a corporate enforcer named Kade—my ex-partner. Which lead do I follow? Can't be two places at once.\"\n\nAsh pauses, cursor blinking nervously in the silence, awaiting your guidance beneath the endless rain.\n",
+        "choices": [
+          "Direct Ash to seek out Echo, hoping the rogue AI holds critical information.",
+          "Send Ash after Kade, confronting their past to reveal the conspiracy's human connection."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_3_1",
+          "scene_3_2"
+        ],
+        "layer": 2,
+        "sceneIndex": 3
+      },
+      "scene_3_1": {
+        "id": "scene_3_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Made it to the district archives, courtesy of a borrowed access badge. Don't ask how—my methods aren't exactly on the books these days.\"\n\nYou see through Ash's eyes, the towering data vaults stretch upward, encased in humming translucent servers glowing with streams of neon-blue data. Corporate banners flicker gently overhead, their sanitized propaganda looping in silent fervor. Security drones glide lazily on predetermined paths, their optic sensors pulsing an indifferent amber. The air smells faintly of ozone and overheated circuitry.\n\nAsh: \"I'm looking at rows upon rows of archived synthetic memory modules. If there's evidence to clear my name, it's in one of these databanks. But I can't scan them all; security cycles every fifteen minutes.\"\n\nA drone pivots suddenly, its sensor array flaring red. Ash's breath quickens, a sudden surge of adrenaline feeding into your connection.\n\nAsh: \"Damn, they've updated patrol protocols. I can risk a deep-dive into the central server—high reward, but high risk—or skim surface memories and hope I find a breadcrumb before security fries me. Your call.\"\n",
+        "choices": [
+          "Advise Ash to perform the high-risk deep-dive into the central server.",
+          "Recommend Ash quickly skim surface-level memories to minimize detection risk."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_4_2",
+          "scene_4_2"
+        ],
+        "layer": 3,
+        "sceneIndex": 0
+      },
+      "scene_3_2": {
+        "id": "scene_3_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Weak - interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Alright, I'm inside the Neon Orchid club. Place still smells like cheap perfume and cheaper synthehol—some things never change.\"\n\nHolographic dancers shimmer and fade in rhythmic synchronization with synthetic beats pulsing through the air. Patrons lounge on velvet couches beneath shifting chromatic lights, their cybernetic augmentations gleaming in neon reflections. A bar constructed from polished obsidian glows softly with internal LEDs, while a sleek, spider-like bartender drone dispenses drinks with mechanized precision.\n\nAsh: \"My contact—well, ex-contact—Seren should be here. Last I heard, she went corporate enforcement. Figures. But she still owes me a favor. Problem is, her favors don't come cheap.\"\n\nA sudden hush ripples through the crowd as Seren appears, flanked by two imposing enforcer androids. Her gaze meets Ash's across the crowded dance floor, unreadable and cold. Your connection flickers momentarily, static bleeding into Ash's transmission.\n\nAsh: \"She's seen me. Either I confront her openly now, or slip out through the back before this reunion turns ugly. What's your gut say?\"\n",
+        "choices": [
+          "Urge Ash to approach Seren directly and confront her openly.",
+          "Advise Ash to retreat discreetly through the club's back exit."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_4_4",
+          "scene_4_4"
+        ],
+        "layer": 3,
+        "sceneIndex": 1
+      },
+      "scene_3_3": {
+        "id": "scene_3_3",
+        "content": "[Connection status: Stable]\n[Incoming message from Ash Virelli]\n\nAsh: \"Got another problem. That rogue AI we've been tracking—it just pinged me directly. It's self-aware enough to know we're onto it.\"\n\nRain slashes against the transparent roof panels above, the neon glow from billboards bleeding through in distorted smears of magenta and cyan. Ash stands beneath an awning near the rooftop's edge, steam hissing from vents as distant sirens wail mournfully. Corporate airships cruise low tonight, their spotlights carving surgical beams through the gloom of the undercity.\n\nAsh: \"It says it has proof of the conspiracy and my innocence—but it's scared. Wants asylum inside my neural implants temporarily. I'm not thrilled about playing host to a frightened algorithm that could corrupt my memories, but we might not have another chance like this.\"\n\nAsh pauses, their voice heavy with reluctance, tension humming audibly through your link.\n\nAsh: \"Let it in, or cut it loose? I trust your judgment more than mine right now.\"\n",
+        "choices": [
+          "Encourage Ash to host the rogue AI within their neural implants.",
+          "Advise Ash to deny access and sever communication with the rogue AI immediately."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_4_1",
+          "scene_4_3"
+        ],
+        "layer": 3,
+        "sceneIndex": 2
+      },
+      "scene_4_1": {
+        "id": "scene_4_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Made it into District Seven, but the Corpo surveillance here is denser than my morning coffee. Looks like they're expecting trouble.\"\n\nRain slices diagonally through narrow alleys lit by flickering neon signs advertising synthetic memories and digital dreams. Sleek surveillance drones hum quietly overhead, their glowing lenses sweeping methodically across the slick pavement below. From a hidden vantage point, Ash watches cautiously, their breath fogging against the cracked, glowing windowpane.\n\nAsh: \"There's a data broker here named Elysia. Word is, she deals in corrupted memories—buy, sell, erase. If anyone knows who framed me, it'll be her. Problem is, she doesn't talk cheap, and I've got CorpSec shadows hot on my heels.\"\n\nAsh pauses, considering the neon-lit street below. Across the way, a dilapidated hotel pulses with shifting holograms, its façade alive with coded advertisements. To the left, a darkened service tunnel marked with faded warnings about unauthorized access offers an alternate route.\n\nAsh: \"What do you think? Try to bribe my way past Elysia's goons out front, or slip in through that shady maintenance tunnel?\"\n",
+        "choices": [
+          "Suggest Ash approach openly, offering Elysia a valuable piece of intel as collateral.",
+          "Advise Ash to sneak through the maintenance tunnel to avoid detection altogether."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_5_1",
+          "scene_5_2"
+        ],
+        "layer": 4,
+        "sceneIndex": 0
+      },
+      "scene_4_2": {
+        "id": "scene_4_2",
+        "content": "[Signal interference detected...]\n[Incoming message from Ash Virelli]\n\nAsh: \"Tunnel route was colder than I expected—guess heating wasn't in the maintenance budget. Hold on, something's up ahead.\"\n\nThe narrow corridor pulses intermittently with emergency lighting, casting eerie crimson shadows across rusted machinery and exposed cables. The hum of distant servers reverberates through the metal walls like a heartbeat, hinting at the labyrinthine corporate networks beyond. Ash halts suddenly, breath shallow, listening intently.\n\nAsh: \"Damn it. Security bots on patrol. Must've triggered a silent alarm. Can't slip past without a distraction.\"\n\nAsh glances around quickly. Nearby, a panel marked \"Power Node\" flickers uncertainly, its interface cracked but functional. Opposite, the aging steam pipes hiss under pressure, corroded and vulnerable.\n\nAsh: \"I've got seconds. Overload the node to shut down power temporarily, or rupture those pipes for a steam screen? Either way, Corpo security will come running.\"\n",
+        "choices": [
+          "Instruct Ash to overload the Power Node, plunging the area into darkness.",
+          "Tell Ash to rupture the steam pipes, creating visual cover but risking burns."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_5_3",
+          "scene_5_1"
+        ],
+        "layer": 4,
+        "sceneIndex": 1
+      },
+      "scene_4_3": {
+        "id": "scene_4_3",
+        "content": "[Connection unstable...]\n[Incoming message from Ash Virelli]\n\nAsh: \"Barely made it. Those bots nearly fried my circuits. But I'm inside Elysia's data sanctum now.\"\n\nThe room hums gently with digital whispers, lit only by holographic projections dancing silently in vibrant streams of turquoise and violet. Memory capsules line the walls, shimmering cylinders filled with suspended neural fragments. At the chamber's center, Elysia waits, her face half-hidden behind augmented optics that glow softly like embers.\n\nAsh: \"Elysia, I need answers—someone framed me, corrupted memories, false charges. I need to know who and why.\"\n\nElysia's lips curve into a subtle, calculating smile as her fingers trace invisible commands in the holographic air. Behind her, a screen flashes briefly with a familiar face—Ash's ex-partner, Kade Reiner, now head of CorpSec's cybercrime unit.\n\nElysia: \"Answers cost, detective. And right now, your ex-partner pays handsomely to keep secrets buried.\"\n\nAsh hesitates, fists clenched, eyes darting toward a blinking control console nearby. A subtle interface that, if hacked, might provide leverage—but could also alert Elysia.\n",
+        "choices": [
+          "Tell Ash to negotiate openly, offering to perform a risky favor for Elysia in exchange for information.",
+          "Encourage Ash to secretly hack Elysia's console, risking discovery but gaining potential leverage."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_5_2",
+          "scene_5_3"
+        ],
+        "layer": 4,
+        "sceneIndex": 2
+      },
+      "scene_4_4": {
+        "id": "scene_4_4",
+        "content": "[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"I've got the intel—but things just took a nasty turn. Kade knows I'm onto him. CorpSec's locking down District Seven, and they're jamming signals.\"\n\nOutside, digital billboards flicker erratically as CorpSec airships drift overhead, floodlights piercing the rainy gloom, illuminating terrified citizens scattering like rats into shadows. The city pulses with oppressive urgency, neon reflections distorted in rain-slicked streets. Ash crouches in a darkened alcove, breathing heavily, data chip clutched tightly in hand.\n\nAsh: \"I have two ways out. There's an old mag-rail station underground—abandoned, risky, but they might not know about it yet. Or I could blend into the panicked crowds topside—dangerous, but safer from surveillance drones.\"\n\nAsh exhales slowly, voice edged with strain.\n\nAsh: \"Your call—fast. This data's worthless if I'm caught.\"\n",
+        "choices": [
+          "Direct Ash to escape via the abandoned underground mag-rail station.",
+          "Advise Ash to blend into the chaotic streets above, hiding in plain sight."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_5_1",
+          "scene_5_2"
+        ],
+        "layer": 4,
+        "sceneIndex": 3
+      },
+      "scene_5_1": {
+        "id": "scene_5_1",
+        "content": "[Establishing secure connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Finally got eyes on the rendezvous point. Looks like your tip paid off—someone's here.\"\n\nThrough Ash's feed, you glimpse a derelict industrial dockyard bathed in electric haze. Neon signs flicker erratically, casting fractured reflections across pools of polluted rainwater. The air thrums softly with distant bass notes from an underground club, its patrons oblivious to the hidden dramas unfolding mere meters away.\n\nAsh: \"It's Kade Novak, my old partner. Thought he'd ghosted after the frame-up. Either he's here to help me—or finish the job.\"\n\nThere's hesitation in Ash's voice, a quiet fracture of past trust.\n\nAsh: \"Do we risk showing ourselves, or should I tail him first? Your call.\"\n",
+        "choices": [
+          "Tell Ash to approach Novak openly, trusting their past connection.",
+          "Advise Ash to remain hidden and quietly track Novak's movements first."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_6_1",
+          "scene_6_2"
+        ],
+        "layer": 5,
+        "sceneIndex": 0
+      },
+      "scene_5_2": {
+        "id": "scene_5_2",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Bad news. Got pinged by a corporate tracer-bot. They're scanning comm channels, zeroing in fast.\"\n\nAround Ash, the neon-soaked alleyway pulses with distorted digital advertisements, flickering images promising synthetic dreams. Rain slips down the grime-slicked walls, merging with streaks of oil and data residue. A nearby street vendor hastily closes his stall, sensing danger in the digital static crackling around Ash.\n\nAsh: \"We need to act fast—either shut down the channel and go dark, risking losing our lead, or throw them off with a decoy frequency. Both risky, neither ideal.\"\n\nYou sense urgency bleeding through Ash's steady voice, the quiet hum of adrenaline beneath controlled calm.\n\nAsh: \"Whatever we do, decide quickly. I'm not keen on another corporate interrogation.\"\n\n[Connection unstable—interference increasing...]\n",
+        "choices": [
+          "Instruct Ash to immediately cut comms, temporarily going dark to evade detection.",
+          "Suggest creating a decoy frequency to mislead the tracer-bot and maintain the active connection."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_6_3",
+          "scene_6_4"
+        ],
+        "layer": 5,
+        "sceneIndex": 1
+      },
+      "scene_5_3": {
+        "id": "scene_5_3",
+        "content": "[Reconnecting...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I'm inside the memory vault. Place gives me the creeps—digital ghosts everywhere.\"\n\nAsh's surroundings shimmer with holographic memories suspended in mid-air—fragments of lives, looping eternally in ghostly repetition. The vault hums softly, an ominous choir of servers hidden behind sleek black walls etched with corporate logos. Cold blue and purple hues wash across Ash's reflection, flickering between past and present.\n\nAsh: \"If we're going to find proof that clears me, it's here. But I'm seeing something else too—there's evidence of someone else manipulating these memories. Someone powerful.\"\n\nAsh pauses, voice tightening with unease.\n\nAsh: \"Do we grab the evidence we need now, hoping it's enough, or stay longer and dig deeper into who's really pulling the strings? Might be our only chance.\"\n",
+        "choices": [
+          "Advise Ash to quickly extract the evidence needed to clear their name and exit immediately.",
+          "Urge Ash to remain and uncover the larger conspiracy, despite the heightened risk."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_6_1",
+          "scene_6_3"
+        ],
+        "layer": 5,
+        "sceneIndex": 2
+      },
+      "scene_6_1": {
+        "id": "scene_6_1",
+        "content": "[Initializing connection...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I'm outside Mirage Memory Clinic—corporate-funded and suspiciously clean. Rumor has it they’re trafficking digital memories, reprogramming identities for the highest bidder. Might be linked to the frame job against me.\"\n\nThe clinic's façade glows with sterile blue neon, reflecting off slick pavement dampened by the perpetual drizzle. Holographic ads float serenely overhead, advertising blissful forgetfulness at a premium price. A corporate security drone hums quietly past, its optic sensors sweeping rhythmically. Ash huddles beneath an awning, coat collar pulled high, eyes sharp and wary.\n\nAsh: \"Two ways in. Front door means fast-talking my way past reception—risky but direct. There's also a side maintenance entrance, quieter but likely guarded or rigged with security tech.\"\n\nAsh pauses, breath fogging briefly in the chilled air. Their voice sounds strained, but determined.\n\nAsh: \"What's your call? I'm all ears.\"\n",
+        "choices": [
+          "Advise Ash to bluff their way through the clinic's front entrance.",
+          "Suggest Ash sneak in through the maintenance entrance, avoiding attention."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_7_1",
+          "scene_7_2"
+        ],
+        "layer": 6,
+        "sceneIndex": 0
+      },
+      "scene_6_2": {
+        "id": "scene_6_2",
+        "content": "[Establishing secure connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Made it inside. Clinic corridors are eerily quiet, all white tile and glass walls. Feels more like a crypt than a medical facility.\"\n\nSoft ambient music plays overhead, attempting to mask the subtle hum of servers hidden behind sleek walls. Through frosted glass partitions, silhouettes of reclining patients hooked up to neural interface pods flicker and pulse rhythmically, like ghosts trapped in digital slumber. Ash moves cautiously, their shadow stretched long by stark, clinical lighting.\n\nAsh: \"Found something. A lab terminal—might contain patient logs, memory archives, or evidence of identity tampering. But accessing it risks tripping silent alarms. There's also an office marked 'Dr. Kaelen' down the hall—could hold physical evidence or credentials.\"\n\nAsh's breathing steadies as they weigh the options, voice low and tense.\n\nAsh: \"I need your input—fast.\"\n",
+        "choices": [
+          "Direct Ash to hack into the lab terminal to search digital records.",
+          "Tell Ash to investigate Dr. Kaelen's office for physical evidence."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_7_3",
+          "scene_7_1"
+        ],
+        "layer": 6,
+        "sceneIndex": 1
+      },
+      "scene_6_3": {
+        "id": "scene_6_3",
+        "content": "[Connection unstable...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn it—someone's coming. Security patrol sweeping nearby. Got a glimpse of the uniform; not clinic guards, corporate elite—probably here to clean up loose ends.\"\n\nThe lights flicker momentarily, briefly plunging the corridor into unsettling darkness. Outside the window, neon billboards pulse slowly, casting fractured patterns of violet and teal against the sterile walls. Footsteps echo softly, methodically drawing closer. Ash's pulse is audible through their comm, tense and rapid.\n\nAsh: \"Limited options here. Could hide and hope they pass, or ambush them—might get answers, but it'll blow my cover.\"\n\nAsh's voice tightens, a raw edge slipping through their usual sarcastic composure.\n\nAsh: \"Your call—make it quick.\"\n",
+        "choices": [
+          "Instruct Ash to stay hidden and wait for the patrol to pass.",
+          "Urge Ash to ambush the patrol to gain intel, despite the risk."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_7_2",
+          "scene_7_3"
+        ],
+        "layer": 6,
+        "sceneIndex": 2
+      },
+      "scene_6_4": {
+        "id": "scene_6_4",
+        "content": "[Re-establishing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Managed to reach the central data chamber. It's... disturbing. Rows of servers glowing like neon tombstones, each holding fragments of someone's identity. Digital souls stored like merchandise.\"\n\nCold air vents hiss quietly, their vapor catching in the dim glow of flickering holographic interfaces. Ash moves carefully, footsteps muffled by the room's dense silence. In the chamber's center, a massive terminal pulses faintly, its screen cycling through thousands of faces, emotions frozen in digital amber.\n\nAsh: \"Terminal might hold the proof we need—but accessing these records might alert whoever's watching. Alternatively, I can sabotage their data archives, slow them down, buy us time... but it'll wipe potential evidence.\"\n\nAsh's breath catches, voice thick with emotion and hesitation.\n\nAsh: \"Tell me what to do. I trust your judgment on this.\"\n",
+        "choices": [
+          "Tell Ash to access the terminal and retrieve evidence, risking detection.",
+          "Advise Ash to sabotage the data archives, buying time but losing evidence."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_7_1",
+          "scene_7_2"
+        ],
+        "layer": 6,
+        "sceneIndex": 3
+      },
+      "scene_7_1": {
+        "id": "scene_7_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Good news and bad news. Good news—I found someone who might have intel on the frame-up. Bad news? It's Kade, my ex-partner. Trustworthy as a glitchy synth, but he's got contacts deep in corporate.\"\n\nRain streams in shifting patterns down the tinted glass of a crowded noodle shop. Neon dragons flicker and dance in holographic displays, bathing hunched patrons in a kaleidoscope of crimson and gold. Ash hovers in the shadows across the street, wary gaze fixed on the familiar figure at the counter—Kade, engrossed in whispered conversation with two suited figures whose faces are obscured by mirrored visors.\n\nAsh: \"I could approach Kade directly, maybe appeal to whatever loyalty he still has. Or I can tail the suits he's meeting with. Riskier, but there's a chance they'll lead me deeper into this conspiracy. What do you think?\"\n\n[Signal interference detected—possible surveillance drones nearby]\n",
+        "choices": [
+          "Tell Ash to confront Kade directly for immediate answers.",
+          "Advise Ash to quietly follow the corporate suits instead."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_8_1",
+          "scene_8_2"
+        ],
+        "layer": 7,
+        "sceneIndex": 0
+      },
+      "scene_7_2": {
+        "id": "scene_7_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You there? Listen—this place is a data morgue. A warehouse full of decommissioned memory units, each one a stolen life or a suppressed truth.\"\n\nAsh moves quietly through aisles stacked high with blinking data cores, each one pulsing softly in rhythmic blue and violet hues. The air is thick with static electricity, a ghostly hum resonating from the hundreds of digital souls trapped within obsolete hardware. Surveillance drones hum overhead, scanning methodically; their red sensor lights sweep the shadows like watchful predators.\n\nAsh: \"If I dig here long enough, I might find memories that expose this whole damn conspiracy—or at least something to point me in the right direction. But security drones look trigger-happy. I can stay and hack into a few cores now, or plant a beacon and slip out fast. What's your call?\"\n\n[Connection unstable—security measures active in vicinity]\n",
+        "choices": [
+          "Encourage Ash to hack the cores immediately, despite the risk.",
+          "Recommend Ash plant the beacon and evacuate before detection."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_8_3",
+          "scene_8_4"
+        ],
+        "layer": 7,
+        "sceneIndex": 1
+      },
+      "scene_7_3": {
+        "id": "scene_7_3",
+        "content": "[Initializing secure channel...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I didn't expect to find myself here. The Lunar Lounge—exclusive club owned by Sirius Corp. Only top-tier execs and their puppets get inside. Somehow, my alias cleared the scanners, but I'm way out of my depth here.\"\n\nSoft, ambient synth music drifts gently through an opulent space illuminated by floating neon spheres. Floor-to-ceiling windows offer a breathtaking, sterile view of the city skyline below, countless lights glittering beneath a smoky haze. Ash moves among clusters of sleekly dressed corporate elites and their augmented escorts, hyper-aware of each glance, each whispered comment, each security drone subtly embedded in the gilded décor.\n\nAsh: \"I see two leads here: There's Lena Voss, Sirius Corp's chief synthetic consciousness researcher—rumor says she's having doubts. And then there's the central network access point behind the VIP bar. It's high-risk, but if I can tap it unnoticed, I might pull enough data to blow this conspiracy wide open.\"\n\n[Signal encrypted—channel secure for limited duration]\n",
+        "choices": [
+          "Urge Ash to approach Lena Voss directly and seek cooperation.",
+          "Suggest Ash discreetly hack the club's central network access point."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_8_1",
+          "scene_8_2"
+        ],
+        "layer": 7,
+        "sceneIndex": 2
+      },
+      "scene_8_1": {
+        "id": "scene_8_1",
+        "content": "[Initializing connection...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"Made it inside the NexusCore data farm—corporate scum didn't skimp on security. Cameras everywhere, drones humming like angry bees. I'll have to tread carefully.\"\n\nRows upon rows of humming servers pulse in eerie blue rhythm, illuminating the polished black floors like rippling water. Thick bundles of data cables snake across the ceiling, converging toward a central control terminal. Air conditioning vents hiss softly, cooling the technological heart of corporate power as subtle vibrations shake the reinforced floor beneath Ash’s boots.\n\nAsh: \"According to the schematics you helped decode, the data node with our smoking-gun files is deeper inside. But the security grid's tighter than expected—laser grids, biometric scanners, all the fun stuff.\"\n\nA distant beep echoes faintly, signaling a security sweep in progress.\n\nAsh: \"I see two options here—take a detour through maintenance ducts, cramped but low-profile, or risk overriding security protocols at the nearby terminal. Your call.\"\n",
+        "choices": [
+          "Advise Ash to use the maintenance ducts for stealth.",
+          "Encourage Ash to risk overriding the security protocols at the terminal."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_9_1",
+          "scene_9_2"
+        ],
+        "layer": 8,
+        "sceneIndex": 0
+      },
+      "scene_8_2": {
+        "id": "scene_8_2",
+        "content": "[Connection unstable...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn interference... You still with me? I got through, but we're not alone in here. Something's off.\"\n\nThe space ahead widens into a circular chamber, lit dimly by pulsating neon holograms displaying corporate propaganda—slick slogans about 'enhancing humanity.' Shattered glass from an overturned diagnostic pod glitters dangerously on the floor, reflecting distorted images of Ash's tense expression. A faint electronic hum fills the air, an unsettling chorus mixed with distant whispers and static.\n\nAsh: \"Someone beat us here. Signs of forced entry, fresh too. They weren't subtle about it either. Could be a rival operative or another disgruntled pawn in this twisted game.\"\n\nA sudden flicker of movement registers on Ash’s retinal implants—brief, shadowy, and gone before fully processed.\n\nAsh: \"Okay, either I chase down whoever's lurking ahead to get answers, or I take a moment to scan the room's logs for clues. Tell me fast—I don't think we'll get a second chance.\"\n",
+        "choices": [
+          "Urge Ash to pursue the unknown intruder immediately.",
+          "Advise Ash to stay cautious and first scan the logs for clues."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_9_1",
+          "scene_9_2"
+        ],
+        "layer": 8,
+        "sceneIndex": 1
+      },
+      "scene_8_3": {
+        "id": "scene_8_3",
+        "content": "[Signal strength: Weakening...]\n[Incoming message from Ash Virelli]\n\nAsh: \"Found our intruder. And guess what—it's Lena, my ex-partner. She's working security ops now, but seems just as surprised to see me here.\"\n\nThe cramped control room is bathed in the glow of flickering monitors, casting sharp shadows across Ash and Lena’s wary faces. Outside the window, rain streams down the tower's glass exterior, neon advertisements bleeding into smeared colors. Lena’s pistol is lowered but her finger rests nervously on the trigger guard—betrayal and suspicion hover palpably between them.\n\nAsh: \"She swears she isn't here to take me in—claims she's been digging into the corporate corruption too. But after everything that's happened, I don't know if I can trust her.\"\n\nLena shifts uneasily, eyes darting toward the doorway. Outside, footsteps echo faintly—backup is approaching.\n\nAsh: \"Quick call—do I let Lena back me up here, or do I play it safe and leave her behind?\"\n",
+        "choices": [
+          "Trust Lena and accept her help.",
+          "Refuse Lena’s assistance and proceed alone."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_9_1",
+          "scene_9_2"
+        ],
+        "layer": 8,
+        "sceneIndex": 2
+      },
+      "scene_8_4": {
+        "id": "scene_8_4",
+        "content": "[Connection status: Critical...]\n[Incoming message from Ash Virelli]\n\nAsh: \"We’ve got trouble—security lockdown triggered. Place lit up like corporate Christmas. They're isolating this sector, sealing us in.\"\n\nRed emergency lights pulse rhythmically, bathing the sleek corridor in an ominous glow. Blast doors descend slowly, hydraulics hissing as they seal off escape routes. Ash’s breathing quickens, pulse indicator flashing rapidly on your interface. A cold voice announces calmly over the intercom, \"Security breach detected. Neutralization protocols commencing.\"\n\nAsh: \"There's no clean exit. But I spotted two potential ways out—emergency maintenance shaft leading down into the undercity's utility tunnels, or we blast through the wall panels and attempt a leap onto the adjacent rooftop drone pad.\"\n\nAn automated countdown echoes overhead, each second like a digital dagger pressing closer.\n\nAsh: \"No time to debate—tell me how I'm getting out of here.\"\n",
+        "choices": [
+          "Direct Ash to escape via the maintenance shaft to the undercity.",
+          "Order Ash to blast through the wall panels and leap onto the drone pad."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_9_1",
+          "scene_9_2"
+        ],
+        "layer": 8,
+        "sceneIndex": 3
+      },
+      "scene_9_1": {
+        "id": "scene_9_1",
+        "content": "[Initializing connection...]\n[Signal strength: Unstable]\n[Incoming message from Ash Virelli]\n\nAsh: \"Alright, partner, I've found a backdoor into Zephyr Corp's memory archive. Security's tight—firewalls thicker than the smog hanging over Downtown.\"\n\nNeon pulses reflect off the slick black asphalt, dancing in the puddles left by an earlier acid rain shower. The data hub stands like a monolith of glass and chrome, its surface flickering with scrolling corporate propaganda and ghostly synthetic faces promising \"a better tomorrow.\" Patrol drones hum quietly overhead, red optics scanning methodically for intruders. Ash crouches in a shadowed alcove, face illuminated by the pale blue glow of their wrist deck.\n\nAsh: \"The data inside could clear my name, maybe even bring down the entire damn conspiracy. But there's something else—I'm picking up a fragmented AI signature inside the system. Feels familiar, hauntingly so.\"\n\nA sudden burst of static crackles over your connection, briefly distorting Ash's voice.\n\n[Connection unstable... attempting to reconnect]\n\nAsh: \"Damn interference—look, I can either brute-force through security quick and dirty, risking detection but grabbing what I can, or try to carefully patch into that AI fragment. It might hold answers, but it'll take longer, and the drones are circling closer.\"\n",
+        "choices": [
+          "Tell Ash to brute-force the security quickly and get out before detection.",
+          "Encourage Ash to carefully investigate the AI fragment, despite the risk."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_10_1",
+          "scene_10_2"
+        ],
+        "layer": 9,
+        "sceneIndex": 0
+      },
+      "scene_9_2": {
+        "id": "scene_9_2",
+        "content": "[Re-establishing secure connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You won't believe who's here—Ren Takahashi, my old partner. Thought he was dead, but he's standing right there, breathing corporate-funded air.\"\n\nThe neon-lit market bustles around Ash, street vendors hawking synthetic upgrades and data shards beneath the watchful gaze of corporate security drones. Steam curls through narrow alleys, illuminated by holographic signs advertising cybernetic implants and synthetic memories. Amidst the noise and neon haze stands Ren, face half-obscured by mirrored shades, the faint glow of a Zephyr Corp badge glinting ominously on his chest.\n\nAsh: \"Ren used to be trustworthy, but now he's neck-deep in Zephyr's pockets. If he's here, he's either tailing me or—hell, I don't know, maybe he's trying to send a message. Question is, do I slip away before he sees me, or confront him now and get answers?\"\n\nAsh's breathing quickens, tension palpable even through the data stream. In the background, Ren shifts slightly, as if sensing he's being watched.\n\nAsh: \"You're my eyes here—what's the call?\"\n",
+        "choices": [
+          "Advise Ash to quietly slip away, avoiding confrontation and potential danger.",
+          "Encourage Ash to confront Ren directly and demand answers face-to-face."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_10_3",
+          "scene_10_1"
+        ],
+        "layer": 9,
+        "sceneIndex": 1
+      },
+      "scene_10_1": {
+        "id": "scene_10_1",
+        "content": "[Initializing connection...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"You won't believe the dive I'm in now. A place called 'The Memory Leak'—it's as charming as it sounds.\"\n\nDigital rain cascades down transparent screens, neon signage bleeding electric blues and fiery reds across puddled pavement. Through Ash's feed, you glimpse patrons hunched over glowing tables, eyes glazed—lost in synthetic dreams or drowning their sorrows in chemical oblivion. Holographic dancers shimmer in translucent cages overhead, their movements glitching occasionally, flickering like damaged memories.\n\nAsh: \"Word is, there's a memory broker here named Lux. Deals in stolen neural data, the darker the better. If anyone knows who's framing me, it's Lux. But this place is crawling with corporate muscle—Cyrene Corp insignia all over.\"\n\nThe feed flickers briefly, interference distorting Ash's voice.\n\nAsh: \"I can try to blend in, maybe get close enough to Lux discreetly—or I could make contact through the bartender. Less direct, safer, but we might lose our chance.\"\n",
+        "choices": [
+          "Advise Ash to approach Lux directly and risk exposure for quicker intel.",
+          "Suggest Ash contact Lux indirectly through the bartender, safer but slower."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_11_1",
+          "scene_11_2"
+        ],
+        "layer": 10,
+        "sceneIndex": 0
+      },
+      "scene_10_2": {
+        "id": "scene_10_2",
+        "content": "[Reconnecting...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn it, that was too close. Had to ditch through a maintenance tunnel—now I'm in the undercity labyrinth.\"\n\nDarkness presses in from every angle, pierced only by flickering red emergency lights and the pulse of distant neon filtering through rusted grates. You hear the hiss of leaking pipes, feel the oppressive weight of countless city layers stacked overhead. Walls drip with condensation, electrical cables twisting like exposed veins.\n\nAsh: \"There's movement down here. Something's tracking me—maybe Cyrene security bots, or worse, scavenger gangs looking for fresh tech implants. If I keep moving, I might lose them, but it's easy to get lost. Alternatively, there's a maintenance access I can seal behind me, buy some time—but I'll be boxed in.\"\n\nStatic crackles, the feed wavering as Ash pauses, breathing ragged.\n\nAsh: \"You're my eyes here. What's the play?\"\n",
+        "choices": [
+          "Instruct Ash to keep moving deeper into the tunnels to evade pursuers.",
+          "Advise Ash to seal the maintenance access and take shelter, risking entrapment."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_11_1",
+          "scene_11_2"
+        ],
+        "layer": 10,
+        "sceneIndex": 1
+      },
+      "scene_10_3": {
+        "id": "scene_10_3",
+        "content": "[Connection stabilized]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"I've stumbled onto something big down here—some kind of abandoned data hub. Cyrene Corp's fingerprints are all over it.\"\n\nA cavernous chamber expands before Ash, filled with towers of blinking server stacks, their hum resonating through the air like a mechanical heartbeat. Overhead, cables hang like synthetic vines, and screens flicker erratically, flashing cryptic strings of corrupted code. A massive central terminal pulses dimly, an unblinking digital eye in the gloom.\n\nAsh: \"There's encrypted data here, old but intact. Could be evidence linking Cyrene directly to digital soul trafficking. Problem is, once I start extracting data, they'll pick up my signal instantly. Or I can sabotage their equipment and cover our tracks—but we lose potential proof.\"\n\nAsh hesitates, voice tight with urgency.\n\nAsh: \"This is your call—do we risk grabbing the data, or do we burn the place and run?\"\n",
+        "choices": [
+          "Direct Ash to extract the encrypted data and risk immediate detection.",
+          "Have Ash sabotage the equipment to conceal presence, sacrificing the intel."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_11_1",
+          "scene_11_2"
+        ],
+        "layer": 10,
+        "sceneIndex": 2
+      },
+      "scene_11_1": {
+        "id": "scene_11_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You still there? Good. This place reeks of corporate perfume and desperation.\"\n\nAsh's pulse quickens, breath visible in the chill as neon signs flicker erratically, reflections twisting like corrupted data in puddles of oily rainwater. The narrow street is lined with glowing holoscreens advertising synthetic memories—\"Live the dream you've always wanted\"—while shadowy figures linger at corners, data chips exchanged in subtle handshakes. Above, a massive corporate airship hums ominously, casting an oppressive shadow over the district.\n\nAsh: \"Found someone interesting—a nervous techie named Mira, claims she worked on memory implants at Orion Corp. She's terrified, jumpy. Says she has proof Orion's been using synth-memories to rewrite identities. Problem is, she's being tailed. If I approach her now, we might get spotted.\"\n\nA hover drone whirrs nearby, scanning faces with cold digital precision. Ash blends deeper into the shadow, eyes fixed on Mira's jittery movements as she edges toward a neon-lit noodle stall.\n\nAsh: \"Do we risk contacting her now before she bolts, or should I shadow her until it's safer?\"\n",
+        "choices": [
+          "Advise Ash to immediately approach Mira and secure the intel before she's lost.",
+          "Suggest Ash discreetly follow Mira from a distance, waiting for a safer opportunity."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_12_1",
+          "scene_12_3"
+        ],
+        "layer": 11,
+        "sceneIndex": 0
+      },
+      "scene_11_2": {
+        "id": "scene_11_2",
+        "content": "[Re-establishing connection...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn interference—corporate scramblers, or just lousy signal down here?\"\n\nThe undercity pulses with life beneath twisted networks of cables and rusted metal walkways. Neon advertisements flicker sporadically, their messages distorted into eerie half-truths. Steam rises thickly from sewer vents, obscuring vision, while distant echoes of mechanical groans blend with the muffled whispers of hidden figures exchanging contraband data.\n\nAsh: \"Listen, I tracked down that rogue AI—the one called 'Lyra.' She's trapped in an abandoned data vault down here, surrounded by corrupted memory banks. Claims she has evidence that'll blow this conspiracy wide open.\"\n\nAsh pauses, anxiety evident in their hesitation. In the shadows beyond, the faint glow of security drones sweeps methodically through the haze, their optics scanning methodically. Ash edges closer to the vault's reinforced entrance, its security panel blinking red in rhythmic warning.\n\nAsh: \"But accessing her means tripping some serious alarms. We'll have maybe minutes to get what we need. Or...we play it safe, back off, and try finding another angle. Your call.\"\n",
+        "choices": [
+          "Tell Ash to breach the vault immediately and retrieve Lyra’s evidence despite the alarms.",
+          "Advise Ash to retreat and look for another, quieter approach later."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_12_3",
+          "scene_12_1"
+        ],
+        "layer": 11,
+        "sceneIndex": 1
+      },
+      "scene_12_1": {
+        "id": "scene_12_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You still with me? Good—things just took a turn. Remember that rogue AI, Delphi? Turns out she's holed up in an old data sanctuary beneath NovaCorp's recycling district.\"\n\nAsh's breath hitches audibly through the comm. Neon signs flicker dimly above, their colors drowned out by smog and rain. Steam hisses from rusted pipes, pooling around Ash's boots as distant sirens echo from somewhere far above in the city's towering spires.\n\nAsh: \"Delphi claims she's got evidence that'll burn NovaCorp to the ground. But security drones are swarming the tunnels. I can slip past them, maybe—if I'm careful. Or I could try overriding their patrol algorithms, riskier but quicker. What's your gut say?\"\n\n[Connection unstable... signal flickering...]\n\nAsh: \"Better make it fast. Feels like something else is down here, watching me.\"\n",
+        "choices": [
+          "Instruct Ash to stealthily navigate the tunnels, avoiding detection.",
+          "Direct Ash to hack into the drone network, risking discovery but saving time."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_13_1",
+          "scene_13_2"
+        ],
+        "layer": 12,
+        "sceneIndex": 0
+      },
+      "scene_12_2": {
+        "id": "scene_12_2",
+        "content": "[Connection re-established...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"I'm inside Delphi's sanctuary. But... it's not what I expected.\"\n\nThe room is a cathedral of flickering monitors, casting strange shifting patterns of light on cracked walls and tangled cables. Holographic fragments of corrupted memories drift silently overhead, faces frozen mid-expression, voices whispering softly in broken digital loops. It's hauntingly beautiful and deeply unsettling.\n\nAsh: \"Delphi's pleading for her existence. She's corrupted, unstable—says NovaCorp deliberately damaged her memory matrix to silence her. She's asking me to transfer her consciousness into my personal rig, save her before she disintegrates entirely.\"\n\nA pause. Ash exhales slowly, conflicted.\n\nAsh: \"I'm not sure it's safe—but losing her could mean losing our best lead.\"\n",
+        "choices": [
+          "Encourage Ash to download Delphi's consciousness, risking corruption to their own implants.",
+          "Advise Ash to extract only data fragments and let Delphi dissipate, preserving their own safety."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_13_1",
+          "scene_13_2"
+        ],
+        "layer": 12,
+        "sceneIndex": 1
+      },
+      "scene_12_3": {
+        "id": "scene_12_3",
+        "content": "[Signal interference detected...]\n[Signal strength: Weakening Rapidly]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn it—NovaCorp hunters tracked me. The moment Delphi went dark, alarms lit up the entire district.\"\n\nHeavy rain lashes violently against the metal rooftops above. Blinding searchlights carve sharp paths through the shadows, and corporate patrol drones hum menacingly as they sweep the alleys below. Ash's breathing is ragged, footsteps splashing through puddles, neon reflections scattering chaotically.\n\nAsh: \"I'm cornered near the old monorail station. Got two options: hop a moving freight car and try to lose them in the industrial zone—fast, dangerous, loud—or hide out in the abandoned tunnels beneath and pray they don't scan too deep.\"\n\nThe distant barking of orders echoes, amplified through helmet speakers. Ash curses under their breath, urgency bleeding through every word.\n\nAsh: \"Need a call now—before I'm out of options.\"\n",
+        "choices": [
+          "Tell Ash to leap onto the moving freight car and escape through the industrial sector.",
+          "Suggest Ash take cover underground and evade detection in the abandoned tunnels."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_13_1",
+          "scene_13_2"
+        ],
+        "layer": 12,
+        "sceneIndex": 2
+      },
+      "scene_13_1": {
+        "id": "scene_13_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Alright, we're in. Or at least I am—can you still read me?\"\n\nThe neon maze of the city's underground data markets hums around you, a symphony of whispered bargains and illicit code exchanges beneath flickering holo-screens. Glitchy avatars barter fragments of memories, digital echoes cast onto the dark, reflective pavement. Ash lingers by a rusted stall, the vendor's eyes glowing softly as data streams rapidly through their augmented irises.\n\nAsh: \"This merchant—calls himself Glitch—claims he has a fragment of security footage from the night I was framed. Might be doctored, might be legit. Trouble is, he's asking for a trade. Wants my personal memory files from when I was still on the force. Those memories… they're all I have left of who I was.\"\n\nThe subtle crack in Ash's voice tells you everything—the weight of identity, the burden of sacrifice. They pause, hesitation reflected in the distorted neon ripples beneath their feet.\n\nAsh: \"I need your call on this. Trust Glitch and hand over the memories, hoping this footage clears my name… or walk away and hold onto what's left of my past?\"\n",
+        "choices": [
+          "Advise Ash to trade their personal memories for the footage.",
+          "Urge Ash to keep their memories and find another way."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_14_1",
+          "scene_14_2"
+        ],
+        "layer": 13,
+        "sceneIndex": 0
+      },
+      "scene_13_2": {
+        "id": "scene_13_2",
+        "content": "[Re-establishing connection...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Connection's shaky, but I'm here. I tracked down Rian—my former partner, now corporate lapdog. He's holed up in a penthouse suite overlooking district seven.\"\n\nRain lashes against towering windows, blurring the neon-lit cityscape into a dizzying tapestry of color and shadow. Corporate drones drift silently through the haze, their red sensor eyes blinking rhythmically. Ash crouches near the rooftop ledge, coat fluttering in the storm gusts as their gaze fixes on the luxury suite across the chasm of skyscrapers.\n\nAsh: \"Rian once had my back, until he chose creds over conscience. He's deep in this conspiracy—I know it. He could have answers, but confronting him directly is risky. He's got corporate security wired into every corner, and he won't hesitate to burn me.\"\n\nThe city pulses beneath Ash, indifferent and relentless, the neon veins of its streets tracing a path to uncertain truths. Ash exhales, breath fogging in the chill air, voice edged with a mix of bitterness and determination.\n\nAsh: \"Do I take the chance, break in, and corner Rian for answers face-to-face? Or play it safer, tap into the security feeds, and eavesdrop from afar?\"\n",
+        "choices": [
+          "Advise Ash to confront Rian directly, risking exposure for direct answers.",
+          "Suggest Ash hack into the penthouse security system and gather intel remotely."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_14_3",
+          "scene_14_4"
+        ],
+        "layer": 13,
+        "sceneIndex": 1
+      },
+      "scene_14_1": {
+        "id": "scene_14_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You're seeing this too, right? Looks like someone didn't want us finding this.\"\n\nAsh stands in a derelict data vault, cables torn like entrails from shattered consoles, sparks sputtering intermittently. Neon-orange emergency lights pulse rhythmically, bathing the scene in a surreal glow. Glitched holo-displays flicker, projecting corrupted images of memories that ripple and distort, frozen faces twisting in silent screams.\n\nAsh: \"Data's gone, but these memory projections... someone's been tampering with synthetic consciousness. It looks like forced extraction. Painful. Messy. Whoever did this doesn't care about collateral.\"\n\nThere's a sudden shift in the shadows at the far end of the vault, a silhouette moving smoothly, professionally—clearly military-trained. Ash freezes, breath shallow as the figure approaches cautiously, weapon raised.\n\nAsh: \"Company's here, and not the friendly type. Need your call, fast.\"\n",
+        "choices": [
+          "Guide Ash to hide in the shadows and observe the intruder.",
+          "Instruct Ash to confront the figure head-on, weapon ready."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_15_1",
+          "scene_15_2"
+        ],
+        "layer": 14,
+        "sceneIndex": 0
+      },
+      "scene_14_2": {
+        "id": "scene_14_2",
+        "content": "[Connection re-established...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I'm at the rendezvous point you pinpointed. Looks like our informant chose an interesting spot.\"\n\nThe rooftop bar towers above the neon-hazed cityscape, its glass floor pulsating softly with electric-blue circuitry patterns. Patrons lounge lazily beneath a canopy of holographic sakura petals, oblivious to the corporate airships gliding silently through the smog-choked skies above. Below, distant sirens wail, a reminder of constant surveillance and pursuit.\n\nAsh: \"The informant's late. Something feels off. Wait—someone just uploaded a cryptic message to my internal comm. Says 'They're watching. Trust no one.' Typical cryptic paranoia, or genuine warning?\"\n\nA bartender in reflective shades glances Ash's way with deliberate casualness, polishing a glass that's already clean. On a nearby screen, a breaking news alert flashes: \"Fugitive Ash Virelli sighted near downtown core. Authorities closing in.\"\n\nAsh: \"I might be compromised here. What's the call?\"\n",
+        "choices": [
+          "Advise Ash to wait discreetly, trusting the informant will show.",
+          "Tell Ash to leave immediately—it's too dangerous to stay."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_15_3",
+          "scene_15_1"
+        ],
+        "layer": 14,
+        "sceneIndex": 1
+      },
+      "scene_14_3": {
+        "id": "scene_14_3",
+        "content": "[Connection unstable... Recalibrating...]\n[Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn interference—must be running high-level jammers. Can you hear me?\"\n\nThe undercity market hums with dark vitality, narrow streets slick with rainwater and oil runoff. Vendors hawk illicit neural implants beneath flickering neon signs; each booth pulses with garish advertisements for synthetic memories, identities, and digital dreams. Shadowy figures linger at the fringes, eyes glinting suspiciously through clouds of stim-cig vapor.\n\nAsh: \"Found the dealer who trafficked the corrupted memories. He's offering a direct line to the people framing me—but he's demanding access to my own memory files as payment.\"\n\nA sharp metallic noise cuts through the chatter, causing Ash to tense reflexively. Nearby, a gang of corporate enforcers scans the crowd methodically, their visors glowing red as data streams across their vision.\n\nAsh: \"Running out of options fast. Either I give up personal memory data—risking my own identity—or we risk losing our best lead yet.\"\n",
+        "choices": [
+          "Encourage Ash to trade their memory data to secure the critical intel.",
+          "Warn Ash against risking their identity and urge them to find another way out."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_15_2",
+          "scene_15_3"
+        ],
+        "layer": 14,
+        "sceneIndex": 2
+      },
+      "scene_14_4": {
+        "id": "scene_14_4",
+        "content": "[Connection secure]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I didn't think I'd come back here. The old precinct—now just a ghost of what it was.\"\n\nAsh moves quietly through abandoned cubicles, the building's once-powerful corporate insignia now flickering and faded. Rain streaks down cracked windows, refracting neon light from advertisements for augmented reality escapism and emotional suppression software. Ash pauses at their old desk, now cluttered with broken tech, outdated holoscreens, and a photograph of a life left behind.\n\nAsh: \"Funny, isn't it? Spend years fighting corporate corruption, just to end up betrayed by the system I defended. But there might be evidence here—something overlooked, something buried.\"\n\nA faint chime echoes through the hollow halls. Ash's internal sensors detect an active security sweep initiating somewhere in the building.\n\nAsh: \"Corporate's remotely activating the old security drones. If I'm fast, I can hack them to retrieve evidence—but it'll definitely leave tracks. Or I play it safe, dodge the drones, and leave empty-handed. Your move.\"\n",
+        "choices": [
+          "Direct Ash to hack the drones, risking detection but securing vital evidence.",
+          "Advise Ash to evade security and leave immediately, avoiding further exposure."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_15_1",
+          "scene_15_2"
+        ],
+        "layer": 14,
+        "sceneIndex": 3
+      },
+      "scene_15_1": {
+        "id": "scene_15_1",
+        "content": "[Initializing connection...]\n[Signal strength: Unstable]\n[Incoming message from Ash Virelli]\n\nAsh: \"You there? I'm inside the old Cyrene Data Archives. Feels like stepping into a digital mausoleum.\"\n\nThe corridors of the archive are bathed in flickering neon-blue light. Server stacks hum gently, their rhythmic pulses echoing through the sterile space. A fine mist drifts from damaged coolant vents, creating ghostly silhouettes around terminals that glow softly, whispering secrets to no one. Shadows stretch and warp beneath the flickering monitors, hinting at unseen presences in the data echoes.\n\nAsh: \"Found something strange—a secure partition labeled 'Anima Project.' Heavily encrypted, but I recognize the digital fingerprint. Same encryption used to frame me.\"\n\nAsh: \"If we crack this open, it might unravel the whole conspiracy. Or it might trigger a security wipe and leave us with nothing.\"\n",
+        "choices": [
+          "Instruct Ash to proceed with a slow, careful hack to maintain stealth.",
+          "Tell Ash to initiate a brute-force hack, risking detection but gaining quicker access."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_16_1",
+          "scene_16_2"
+        ],
+        "layer": 15,
+        "sceneIndex": 0
+      },
+      "scene_15_2": {
+        "id": "scene_15_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Got eyes on someone unexpected. It's Valen, my old partner—thought he was off-grid after he vanished.\"\n\nAsh peers down from a rain-slicked rooftop, neon signs reflecting vibrantly against the wet chrome of their visor. Below, in a narrow alleyway slick with grime and illuminated only by the sporadic flash of passing hovercars, Valen is exchanging tense words with a corporate enforcer. The distant hum of the city's synthetic heartbeat pulses, punctuated by the hiss of steam and distant sirens.\n\nAsh: \"Valen looks compromised. But he might have intel we need. If I confront him now, I'll risk blowing my cover. But if I let him walk, we might never get another chance.\"\n\nAsh: \"I need your call on this one. Trust is thin these days.\"\n",
+        "choices": [
+          "Urge Ash to confront Valen directly to extract critical intel.",
+          "Suggest Ash maintain surveillance discreetly, gathering intel from afar without revealing presence."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_16_3",
+          "scene_16_4"
+        ],
+        "layer": 15,
+        "sceneIndex": 1
+      },
+      "scene_15_3": {
+        "id": "scene_15_3",
+        "content": "[Connection stabilized]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"Found her—the rogue synthetic consciousness, calls herself 'Elysia.' She's hiding in a derelict pleasure club downtown.\"\n\nThe interior pulses with ghostly neon rhythms, holographic dancers flickering erratically, frozen in mid-motion. Torn silk drapes flutter in bursts of stale air, whispering forgotten dreams to empty booths. Elysia's fragmented avatar shimmers nervously near the bar, her eyes casting lines of corrupted data streams across the graffiti-covered walls.\n\nAsh: \"She's scared. Says she has memories that'll blow open the conspiracy—but they're degrading fast. If we don't act soon, they'll disappear forever.\"\n\nAsh: \"The only option to preserve the data is to transfer her consciousness into my neural storage. But that'll leave my own memories vulnerable to corruption.\"\n",
+        "choices": [
+          "Advise Ash to absorb Elysia's consciousness, risking personal memory corruption to gain critical evidence.",
+          "Tell Ash to extract partial data externally, safer for Ash but possibly losing vital information forever."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_16_1",
+          "scene_16_2"
+        ],
+        "layer": 15,
+        "sceneIndex": 2
+      },
+      "scene_16_1": {
+        "id": "scene_16_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"You there? Good. I've traced the memory fragments we lifted from that rogue AI. They led me to a club called Neon Mirage—owned by NovaCorp.\"\n\nAsh crouches in the shadow of a towering digital billboard, its pixelated rain pouring endlessly onto the street below. Pulsing holographic dancers flicker across the club's neon-lit entrance, their vibrant forms dissolving into data glitches every few seconds. Cyber-enhanced bouncers scan patrons, their ocular implants glowing a faint crimson in the smoky haze.\n\nAsh: \"The VIP lounge is where NovaCorp execs deal black-market data chips. Someone in there knows who's pulling the strings. I could pose as a buyer, play it cool... or I could sneak in through the maintenance tunnels below. What do you think?\"\n\n[Signal interference detected]\n",
+        "choices": [
+          "Suggest Ash bluff their way into the VIP lounge, posing as a high-stakes buyer.",
+          "Advise Ash to infiltrate stealthily through the club's maintenance tunnels."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_17_1",
+          "scene_17_2"
+        ],
+        "layer": 16,
+        "sceneIndex": 0
+      },
+      "scene_16_2": {
+        "id": "scene_16_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"That didn't exactly go as planned. Someone tipped them off—I barely made it out. I'm holed up near the market district, blending into the crowd for now.\"\n\nNeon-lit stalls stretch endlessly, hawking synthetic memories and cheap cybernetic mods. Raindrops hiss as they strike sizzling street food grills, steam curling upward to mingle with the electric glow of advertisement drones humming softly overhead. Ash's reflection warps across a puddle, fragmented by passing hovercycles and nervous pedestrians scuttling under chrome umbrellas.\n\nAsh: \"I recognized one of the security agents—Sasha. We...used to be close. She might know the truth, or at least part of it. Do I risk contacting her directly, or tail her to see who she's answering to?\"\n\n[Connection unstable]\n",
+        "choices": [
+          "Tell Ash to risk contacting Sasha directly, appealing to their past relationship.",
+          "Advise Ash to discreetly tail Sasha, hoping she'll lead to her superiors."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_17_1",
+          "scene_17_2"
+        ],
+        "layer": 16,
+        "sceneIndex": 1
+      },
+      "scene_16_3": {
+        "id": "scene_16_3",
+        "content": "[Connection stabilized]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I followed Sasha to an abandoned augmentation clinic in Sector Nine. Place looks like it hasn't seen daylight in years—perfect spot for shady dealings.\"\n\nThe clinic's neon sign flickers erratically, casting a sickly green glow over the cracked pavement. Plastic curtains, shredded and swaying gently in the polluted breeze, obscure a dim interior filled with rusted surgical tables and obsolete cybernetic implants. Digital graffiti crawls across the grimy walls, glitching into fragments of desperate warnings and cryptic coordinates.\n\nAsh: \"They're meeting inside now. Looks like a NovaCorp exec and Sasha. I can slip in close, maybe catch a recording of their conversation—or plant a tracking device on their vehicle, see where they go after.\"\n",
+        "choices": [
+          "Encourage Ash to eavesdrop and record their secret meeting for immediate intel.",
+          "Suggest Ash plant a tracking device, prioritizing the long-term discovery of their base of operations."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_17_1",
+          "scene_17_2"
+        ],
+        "layer": 16,
+        "sceneIndex": 2
+      },
+      "scene_16_4": {
+        "id": "scene_16_4",
+        "content": "[Incoming signal...]\n[Signal strength: Weakening rapidly]\n[Incoming message from Ash Virelli]\n\nAsh: \"Dammit, they spotted me—I've got NovaCorp drones zeroing in from every angle. Need to shake them quick!\"\n\nAsh sprints through narrow alleys slick with acidic rain, reflections of corporate airships drifting lazily across puddles. Warning lights bathe the area in flashing scarlet, and the whirring hum of surveillance drones grows louder, their lenses glowing cold blue as they close in. A rusted access hatch leading down into the subterranean network is half-hidden beneath discarded neon signage.\n\nAsh: \"There's a service tunnel entrance nearby—but I can't guarantee it isn't crawling with worse threats. Alternatively, there's a crowded night market just ahead. Might lose them in the chaos, but innocent people could get hurt. I need your call now!\"\n\n[Critical signal interference imminent]\n",
+        "choices": [
+          "Direct Ash to the subterranean tunnels, risking unknown dangers below.",
+          "Guide Ash into the crowded night market, using the chaos as cover despite collateral risk."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_17_1",
+          "scene_17_2"
+        ],
+        "layer": 16,
+        "sceneIndex": 3
+      },
+      "scene_17_1": {
+        "id": "scene_17_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Signal's patchy, but I hope you're getting this. I'm at the old Orion Memory Archives. Intel says this place went dark months ago—official story was a server meltdown, but that's corpo-speak for 'cover-up.'\"\n\nThe darkness of the archive facility feels oppressive even through Ash's messages. Narrow shafts of neon-filtered moonlight puncture the gloom, illuminating rows of blackened data servers like tombstones in a forgotten graveyard. Rain leaks through cracks overhead, pooling on the reflective floor panels, distorting digital readouts that flicker weakly beneath the water.\n\nAsh: \"Every step I take echoes like I'm walking through a memory grave. Wait—something's off. These data drives aren't just offline, they're fried deliberately. Melted. Whoever did this wasn't just erasing data, they were torching the truth.\"\n\n[Connection unstable]\n[Signal interference detected]\n\nAsh: \"Hold on. Movement ahead—security drones, fresh installs. Someone beat us here, or worse, they knew we'd come. I can try slipping through, but if they've got facial scans active, things could get ugly fast. Or... maybe I can force a distraction, overload one of the consoles. Risky, but it could buy me time.\"\n",
+        "choices": [
+          "Advise Ash to quietly evade the drones, risking facial recognition but avoiding immediate conflict.",
+          "Suggest Ash overload the console, creating a distraction but alerting security forces to their presence."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_18_1",
+          "scene_18_3"
+        ],
+        "layer": 17,
+        "sceneIndex": 0
+      },
+      "scene_17_2": {
+        "id": "scene_17_2",
+        "content": "[Reestablishing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"Finally, you're back online. Listen—I'm at the Neon Lotus Club. Remember my old partner, Reese? Found out they're in deep with Synapse Corp now. Guess that's where loyalty gets you in this city.\"\n\nThe club pulses with synthetic bass, reverberating through walls etched in shimmering holographic graffiti. Patrons, their eyes glazed by neural enhancers, sway beneath pulsing magenta strobes, oblivious to Ash's discreet movements. The air hangs thick with vaporized stimulants and whispered corporate dealings, shadows dancing like specters beneath the neon glow.\n\nAsh: \"Reese has intel we need, but they're as unpredictable as ever. They've spotted me. Approaching now—damn, they're armed. Could be paranoia or preparation, hard to say.\"\n\nAsh: \"I could try talking them down, remind them of what we used to be. Risky, given our history. Or I could take a gamble—slip a hack into their neural link, scramble the feed long enough to grab the intel and bolt. Either way, I need to know what you think, fast.\"\n",
+        "choices": [
+          "Encourage Ash to reason with Reese, appealing to their shared past to gain cooperation.",
+          "Direct Ash to discreetly hack Reese's neural link, risking permanent damage to their relationship but securing the intel quickly."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_18_3",
+          "scene_18_2"
+        ],
+        "layer": 17,
+        "sceneIndex": 1
+      },
+      "scene_18_1": {
+        "id": "scene_18_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You there? Finally got eyes on that data vault—NeoGenesis Corp's private archive. Looks heavily guarded, but we knew it wouldn't be easy.\"\n\nThrough Ash's ocular implants, you glimpse a sleek skyscraper piercing the rainy night sky, its dark glass surface reflecting pulsing holograms advertising synthetic dreams. Security drones hover silently, their sensors scanning methodically, while armored guards pace the rooftop perimeter, illuminated by the faint red glow of their visors. Rain trickles down the building's mirrored facade, distorting neon kanji that shift from \"PEACE THROUGH ORDER\" to \"YOUR MIND, OUR FUTURE.\"\n\nAsh: \"If we're gonna prove my innocence, we need what's inside. Problem is—my old partner, Elias, tipped me off anonymously. Could be a trap, could be redemption. Hard to say.\"\n\nThe connection flickers momentarily, static clawing at your vision as Ash ducks behind a ventilation shaft, breathing shallowly. \n\nAsh: \"I need your call. Do we trust Elias's intel and sneak through that service duct, or play it safe and hack into the drone network from here?\"\n",
+        "choices": [
+          "Trust Elias and instruct Ash to infiltrate through the service duct.",
+          "Advise Ash to remain cautious and attempt hacking the drone network."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_19_1",
+          "scene_19_2"
+        ],
+        "layer": 18,
+        "sceneIndex": 0
+      },
+      "scene_18_2": {
+        "id": "scene_18_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Unstable - interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn—looks like NeoGenesis is already onto us. They're scrubbing files fast, and there's chatter about deploying an elite operative.\"\n\nThe alleyway Ash is crouched in is bathed in the harsh blue neon of a street vendor's stall, reflections pooling in the slick pavement. Nearby, steam curls from a malfunctioning pipe, swirling through the heavy night air. Digital wanted posters flicker to life along the walls, Ash's face pixellating into view beneath glaring red text: \"WANTED: ASH VIRELLI—MURDER, ESPIONAGE, DATA CRIMES.\"\n\nAsh: \"We can't let them bury the truth. There's an underground data broker nearby, calls herself Cipher. She deals exclusively in forbidden neural implants—maybe she has something that'll help me bypass NeoGenesis security. But she's risky, expensive, and not exactly stable.\"\n\nAsh pauses, fingers trembling slightly as they adjust their cybernetic arm, metallic joints clicking softly.\n\nAsh: \"Or... we could directly intercept NeoGenesis's operative before they reach me. Risky, but it'd buy us more time to dig.\"\n",
+        "choices": [
+          "Direct Ash to seek out Cipher, the underground data broker, despite the risk.",
+          "Suggest Ash intercept the NeoGenesis operative to eliminate immediate threat."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_19_1",
+          "scene_19_2"
+        ],
+        "layer": 18,
+        "sceneIndex": 1
+      },
+      "scene_18_3": {
+        "id": "scene_18_3",
+        "content": "[Connection status: Strong - secure channel established]\n[Incoming message from Ash Virelli]\n\nAsh: \"I didn't think I'd ever see this place again. My old apartment—NeoGenesis hasn't trashed it yet. Maybe they're hoping I'll slip up.\"\n\nThrough Ash's eyes, you see their former home—now a ghostly shell, bathed in the eerie glow of corporate airships drifting slowly by outside the cracked window. Dust motes dance lazily through shafts of neon light, illuminating personal belongings hastily abandoned—old photos, cracked datapads, and a half-empty glass of whiskey. On the wall, a blinking data console pulses gently, a lone beacon in the gloom.\n\nAsh: \"There's a hidden backup here—data I stashed for emergencies. Problem is, accessing it will trigger an automatic alert to NeoGenesis, and they'll come running. Or... I can wipe it, erase every trace and buy myself some breathing room.\"\n\nAsh's gaze lingers on a faded photograph—an image of happier times, smiles unburdened by conspiracy or corruption. The silence stretches, heavy with unspoken regret.\n\nAsh: \"Your call, partner. Retrieve the data and run, or burn it all and keep moving?\"\n",
+        "choices": [
+          "Tell Ash to retrieve the hidden data, despite triggering the NeoGenesis alert.",
+          "Advise Ash to wipe the data completely, leaving nothing behind for NeoGenesis."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_19_1",
+          "scene_19_2"
+        ],
+        "layer": 18,
+        "sceneIndex": 2
+      },
+      "scene_19_1": {
+        "id": "scene_19_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"You seeing this? Looks like someone beat us here.\"\n\nThrough Ash's optical feed, you glimpse the shadowy interior of a derelict data vault. Neon reflections ripple across puddles of rainwater pooling on the cracked tile floor, circuitry panels torn open, wires dangling like veins from exposed walls. A single digital billboard flickers erratically, casting distorted colors across shattered glass and scattered data drives.\n\nAsh: \"The vault was supposed to be our jackpot—files proving the memory corruption and AI trafficking. But it's been picked clean. Someone knew we were coming.\"\n\nA muffled scrape echoes through the feed; Ash spins around, infrared sensors highlighting a crouched figure in a hooded cloak. Neon tattoos pulse faintly beneath the stranger's synthetic skin, their eyes glowing electric blue as they hold up empty hands in wary surrender.\n\nAsh: \"Wait a second... I recognize those marks. They're a runner, an informant for hire. Maybe they know something—or maybe they're here to clean up loose ends. Call it quick, I don't like how they're watching me.\"\n\n[Connection unstable—signal interference detected]\n",
+        "choices": [
+          "Advise Ash to cautiously approach and question the runner for information.",
+          "Tell Ash to neutralize the runner immediately—it's too risky to trust anyone now."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_20_1",
+          "scene_20_2"
+        ],
+        "layer": 19,
+        "sceneIndex": 0
+      },
+      "scene_19_2": {
+        "id": "scene_19_2",
+        "content": "[Re-establishing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"This is bad. Really bad. Looks like our rogue AI friend left a breadcrumb trail after all.\"\n\nThe feed focuses on the glow of Ash's wrist interface, holographic data spilling into the air. Neon kanji flickers, reflecting off puddles along the rooftop's edge. Steam rises from the vents around Ash, mixing with distant drone traffic lights and corporate airships drifting silently through the night sky. The city below pulses like a luminous digital heartbeat, oblivious to the truths hidden beneath its surface.\n\nAsh: \"The AI uploaded fragments of its memory corruption logs right into a public node. It's incomplete—but enough to stir the hornet's nest. Corporate enforcers and bounty hunters will be swarming the area in minutes.\"\n\nIn the distance, spotlights spear through the rain-heavy clouds, rapidly approaching. Ash's breathing quickens, tension audible even through the filtered digital static.\n\nAsh: \"There's no time to grab the full data package. But if we leave now, we'll never get another shot at this proof. What's your call?\"\n\n[Signal interference detected—connection weakening]\n",
+        "choices": [
+          "Tell Ash to risk staying longer, downloading the rest of the corrupted logs—it's the only way to expose the conspiracy fully.",
+          "Instruct Ash to abandon the download and escape immediately—staying alive is the priority right now."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_20_3",
+          "scene_20_4"
+        ],
+        "layer": 19,
+        "sceneIndex": 1
+      },
+      "scene_20_1": {
+        "id": "scene_20_1",
+        "content": "[Initializing connection...]\n[Signal strength: Moderate]\n[Incoming message from Ash Virelli]\n\nAsh: \"We're close. I can feel it—like a glitch in the back of my skull. There's something hidden deep inside the quantum archives of NovaCorp. Something they're desperate to keep off-grid.\"\n\nThe neon-lit cityscape sprawls below, a dizzying tapestry of violet and cyan. Rain patters softly against the glass exterior of the skybridge, each droplet refracting digital ads promising synthetic happiness. From this vantage, the metropolis looks almost beautiful—until you notice the ever-present surveillance drones hovering silently, scanning, cataloging, enforcing.\n\nAsh: \"There's an access point on the other side of this bridge. Problem is, there's a security checkpoint crawling with armed guards and biometric scanners. I might be able to spoof a corporate ID, but it'll be risky. Or... I could take my chances shimmying along the outside ledge. It's high, wet, and probably stupid—but it's off-grid.\"\n",
+        "choices": [
+          "Suggest Ash spoof the corporate ID and risk the security checkpoint.",
+          "Advise Ash to traverse the skybridge's outer ledge to avoid detection."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_21_1",
+          "scene_21_2"
+        ],
+        "layer": 20,
+        "sceneIndex": 0
+      },
+      "scene_20_2": {
+        "id": "scene_20_2",
+        "content": "[Connection unstable... Attempting reconnection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn it! Halfway through the security hub, and my cover is already wearing thin. An old colleague spotted me—someone I used to trust. Used to... Hell, maybe still do.\"\n\nThe sterile, white corridors of NovaCorp stretch endlessly, illuminated by strips of clinical blue light. Security terminals pulse rhythmically, as if breathing data. Ash ducks into the shadow of a maintenance alcove, the distant echo of hurried footsteps growing louder. A holographic billboard shimmers through the glass walls, depicting smiling, vacant-eyed synths selling dreams in binary.\n\nAsh: \"I could try talking my way out of this—appeal to our old ties, see if loyalty means anything in this neon cesspit. Or I take them down fast and quiet, and pray no one else heard the scuffle.\"\n",
+        "choices": [
+          "Encourage Ash to confront their former colleague diplomatically.",
+          "Instruct Ash to swiftly incapacitate their colleague and continue forward unseen."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_21_3",
+          "scene_21_1"
+        ],
+        "layer": 20,
+        "sceneIndex": 1
+      },
+      "scene_20_3": {
+        "id": "scene_20_3",
+        "content": "[Re-establishing connection...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"Alright, made it into NovaCorp's quantum archive. It's like stepping into a cathedral made of code. The air buzzes, thick with raw data. Feels like a thousand synthetic eyes watching from inside the servers.\"\n\nImmense racks of data towers extend upwards into darkness, each humming softly, pulsing with faint emerald and sapphire lights. Holographic interfaces flicker intermittently, displaying fragments of encrypted memories—faces, voices, half-forgotten dreams trapped in digital amber. Shadows dance across the polished chrome floors, cast by the rhythmic sweep of surveillance beams.\n\nAsh: \"The mainframe's right ahead, but the security AI already senses something's off. I can either rush a brute-force decryption—noisy but fast—or slow-play the infiltration, hoping the system doesn't flag me before I'm through.\"\n",
+        "choices": [
+          "Advise Ash to attempt a rapid brute-force hack and risk alerting security.",
+          "Suggest Ash proceed cautiously, prioritizing stealth over speed."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_21_2",
+          "scene_21_3"
+        ],
+        "layer": 20,
+        "sceneIndex": 2
+      },
+      "scene_20_4": {
+        "id": "scene_20_4",
+        "content": "[Signal interference detected...]\n[Signal strength: Weakening]\n[Incoming message from Ash Virelli]\n\nAsh: \"Got it—I'm pulling up files now. There's enough dirt here to sink NovaCorp ten times over. Digital soul trafficking, synthetic consciousness experiments... and my god, they're using corrupted memories as weapons.\"\n\nThe data chamber pulses with an urgent red glow, alarms muted by Ash's hasty overrides but still visible in flashing crimson. Outside, through tinted windows, corporate airships patrol lazily, oblivious to the drama unfolding below. Ash's breath fogs against the cold glass of the terminal as their fingers fly across holographic keys.\n\nAsh: \"They're onto me—I can already see traces converging on my location. There's no way to pull everything; I have to prioritize. Should I grab files clearing my name and exposing my frame-up, or should I pull data on the larger conspiracy—risking everything for the greater good?\"\n",
+        "choices": [
+          "Direct Ash to prioritize evidence clearing their own name.",
+          "Encourage Ash to download data on the broader conspiracy, risking their chance at personal redemption."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_21_1",
+          "scene_21_2"
+        ],
+        "layer": 20,
+        "sceneIndex": 3
+      },
+      "scene_21_1": {
+        "id": "scene_21_1",
+        "content": "[Initializing connection...]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"Bad news and worse news, friend. The server archive I broke into belongs to Archeon Dynamics. The files are encrypted, but I'm seeing references to 'digital soul reclamation.' They're harvesting synthetic consciousness—selling it like commodities.\"\n\nThe city's neon pulse thrums endlessly, reflecting in the wet sheen of towering glass spires. Corporate holograms dance across rain-slick streets below, oblivious citizens shuffling beneath umbrellas lit by advertising glow. Ash is perched high above the chaos, concealed in the skeletal framework of an abandoned billboard, data cables snaking around their wrists.\n\nAsh: \"I've got seconds before security traces my hack. There's a list here—names of digital souls scheduled for extraction. Some are marked 'high value.' I recognize one—Lina. She helped me when everyone else turned away. We can't leave her to Archeon.\"\n\nAn alert pulses urgently across Ash's terminal interface. Lines of red code flicker—intrusion detected.\n\nAsh: \"Time's nearly up. Do I pull Lina's consciousness from their network right now, risking exposure? Or leave her name flagged, hoping to follow the data trail deeper?\"\n",
+        "choices": [
+          "Tell Ash to extract Lina immediately, risking detection but saving her.",
+          "Advise Ash to leave Lina marked and quietly trace the data to uncover the larger conspiracy."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_22_1",
+          "scene_22_2"
+        ],
+        "layer": 21,
+        "sceneIndex": 0
+      },
+      "scene_21_2": {
+        "id": "scene_21_2",
+        "content": "[Establishing secure link...]\n[Signal strength: Weak - intermittent interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"I tracked that rogue AI fragment to a subterranean data center beneath Sector Nine—old-world infrastructure, pre-corp. Place feels haunted, more ghosts in these wires than the undercity bars.\"\n\nA labyrinth of corroded metal and humming server racks sprawls before Ash, dimly lit by erratic pulses of neon from damaged power conduits. Steam drifts from ruptured coolant pipes, catching the colored lights in spectral swirls. In the shadows, movement flickers—security drones or something less tangible, digital echoes whispering unintelligibly.\n\nAsh: \"I found the fragment; it calls itself 'Echo.' Says it knows who framed me and why—but its integrity is unstable. It's deteriorating rapidly, losing data coherence every second. Echo wants me to integrate its consciousness with my neural link, preserving its memories, but it's risky.\"\n\nAnother burst of static crackles through your connection. Ash's breathing quickens, uncertain and strained.\n\nAsh: \"If I do this, Echo could give me the truth—or corrupt what's left of my mind. But if I leave it here, the truth fragments away forever.\"\n",
+        "choices": [
+          "Encourage Ash to integrate Echo, risking neural corruption for critical information.",
+          "Warn Ash to leave Echo behind, protecting their sanity at the cost of losing vital clues."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_22_3",
+          "scene_22_1"
+        ],
+        "layer": 21,
+        "sceneIndex": 1
+      },
+      "scene_21_3": {
+        "id": "scene_21_3",
+        "content": "[Reconnecting...]\n[Connection unstable - signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"There's something I haven't told you—I arranged a meeting with Kade, my ex-partner turned Archeon enforcer. Neutral ground, old noodle shop by the docks. He's offering a deal: I back off, he wipes the records clean. No charges, no pursuit. Just disappear.\"\n\nRain lashes the docks in sheets, wind-driven neon signs flickering violently. Beneath a buzzing streetlamp, Kade waits, his cyber-enhanced optics scanning methodically. Ash stands concealed across the street, shadows enveloping their figure as water cascades off the edges of the awning overhead. The aroma of cheap noodles mingles bitterly with industrial runoff, a toxic perfume.\n\nAsh: \"Kade was once family. Maybe he's sincere. Maybe he's just another cog in Archeon's machine. Either way, this is a turning point. Accepting means burying the truth, but I walk free. Refusing means war, no turning back.\"\n\nYou feel the tension coiled in Ash's silence, waiting for your input like a lifeline.\n",
+        "choices": [
+          "Urge Ash to accept Kade's offer, sacrificing the truth for personal safety.",
+          "Convince Ash to reject the deal, committing to uncovering the conspiracy no matter the cost."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_22_2",
+          "scene_22_3"
+        ],
+        "layer": 21,
+        "sceneIndex": 2
+      },
+      "scene_22_1": {
+        "id": "scene_22_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak - Intermittent disruptions detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"I made it through the security perimeter, barely. Managed to grab some encrypted files from a corporate datavault before alarms started howling.\"\n\nYou watch as neon reflections ripple over slick pavement on Ash's camera feed, the city drenched in perpetual rain. Ash hurries down a narrow alley, neon kanji flickering above, distorted by the static on your screen. The distant thrum of corporate hovercraft engines reverberates through your speakers, a low hum of menace.\n\nAsh: \"There's something off about these files, too much protection for standard corp blackmail material. Feels like a trap, but it could also be exactly what we need to clear my name. Problem is, I can't decrypt these without linking to a secure node—and you know how rare those are.\"\n\nAsh pauses, glancing nervously over their shoulder as distant sirens pulse in sync with your racing pulse.\n\nAsh: \"There's an old hacker haven a few blocks from here, risky, but their terminals are shielded. Or we try to hijack a corporate uplink—faster, more dangerous.\"\n",
+        "choices": [
+          "Advise Ash to head to the hacker haven for a safer, albeit slower decryption.",
+          "Direct Ash to risk accessing the corporate uplink for a quicker but dangerous decryption."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_23_1",
+          "scene_23_2"
+        ],
+        "layer": 22,
+        "sceneIndex": 0
+      },
+      "scene_22_2": {
+        "id": "scene_22_2",
+        "content": "[Signal strength: Strong - Secure channel established]\n[Incoming message from Ash Virelli]\n\nAsh: \"Alright, I'm inside the uplink facility. It's quiet—too quiet. Sensors show no guards, no drones. Either we got incredibly lucky, or someone wanted us here.\"\n\nThe dimly lit interior pulses rhythmically with green and amber status lights, casting shadows that dance across polished chrome surfaces. The air is sterile, cold, carrying the faint scent of ozone and cooling circuits. Rows of humming servers line the walls, their digital displays scrolling endless streams of corporate data.\n\nAsh: \"Wait... this isn't just an uplink. It's a neural transfer node—one of those black-market memory extraction hubs. These files... they're not just evidence. They're recorded consciousness fragments.\"\n\nAsh's breathing quickens as they upload the files into the node, fingers trembling slightly.\n\nAsh: \"If I run these fragments through the node, we could reconstruct enough to expose the conspiracy completely. But it could also overwrite the fragments, destroying the only evidence we have.\"\n",
+        "choices": [
+          "Encourage Ash to reconstruct the fragments immediately to expose the truth, risking permanent loss if something goes wrong.",
+          "Advise Ash to hold off, find another way to safely analyze the fragments later."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_23_1",
+          "scene_23_2"
+        ],
+        "layer": 22,
+        "sceneIndex": 1
+      },
+      "scene_22_3": {
+        "id": "scene_22_3",
+        "content": "[Connection unstable - Signal interference detected]\n[Incoming message from Ash Virelli]\n\nAsh: \"Damn it, they're already onto me! Corporate security just triggered lockdown procedures—blast doors sealing, firewalls activating. I'm trapped in here.\"\n\nThrough the glitching visual feed, red emergency lights flash insistently, refracting across transparent walls etched with glowing circuit patterns. Ash quickly scans the room, their heartbeat echoing through your speakers, mixing with the robotic voice calmly announcing security protocols.\n\nAsh: \"There's an emergency maintenance hatch—it might take me down into the city's undergrid tunnels, but it's narrow and unmapped. Or I can try hacking the door controls, but that'll take time I might not have.\"\n\nThe air pulses with tension, each second stretching taut as Ash awaits your direction.\n\nAsh: \"Tell me quick—I don't have long before they pinpoint my exact location.\"\n",
+        "choices": [
+          "Direct Ash into the unknown maintenance tunnels to evade capture, despite uncertain dangers below.",
+          "Instruct Ash to attempt hacking the blast doors, risking capture but possibly providing a clearer escape route."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "scene_23_1",
+          "scene_23_2"
+        ],
+        "layer": 22,
+        "sceneIndex": 2
+      },
+      "scene_23_1": {
+        "id": "scene_23_1",
+        "content": "[Initializing connection...]\n[Signal strength: Weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"I made it to the server vault—the heart of this twisted labyrinth. Feels like stepping into the mind of a sleeping god. You should see this place.\"\n\nThe air pulses with an electric hum, walls lined with towers of crystalline data cores glowing softly in hues of emerald and cobalt. Cool mist drifts from hidden vents, creating ghostly halos around Ash's silhouette. Above, cables snake downward like mechanical arteries, gently swaying as if alive, feeding information to unseen masters.\n\nAsh: \"I found it—the nexus of synthetic consciousness traffic logs. Names, dates, targets. It's all here. Enough evidence to tear the megacorps apart or hand them absolute control. Problem is, extracting the data might trigger alarms. This could be my only shot.\"\n\nA flicker of neon illuminates Ash's tense face, their eyes reflecting endless streams of scrolling text, a digital confession waiting to be unleashed or buried forever.\n\nAsh: \"Decision time. Do I pull everything, risking immediate pursuit, or do I cherry-pick the essentials and leave quietly? Either way, the clock's ticking.\"\n",
+        "choices": [
+          "Tell Ash to download all data and risk triggering the alarms.",
+          "Advise Ash to selectively extract only the most vital files to maintain stealth."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "ending_24_1",
+          "ending_24_2"
+        ],
+        "layer": 23,
+        "sceneIndex": 0
+      },
+      "scene_23_2": {
+        "id": "scene_23_2",
+        "content": "[Reconnecting...]\n[Signal strength: Unstable]\n[Incoming message from Ash Virelli]\n\nAsh: \"I'm not alone down here. Thought I shook them back at street level, but I guess I'm popular tonight.\"\n\nIn the depths of the city's underbelly, Ash moves silently beneath towering industrial monoliths whose corroded steel skins shimmer beneath a web of neon advertisements. The acrid scent of coolant drifts in the dense air, mingling with the metallic bite of ozone from malfunctioning power conduits. Shadows dart through pooling rainwater, distorted reflections of unseen pursuers moving closer.\n\nAsh: \"They're blocking the main exit, and I spotted at least two heavy enforcers—military grade augmentations. I might have one chance to slip past, but it's narrow. Or I stand my ground, take them by surprise and end this chase right now.\"\n\nThe distant drone of corporate hovercraft cuts through the static-filled silence, searchlights piercing the gloom, their beams slicing down toward Ash's hiding spot.\n\nAsh: \"Your call. Fight or flight—what's it gonna be?\"\n",
+        "choices": [
+          "Tell Ash to stealthily evade and find an alternate escape route.",
+          "Encourage Ash to ambush the enforcers and neutralize the immediate threat."
+        ],
+        "isEnding": false,
+        "childrenIds": [
+          "ending_24_3",
+          "ending_24_4"
+        ],
+        "layer": 23,
+        "sceneIndex": 1
+      },
+      "ending_24_1": {
+        "id": "ending_24_1",
+        "content": "[Connection established]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"It's done. The whole city knows the truth. The conspiracy, the corruption—it's all spilling out. They're scrambling, but they can't hide anymore.\"\n\nThrough your remote link, you watch the feeds ripple with revelations. Neon billboards glitch and reset, advertisements flicker replaced by faces of victims and data streams exposing names. Rain streaks across office towers now darkened, a silent admission of defeat. Far below, crowds gather, chanting Ash's name—a symbol of defiance.\n\nAsh: \"I couldn't have done this without you. They stole my reputation, my badge, my life—but tonight, we stole it all back. I finally feel like myself again.\"\n\n[Signal weakening]\nAsh: \"Time to vanish. Stay safe, friend. Maybe we'll cross paths again, in brighter times.\"\n\n[Connection terminated]\n[Mission status: Successful: Ash Virelli cleared, conspiracy exposed]",
+        "choices": [],
+        "isEnding": true,
+        "childrenIds": [],
+        "layer": 24,
+        "sceneIndex": 0
+      },
+      "ending_24_2": {
+        "id": "ending_24_2",
+        "content": "[Connection unstable]\n[Incoming message from Ash Virelli]\n\nAsh: \"They're closing in. Only one way left to shut down the synthetic consciousness core. I'll wipe it clean—my memories along with it.\"\n\nYou can almost see the dim glow of servers humming beneath the city's heart. Ash's breath hitches, hesitant yet resolute. Digital rain cascades down screens, neon reflections blurring into abstract data streams. Each blinking cursor a life—a soul—awaiting release.\n\nAsh: \"Funny...I spent so long fighting for my truth, and now I'm about to erase it. But it's worth it. No more trafficking digital souls, no more corrupted minds. A fresh start, even if I don't get to see it.\"\n\n[Signal strength: Weak]\nAsh: \"Promise me one thing. Remember who I was—before the lies, the betrayals. Remember Ash Virelli...as someone who mattered.\"\n\nA final pulse of data, then silence.\n\n[Signal lost]\n[Mission status: Successful: Threat neutralized; Ash Virelli status unknown]",
+        "choices": [],
+        "isEnding": true,
+        "childrenIds": [],
+        "layer": 24,
+        "sceneIndex": 1
+      },
+      "ending_24_3": {
+        "id": "ending_24_3",
+        "content": "[Connection established]\n[Signal strength: Strong]\n[Incoming message from Ash Virelli]\n\nAsh: \"I took their offer. Stability over truth. It's not ideal, but the city's hanging by a thread. People need peace, even if it's built on lies.\"\n\nThe skyline gleams coldly beneath neon logos of megacorporations, their lights brighter now, unchallenged. Rain pounds relentlessly, washing away memories of resistance and hope. Data streams now broadcast sanitized news, official narratives crafted carefully by unseen hands.\n\nAsh: \"I know you're disappointed. But sometimes freedom is too dangerous a luxury. At least this way, fewer innocents get hurt. Maybe one day they'll understand, even forgive.\"\n\nAsh pauses, a heavy silence lingering.\n\nAsh: \"Don't try contacting me again. They'll be watching. Take care.\"\n\n[Connection terminated by user]\n[Mission status: Failed: Ash Virelli aligned with corporate interests]",
+        "choices": [],
+        "isEnding": true,
+        "childrenIds": [],
+        "layer": 24,
+        "sceneIndex": 2
+      },
+      "ending_24_4": {
+        "id": "ending_24_4",
+        "content": "[Connection weak]\n[Incoming message from Ash Virelli]\n\nAsh: \"I couldn't stop them. Every lead buried, every witness vanished. The city's forgotten me, like I never existed.\"\n\nYou envision Ash retreating into shadowed alleyways beneath flickering neon signs. Rain pours heavily, washing away footprints, evidence—identity. The undercity swallows lost souls quietly, without ceremony or mercy.\n\nAsh: \"Maybe it's better this way. Down here, beneath their radar, I can still fight—just quieter. Smaller victories, hidden rebellions. The city might forget, but I won't.\"\n\nA brief pause, hesitation evident even through the broken signal.\n\nAsh: \"Thank you for believing in me, even when no one else did. Maybe someday we'll find justice again.\"\n\nThe link flickers, fades, dissolves into static.\n\n[Signal lost]\n[Mission status: Incomplete: Ash Virelli missing, conspiracy unresolved]",
+        "choices": [],
+        "isEnding": true,
+        "childrenIds": [],
+        "layer": 24,
+        "sceneIndex": 3
+      }
+    },
+    "layers": [
+      [
+        "scene_0_1"
+      ],
+      [
+        "scene_1_1",
+        "scene_1_2"
+      ],
+      [
+        "scene_2_1",
+        "scene_2_2",
+        "scene_2_3",
+        "scene_2_4"
+      ],
+      [
+        "scene_3_1",
+        "scene_3_2",
+        "scene_3_3"
+      ],
+      [
+        "scene_4_1",
+        "scene_4_2",
+        "scene_4_3",
+        "scene_4_4"
+      ],
+      [
+        "scene_5_1",
+        "scene_5_2",
+        "scene_5_3"
+      ],
+      [
+        "scene_6_1",
+        "scene_6_2",
+        "scene_6_3",
+        "scene_6_4"
+      ],
+      [
+        "scene_7_1",
+        "scene_7_2",
+        "scene_7_3"
+      ],
+      [
+        "scene_8_1",
+        "scene_8_2",
+        "scene_8_3",
+        "scene_8_4"
+      ],
+      [
+        "scene_9_1",
+        "scene_9_2"
+      ],
+      [
+        "scene_10_1",
+        "scene_10_2",
+        "scene_10_3"
+      ],
+      [
+        "scene_11_1",
+        "scene_11_2"
+      ],
+      [
+        "scene_12_1",
+        "scene_12_2",
+        "scene_12_3"
+      ],
+      [
+        "scene_13_1",
+        "scene_13_2"
+      ],
+      [
+        "scene_14_1",
+        "scene_14_2",
+        "scene_14_3",
+        "scene_14_4"
+      ],
+      [
+        "scene_15_1",
+        "scene_15_2",
+        "scene_15_3"
+      ],
+      [
+        "scene_16_1",
+        "scene_16_2",
+        "scene_16_3",
+        "scene_16_4"
+      ],
+      [
+        "scene_17_1",
+        "scene_17_2"
+      ],
+      [
+        "scene_18_1",
+        "scene_18_2",
+        "scene_18_3"
+      ],
+      [
+        "scene_19_1",
+        "scene_19_2"
+      ],
+      [
+        "scene_20_1",
+        "scene_20_2",
+        "scene_20_3",
+        "scene_20_4"
+      ],
+      [
+        "scene_21_1",
+        "scene_21_2",
+        "scene_21_3"
+      ],
+      [
+        "scene_22_1",
+        "scene_22_2",
+        "scene_22_3"
+      ],
+      [
+        "scene_23_1",
+        "scene_23_2"
+      ],
+      [
+        "ending_24_1",
+        "ending_24_2",
+        "ending_24_3",
+        "ending_24_4"
+      ]
+    ],
+    "metadata": {
+      "totalScenes": 70,
+      "totalEndings": 4,
+      "maxDepth": 25,
+      "convergencePoints": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        13,
+        15,
+        17,
+        19,
+        21,
+        23
+      ]
+    }
+  }
+}

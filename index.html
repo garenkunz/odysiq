@@ -14,15 +14,220 @@
             box-sizing: border-box;
         }
         
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
         body {
             background-color: #000;
             color: #fff;
-            margin: 0;
-            padding: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Profile/Auth UI */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 99999;
+            min-height: 90px;
+            box-shadow: 0 3px 20px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .profile-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .user-info {
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 12px;
+        }
+
+        .username {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .admin-badge {
+            color: #ff6b6b;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sign-out {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+
+        .sign-out:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .auth-button {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .auth-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-button.primary {
+            background: rgba(74, 171, 247, 0.2);
+            border-color: #4dabf7;
+        }
+
+        .cancel-button {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: #ff6b6b;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: #51cf66;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
         }
         
         .story-container {
@@ -31,6 +236,7 @@
             gap: 25px;
             width: 90%;
             max-width: 500px;
+            margin-top: 60px; /* Account for header */
         }
         
         .story-button {
@@ -121,21 +327,242 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="logo">Odysiq</div>
+        <div class="profile-section">
+            <div class="user-info" id="userInfo">
+                <div class="username" id="username"></div>
+                <div class="admin-badge" id="adminBadge">Admin</div>
+                <button class="sign-out" onclick="signOut()">Sign Out</button>
+            </div>
+            <div class="profile-icon" id="profileIcon" onclick="toggleAuth()">
+                👤
+            </div>
+        </div>
+    </div>
+
     <div class="story-container">
-        <button class="story-button final-seconds" onclick="window.location.href='Final-Seconds/final-seconds-index.html'">
-            <h2 class="story-title">Final Seconds</h2>
-            <p class="story-desc">Guide a hostage negotiator through life-or-death decisions with every choice you make.</p>
-        </button>
-        
-        <button class="story-button lost-horizons" onclick="window.location.href='lost-horizons.html'">
-            <h2 class="story-title">Lost Horizons</h2>
-            <p class="story-desc">Navigate an uncharted island's mysteries as you search for a way back to civilization.</p>
-        </button>
-        
-        <button class="story-button quantum-paradox" onclick="window.location.href='quantum-paradox.html'">
-            <h2 class="story-title">Quantum Paradox</h2>
-            <p class="story-desc">Make choices that alter reality as you travel through parallel universes and temporal anomalies.</p>
+        <!-- ── NEW: Ghost Logic tile ── -->
+        <button class="story-button ghost-logic"
+                onclick="window.location.href='Ghost Logic/story-player.html'">
+            <h2 class="story-title">Ghost Logic</h2>
+            <p class="story-desc">
+                Clear your name in a neon-drenched conspiracy where an AI weapon thinks with your conscience.
+            </p>
         </button>
     </div>
+
+    <!-- Authentication Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <h2 id="modalTitle">Sign In</h2>
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="authUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="authPassword" required>
+                </div>
+                <div class="checkbox-group" id="adminCheckbox" style="display: none;">
+                    <input type="checkbox" id="isAdmin">
+                    <label for="isAdmin">Admin Access (for testing)</label>
+                </div>
+                <div class="auth-buttons">
+                    <button type="button" class="auth-button cancel-button" onclick="closeAuthModal()">Cancel</button>
+                    <button type="submit" class="auth-button primary" id="authSubmit">Sign In</button>
+                </div>
+                <div id="authMessage"></div>
+            </form>
+            <p style="margin-top: 15px; text-align: center; font-size: 12px;">
+                <a href="#" onclick="toggleAuthMode()" style="color: #4dabf7; text-decoration: none;">
+                    <span id="authToggleText">Don't have an account? Sign up</span>
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Authentication System
+        let isSignUpMode = false;
+        let currentUser = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentUser();
+            updateUI();
+        });
+
+        function loadCurrentUser() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+            }
+        }
+
+        function saveCurrentUser() {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            } else {
+                localStorage.removeItem('currentUser');
+            }
+        }
+
+        function updateUI() {
+            const profileIcon = document.getElementById('profileIcon');
+            const userInfo = document.getElementById('userInfo');
+            const username = document.getElementById('username');
+            const adminBadge = document.getElementById('adminBadge');
+
+            if (currentUser) {
+                profileIcon.textContent = currentUser.username.charAt(0).toUpperCase();
+                username.textContent = currentUser.username;
+                userInfo.style.display = 'flex';
+                adminBadge.style.display = currentUser.isAdmin ? 'block' : 'none';
+            } else {
+                profileIcon.textContent = '👤';
+                userInfo.style.display = 'none';
+            }
+        }
+
+        function toggleAuth() {
+            if (currentUser) {
+                // User is logged in, show user info (already visible)
+                return;
+            } else {
+                // User not logged in, show auth modal
+                showAuthModal();
+            }
+        }
+
+        function showAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+            resetAuthForm();
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+            resetAuthForm();
+        }
+
+        function resetAuthForm() {
+            isSignUpMode = false;
+            updateAuthModal();
+            document.getElementById('authForm').reset();
+            document.getElementById('authMessage').textContent = '';
+        }
+
+        function toggleAuthMode() {
+            isSignUpMode = !isSignUpMode;
+            updateAuthModal();
+            document.getElementById('authMessage').textContent = '';
+        }
+
+        function updateAuthModal() {
+            const modalTitle = document.getElementById('modalTitle');
+            const authSubmit = document.getElementById('authSubmit');
+            const authToggleText = document.getElementById('authToggleText');
+            const adminCheckbox = document.getElementById('adminCheckbox');
+
+            if (isSignUpMode) {
+                modalTitle.textContent = 'Sign Up';
+                authSubmit.textContent = 'Sign Up';
+                authToggleText.textContent = 'Already have an account? Sign in';
+                adminCheckbox.style.display = 'flex';
+            } else {
+                modalTitle.textContent = 'Sign In';
+                authSubmit.textContent = 'Sign In';
+                authToggleText.textContent = "Don't have an account? Sign up";
+                adminCheckbox.style.display = 'none';
+            }
+        }
+
+        function showMessage(message, isError = false) {
+            const messageEl = document.getElementById('authMessage');
+            messageEl.textContent = message;
+            messageEl.className = isError ? 'error-message' : 'success-message';
+        }
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('storyPathsUsers') || '[]');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('storyPathsUsers', JSON.stringify(users));
+        }
+
+        function signIn(username, password) {
+            const users = getUsers();
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = { username: user.username, isAdmin: user.isAdmin };
+                saveCurrentUser();
+                updateUI();
+                closeAuthModal();
+                showMessage('Signed in successfully!');
+                setTimeout(() => showMessage(''), 2000);
+                return true;
+            } else {
+                showMessage('Invalid username or password', true);
+                return false;
+            }
+        }
+
+        function signUp(username, password, isAdmin) {
+            const users = getUsers();
+            
+            if (users.find(u => u.username === username)) {
+                showMessage('Username already exists', true);
+                return false;
+            }
+
+            const newUser = { username, password, isAdmin };
+            users.push(newUser);
+            saveUsers(users);
+
+            currentUser = { username, isAdmin };
+            saveCurrentUser();
+            updateUI();
+            closeAuthModal();
+            showMessage('Account created successfully!');
+            setTimeout(() => showMessage(''), 2000);
+            return true;
+        }
+
+        function signOut() {
+            currentUser = null;
+            saveCurrentUser();
+            updateUI();
+        }
+
+        // Auth form submission
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('authUsername').value.trim();
+            const password = document.getElementById('authPassword').value;
+            const isAdmin = document.getElementById('isAdmin').checked;
+
+            if (!username || !password) {
+                showMessage('Please fill in all fields', true);
+                return;
+            }
+
+            if (isSignUpMode) {
+                signUp(username, password, isAdmin);
+            } else {
+                signIn(username, password);
+            }
+        });
+
+        // Close modal on outside click
+        document.getElementById('authModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAuthModal();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -13,7 +13,6 @@
     rel="stylesheet"
   />
 
-  <!-- ─── ALL YOUR EXISTING CSS ─────────────────────────────────────────────────── -->
   <style>
     * {
       margin: 0;
@@ -42,45 +41,215 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      margin-top: 60px; /* Account for header */
     }
 
     .message-area {
       flex-grow: 1;
-      overflow: hidden; /* Hide overflow by default - no scrollbar */
+      overflow-y: auto; /* Always allow scrolling */
       margin-bottom: 20px;
       padding: 20px 10px 20px 0;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end; /* Align messages to bottom */
+      justify-content: flex-start; /* Changed from flex-end to prevent content hiding */
       position: relative;
+      min-height: 200px; /* Ensure minimum visible area */
     }
 
     /* When history is shown, allow scrolling */
     .message-area.show-history {
       overflow-y: auto;
-      /* Keep messages at bottom - don't change justify-content */
     }
 
     .message {
-      margin-bottom: 15px;
       animation: slideInFromBottom 0.5s ease-out;
-      padding: 12px;
+      padding: 2px 8px; /* Reduced from 4px 8px */
       border-radius: 4px;
-      border-left: 3px solid transparent;
       position: relative;
       flex-shrink: 0; /* Prevent messages from shrinking */
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      margin-bottom: 2px; /* Reduced from default */
     }
 
     .message p {
       margin: 0;
-      line-height: 1.6;
+      line-height: 1.3; /* Reduced from 1.6 */
+      color: inherit; /* Ensure text inherits color */
+      opacity: 1; /* Always visible */
     }
 
     /* Messages that are pushed out of view fade but maintain their space */
     .message.faded {
-      opacity: 0.1; /* Very faded but still visible */
+      opacity: 0.3; /* More visible than before */
       transition: opacity 0.8s ease-out;
-      /* Don't collapse height or change layout */
+    }
+
+    /* Improved narrator styling - instant display */
+    .message .narrator {
+      display: block;
+      font-style: italic;
+      color: #ccc;
+      margin-bottom: 0; /* Reduced from 0.1em */
+      opacity: 1;
+      /* No animation - instant display */
+    }
+
+    .message .noise {
+      display: block;
+      font-style: italic;
+      color: #f0eaea;
+      margin-bottom: 0; /* Reduced from 0.1em */
+      opacity: 1;
+      /* No animation - instant display */
+    }
+
+    /* Signal messages - special styling for [bracketed] content */
+    .message .signal {
+      display: block;
+      font-family: 'Courier New', monospace;
+      color: #ffd43b; /* Yellow/amber color */
+      padding: 3px 6px; /* Further reduced from 4px 8px */
+      margin: 0.05em 0; /* Further reduced from 0.1em 0 */
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      animation: signalFlicker 0.6s ease-out;
+      position: relative;
+    }
+
+    .message .signal::before {
+      content: "";
+    }
+
+    /* Quick fade animation for non-dialogue content */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Smooth fade-in animation for narrator text */
+    @keyframes narratorFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .narrator-fade-in {
+      animation: narratorFadeIn 2.5s ease-out;
+    }
+
+    /* Loading-style fade animations */
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0.2;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* New unstable connection animation - 3 fade cycles */
+    @keyframes unstableConnection {
+      0% { opacity: 1; }
+      8% { opacity: 0.2; }
+      16% { opacity: 1; }
+      24% { opacity: 0.2; }
+      32% { opacity: 1; }
+      40% { opacity: 0.2; }
+      48% { opacity: 1; }
+      52% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+
+    .fade-out-effect {
+      animation: fadeOut 0.9s ease-in-out;
+      opacity: 0.2;
+    }
+
+    .fade-in-effect {
+      animation: fadeIn 0.9s ease-in-out;
+      opacity: 1;
+    }
+
+    .unstable-effect {
+      animation: unstableConnection 7s ease-in-out;
+      opacity: 1;
+    }
+
+    /* Signal flicker animation */
+    @keyframes signalFlicker {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      40% { opacity: 0.7; }
+      60% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+
+    /* Improved dialogue styling - only dialogue gets typing animation */
+    .message .dialogue {
+      display: block;
+      background: rgba(74, 171, 247, 0.15);
+      color: #fff;
+      margin-bottom: 0; /* Reduced from 0.1em */
+      padding: 4px 6px; /* Reduced from 6px 8px */
+      border-radius: 4px;
+    }
+
+    /* User choice text styling - matches dialogue but different color */
+    .message .user-choice-text {
+      display: block;
+      background: rgba(145, 122, 41, 0.342);
+      color: #fff;
+      margin-bottom: 0;
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
+
+    /* Character names in dialogue */
+    .message .dialogue b {
+      font-weight: 600;
+      color: #4dabf7; /* Highlight character names */
+    }
+
+    .choices {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      margin-top: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .choices.visible {
+      opacity: 1;
+    }
+
+    /* Make sure text wraps properly */
+    .message p {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
     }
 
     /* New animation for messages appearing */
@@ -96,36 +265,27 @@
     }
 
     .agent {
-      background: rgba(74, 171, 247, 0.1);
-      border-left-color: #4dabf7;
-      color: #fff;
+      padding: 2px 8px; /* Reduced from 4px 8px */
+      border-radius: 6px;
+      margin-bottom: 2px; /* Reduced from 0.1em */
     }
 
     .suspect {
-      background: rgba(255, 107, 107, 0.1);
       border-left-color: #ff6b6b;
       color: #ff6b6b;
     }
 
     .system {
-      background: rgba(255, 255, 255, 0.05);
-      border-left-color: #666;
-      color: #999;
-      font-style: italic;
-      font-size: 13px;
+      border-radius: 6px;
+      padding: 2px 8px; /* Reduced from 4px 8px */
+      margin-bottom: 2px; /* Reduced from 0.1em */
+      color: #f8d7da;
     }
 
     .user-choice {
-      background: rgba(81, 207, 102, 0.1);
-      border-left-color: #51cf66;
-      color: #51cf66;
-    }
-
-    .narrator {
-      background: rgba(255, 212, 59, 0.1);
-      border-left-color: #ffd43b;
-      color: #ffd43b;
-      font-style: italic;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 2px;
     }
 
     .waiting-message {
@@ -145,9 +305,10 @@
       font-weight: 600;
       margin-bottom: 5px;
       font-size: 11px;
-      opacity: 0.7;
+      opacity: 0.9; /* More visible */
       text-transform: uppercase;
       letter-spacing: 1px;
+      color: #4dabf7;
     }
 
     .typing-cursor {
@@ -159,17 +320,11 @@
       margin-left: 2px;
     }
 
-    .choices {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
     .choice-button {
-      background-color: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-      padding: 16px;
+      background-color: rgba(255, 255, 255, 0.05); /* More visible background */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 6px;
+      padding: 18px;
       color: #fff;
       text-align: left;
       cursor: pointer;
@@ -177,11 +332,13 @@
       font-family: 'Fira Code', monospace;
       letter-spacing: 0.5px;
       position: relative;
+      line-height: 1.4;
+      font-size: 14px;
     }
 
     .choice-button:hover {
-      background-color: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     }
@@ -211,7 +368,7 @@
 
     .admin-controls {
       position: fixed;
-      top: 10px;
+      top: 70px; /* Below header */
       right: 10px;
       background: rgba(20, 20, 20, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -324,13 +481,252 @@
       .story-container {
         width: 98%;
         height: 95vh;
+        margin-top: 70px;
       }
+      
+      .message {
+        padding: 10px;
+        font-size: 14px;
+      }
+      
+      .choice-button {
+        padding: 16px;
+        font-size: 13px;
+      }
+    }
+
+    /* Header styles for consistency across pages */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.95); /* More opaque for better visibility */
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 50;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #fff;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.7;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .profile-icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .profile-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .user-info {
+      display: none;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 11px;
+    }
+
+    .username {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .admin-badge {
+      color: #ff6b6b;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sign-out {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sign-out:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal {
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .modal h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      color: #fff;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .auth-button {
+      flex: 1;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .auth-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .auth-button.primary {
+      background: rgba(74, 171, 247, 0.2);
+      border-color: #4dabf7;
+    }
+
+    .cancel-button {
+      background: rgba(255, 107, 107, 0.1);
+      border-color: #ff6b6b;
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success-message {
+      color: #51cf66;
+      font-size: 12px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Debug styles to help identify invisible text */
+    .debug-mode .message {
+      border: 1px solid rgba(255, 0, 0, 0.3) !important;
+    }
+    
+    .debug-mode .narrator {
+      background: rgba(255, 255, 0, 0.1) !important;
+    }
+    
+    .debug-mode .dialogue {
+      border: 1px solid rgba(0, 255, 0, 0.3) !important;
     }
   </style>
 </head>
 
 <body>
-  <!-- ─── Admin Controls ───────────────────────────────────────────────────────── -->
+  <!-- ─── Header ───────────────────────────────────────────────────────── -->
+  <div class="header">
+    <a href="../index.html" class="logo">Odysiq</a>
+    <div class="profile-section">
+      <div class="user-info" id="userInfo">
+        <div class="username" id="username"></div>
+        <div class="admin-badge" id="adminBadge">Admin</div>
+        <button class="sign-out" onclick="signOut()">Sign Out</button>
+      </div>
+      <div class="profile-icon" id="profileIcon" onclick="toggleAuth()">👤</div>
+    </div>
+  </div>
+
+  <!-- ─── Admin Controls (hidden unless admin mode) ──────────────────────────── -->
   <div class="admin-controls" id="adminControls">
     <div class="admin-toggle">
       <input type="checkbox" id="adminMode" onchange="toggleAdminMode()" />
@@ -340,394 +736,583 @@
       <input type="checkbox" id="skipTimer" disabled />
       <label for="skipTimer">Skip Timers</label>
     </div>
+    <div id="sceneNavigation" style="display: none; margin-top: 10px;">
+      <label style="font-size: 10px; margin-bottom: 5px; display: block;">Jump to Scene:</label>
+      <select id="sceneSelect" style="width: 100%; margin-bottom: 5px; background: #333; color: #fff; border: 1px solid #555; padding: 3px; font-size: 10px;">
+        <option value="">Select Scene...</option>
+        <!-- Populate via JavaScript if you need to navigate directly between scenes -->
+      </select>
+      <button onclick="jumpToScene()" style="padding: 3px 8px; font-size: 10px; width: 100%; margin-bottom: 5px;">
+        Jump to Scene
+      </button>
+    </div>
     <button onclick="resetStory()" style="margin-top: 10px; padding: 5px 10px; font-size: 10px;">
       Reset Story
     </button>
+  </div>
+
+  <!-- ─── Authentication Modal ───────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <h2 id="modalTitle">Sign In</h2>
+      <form id="authForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="authUsername" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="authPassword" required />
+        </div>
+        <div class="checkbox-group" id="adminCheckbox" style="display: none;">
+          <input type="checkbox" id="isAdmin" />
+          <label for="isAdmin">Admin Access (for testing)</label>
+        </div>
+        <div class="auth-buttons">
+          <button type="button" class="auth-button cancel-button" onclick="closeAuthModal()">Cancel</button>
+          <button type="submit" class="auth-button primary" id="authSubmit">Sign In</button>
+        </div>
+        <div id="authMessage"></div>
+      </form>
+      <p style="margin-top: 15px; text-align: center; font-size: 12px;">
+        <a href="#" onclick="toggleAuthMode()" style="color: #4dabf7; text-decoration: none;">
+          <span id="authToggleText">Don't have an account? Sign up</span>
+        </a>
+      </p>
+    </div>
   </div>
 
   <!-- ─── Story Container ───────────────────────────────────────────────────────── -->
   <div class="story-container">
     <div class="message-area" id="messageArea">
       <div class="message system">
-        <p>🔴 LIVE – Secure comm-link established with Agent Emma Carter</p>
+        <p>Loading scene…</p>
       </div>
     </div>
 
-    <div class="choices" id="choices">
-      <button class="choice-button" onclick="startStory()">Begin Mission</button>
+    <div id="choicesContainer">
+      <!-- Choice buttons will be injected here via JavaScript -->
     </div>
+
+    <button class="history-toggle" id="historyToggle">Show History</button>
   </div>
 
-  <!-- ─── History Toggle ────────────────────────────────────────────────────────── -->
-  <div class="history-toggle" id="historyToggle" onclick="toggleHistory()">Show History</div>
+  <script>
+    // ─── Authentication & Admin JS (same as your index.html) ─────────────────
+    let isSignUpMode = false;
+    let currentUser = null;
 
-  <!-- ─── Paywall Overlay ─────────────────────────────────────────────────────── -->
-  <div class="paywall-overlay" id="paywall">
-    <div class="paywall-container">
-      <h1 class="paywall-title">Continue Emma's Story</h1>
-      <p class="paywall-text">
-        The situation is becoming more complex. Your bond with Emma deepens as you guide her through
-        increasingly difficult choices.
-      </p>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCurrentUser();
+      updateUI();
+      initializeStory(); // Kick off Final Seconds story logic
+    });
 
-      <div
-        style="display: flex; justify-content: space-between; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);"
-      >
-        <span style="opacity: 0.7;">Full story access:</span>
-        <span style="font-size: 18px; font-weight: 500;">$4.99</span>
-      </div>
-
-      <button class="continue-button" onclick="unlockStory()">CONTINUE FOR $4.99</button>
-      <a
-        href="index.html"
-        style="display: block; text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none;"
-        >← Return to stories</a
-      >
-    </div>
-  </div>
-
-  <!-- ─── Module-Based Script ─────────────────────────────────────────────────── -->
-  <script type="module">
-    console.log('Module script started');
-    
-    // Import the scenes from both files
-    import { scenes as scene0Scenes } from './scene0.js';
-    import { scenes as scene1Scenes } from './scene1.js';
-
-    // Combine all scenes
-    const storyDatabase = {
-      ...scene0Scenes,
-      ...scene1Scenes
-    };
-
-    try {
-      // Game state management
-      const gameState = {
-        currentScene: null,
-        decisions: [],
-        adminMode: false,
-        skipTimers: false,
-        isUnlocked: false,
-        waitingFor: null,
-        waitingUntil: null
-      };
-
-      // Typing effect system
-      function typeMessage(element, text, speed = 30) {
-        return new Promise(resolve => {
-          element.innerHTML = '';
-          const cursor = document.createElement('span');
-          cursor.className = 'typing-cursor';
-          element.appendChild(cursor);
-          
-          let i = 0;
-          const typeChar = () => {
-            if (i < text.length) {
-              element.insertBefore(document.createTextNode(text[i]), cursor);
-              i++;
-              setTimeout(typeChar, speed + Math.random() * 20);
-            } else {
-              cursor.remove();
-              resolve();
-            }
-          };
-          typeChar();
-        });
+    function loadCurrentUser() {
+      const userData = localStorage.getItem('currentUser');
+      if (userData) {
+        currentUser = JSON.parse(userData);
       }
-
-      // Message history management - simplified
-      function fadeOldMessages() {
-        if (!gameState.showHistory) {
-          const messageArea = document.getElementById('messageArea');
-          const messages = messageArea.querySelectorAll('.message');
-          const maxVisibleMessages = 4; // Keep last 4 messages visible
-          
-          // If we have more than maxVisibleMessages, fade the older ones
-          if (messages.length > maxVisibleMessages) {
-            const messagesToFade = Array.from(messages).slice(0, messages.length - maxVisibleMessages);
-            messagesToFade.forEach(msg => {
-              msg.classList.add('faded');
-              // Note: We don't remove messages from DOM anymore, just fade them
-            });
-          }
-        }
+    }
+    function saveCurrentUser() {
+      currentUser ? localStorage.setItem('currentUser', JSON.stringify(currentUser)) : localStorage.removeItem('currentUser');
+    }
+    function updateUI() {
+      const profileIcon = document.getElementById('profileIcon');
+      const userInfo = document.getElementById('userInfo');
+      const usernameElem = document.getElementById('username');
+      const adminBadge = document.getElementById('adminBadge');
+      if (currentUser) {
+        profileIcon.textContent = currentUser.username.charAt(0).toUpperCase();
+        usernameElem.textContent = currentUser.username;
+        userInfo.style.display = 'flex';
+        adminBadge.style.display = currentUser.isAdmin ? 'block' : 'none';
+      } else {
+        profileIcon.textContent = '👤';
+        userInfo.style.display = 'none';
       }
-
-      function toggleHistory() {
-        gameState.showHistory = !gameState.showHistory;
-        const messageArea = document.getElementById('messageArea');
-        const toggle = document.getElementById('historyToggle');
-        
-        if (gameState.showHistory) {
-          // Show history mode - enable scrolling and make all messages visible
-          messageArea.classList.add('show-history');
-          
-          // Make all messages 100% opaque by removing faded class
-          const messages = messageArea.querySelectorAll('.message');
-          messages.forEach(msg => msg.classList.remove('faded'));
-          
-          toggle.textContent = 'Hide History';
+    }
+    function toggleAuth() {
+      document.getElementById('authModal').style.display = 'flex';
+    }
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+    }
+    function toggleAuthMode() {
+      isSignUpMode = !isSignUpMode;
+      const modalTitle = document.getElementById('modalTitle');
+      const authSubmit = document.getElementById('authSubmit');
+      const authToggleText = document.getElementById('authToggleText');
+      const adminCheckbox = document.getElementById('adminCheckbox');
+      if (isSignUpMode) {
+        modalTitle.textContent = 'Sign Up';
+        authSubmit.textContent = 'Sign Up';
+        authToggleText.textContent = 'Already have an account? Sign in';
+        adminCheckbox.style.display = 'flex';
+      } else {
+        modalTitle.textContent = 'Sign In';
+        authSubmit.textContent = 'Sign In';
+        authToggleText.textContent = "Don't have an account? Sign up";
+        adminCheckbox.style.display = 'none';
+      }
+    }
+    document.getElementById('authForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('authUsername').value.trim();
+      const password = document.getElementById('authPassword').value.trim();
+      const isAdminChecked = document.getElementById('isAdmin').checked;
+      if (isSignUpMode) {
+        if (!localStorage.getItem(username)) {
+          localStorage.setItem(username, JSON.stringify({ password, isAdmin: isAdminChecked }));
+          document.getElementById('authMessage').innerHTML = '<p class="success-message">Account created! Please sign in.</p>';
         } else {
-          // Hide history mode - disable scrolling and fade old messages again
-          messageArea.classList.remove('show-history');
-          fadeOldMessages();
-          toggle.textContent = 'Show History';
+          document.getElementById('authMessage').innerHTML = '<p class="error-message">Username already taken.</p>';
         }
-      }
-
-      // Enhanced message system with proper sequencing
-      let messageQueue = [];
-      let isTyping = false;
-      let choicesReady = false;
-
-      function addMessage(type, text, speaker = null, delay = 0) {
-        messageQueue.push({ type, text, speaker, delay });
-        if (!isTyping) {
-          processMessageQueue();
-        }
-      }
-
-      async function processMessageQueue() {
-        if (messageQueue.length === 0) {
-          isTyping = false;
-          if (choicesReady) {
-            showPendingChoices();
-          }
-          return;
-        }
-
-        isTyping = true;
-        const { type, text, speaker, delay } = messageQueue.shift();
-
-        // Wait for the delay before starting this message
-        if (delay > 0) {
-          await new Promise(resolve => setTimeout(resolve, delay));
-        }
-
-        const messageArea = document.getElementById('messageArea');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${type}`;
-        
-        let messageHTML = '';
-        if (speaker) {
-          messageHTML += `<div class="character-name">${speaker}</div>`;
-        }
-        messageHTML += `<p></p>`;
-        
-        messageDiv.innerHTML = messageHTML;
-        messageArea.appendChild(messageDiv);
-        
-        const textElement = messageDiv.querySelector('p');
-        
-        // Type out the message and wait for it to complete
-        await typeMessage(textElement, text);
-        
-        // No more automatic scrolling - messages will naturally appear at bottom
-        // Only fade old messages if not in history mode
-        if (!gameState.showHistory) {
-          fadeOldMessages();
-        }
-
-        // Process the next message in the queue
-        processMessageQueue();
-      }
-
-      // Waiting system for time-based actions
-      function addWaitingMessage(description, estimatedTime) {
-        const messageArea = document.getElementById('messageArea');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message waiting-message';
-        messageDiv.id = 'waitingMessage';
-        messageDiv.innerHTML = `<p>${description} <span class="waiting-dots">...</span> (estimated ${estimatedTime})</p>`;
-        messageArea.appendChild(messageDiv);
-        // No automatic scrolling needed
-      }
-
-      function removeWaitingMessage() {
-        const waitingMsg = document.getElementById('waitingMessage');
-        if (waitingMsg) {
-          waitingMsg.remove();
-        }
-      }
-
-      // Enhanced wait timer
-      function startWaitTimer(minutes, acknowledgment, callback) {
-        // Character acknowledges the action first
-        addMessage('agent', acknowledgment, 'Emma Carter');
-        
-        setTimeout(() => {
-          if (gameState.skipTimers && gameState.adminMode) {
-            callback();
-            return;
-          }
-
-          const timeText = minutes >= 60 ? `${Math.floor(minutes/60)}h ${minutes%60}m` : `${minutes}m`;
-          addWaitingMessage('Waiting for response', timeText);
-          
-          gameState.waitingFor = callback;
-          gameState.waitingUntil = Date.now() + (minutes * 60 * 1000);
-          
-          setTimeout(() => {
-            removeWaitingMessage();
-            callback();
-          }, minutes * 60 * 1000);
-        }, 2000);
-      }
-
-      // Admin controls
-      function toggleAdminMode() {
-        gameState.adminMode = document.getElementById('adminMode').checked;
-        document.getElementById('skipTimer').disabled = !gameState.adminMode;
-        if (gameState.adminMode) {
-          document.getElementById('adminControls').style.display = 'block';
-          gameState.skipTimers = document.getElementById('skipTimer').checked;
+      } else {
+        const stored = JSON.parse(localStorage.getItem(username));
+        if (stored && stored.password === password) {
+          currentUser = { username, isAdmin: stored.isAdmin };
+          saveCurrentUser();
+          closeAuthModal();
+          updateUI();
         } else {
-          document.getElementById('adminControls').style.display = 'none';
-          document.getElementById('skipTimer').checked = false;
-          gameState.skipTimers = false;
+          document.getElementById('authMessage').innerHTML = '<p class="error-message">Invalid credentials.</p>';
         }
       }
+    });
 
-      // Enhanced choice handling
-      let pendingChoices = null;
-
-      function showScene(sceneId) {
-        console.log('showScene() called with sceneId:', sceneId);
-        const scene = storyDatabase[sceneId];
-        console.log('Found scene:', scene);
-        if (!scene) {
-          console.error('Scene not found:', sceneId);
-          return;
-        }
-
-        gameState.currentScene = sceneId;
-        document.getElementById('choices').style.display = 'none';
-        choicesReady = false;
-        pendingChoices = scene.choices;
-        
-        if (scene.messages) {
-          // Clear message queue and add all messages
-          messageQueue = [];
-          scene.messages.forEach((message) => {
-            addMessage(message.type, message.text, message.speaker, message.delay || 0);
-          });
-          
-          // Set flag that choices are ready to be shown
-          choicesReady = true;
-        } else {
-          // Show choices immediately if no messages
-          showChoices(scene.choices);
-        }
-      }
-
-      function showPendingChoices() {
-        if (pendingChoices) {
-          showChoices(pendingChoices);
-          pendingChoices = null;
-          choicesReady = false;
-        }
-      }
-
-      function showChoices(choices) {
-        if (!choices) return;
-        
-        const choicesDiv = document.getElementById('choices');
-        choicesDiv.innerHTML = '';
-        
-        choices.forEach(choice => {
-          const button = document.createElement('button');
-          button.className = 'choice-button';
-          button.onclick = () => makeChoice(choice);
-          button.textContent = choice.text;
-          choicesDiv.appendChild(button);
-        });
-        
-        choicesDiv.style.display = 'flex';
-      }
-
-      function makeChoice(choice) {
-        if (!gameState.isUnlocked && gameState.decisions.length >= 3) {
-          showPaywall();
-          return;
-        }
-        
-        gameState.decisions.push(choice);
-        
-        // Clear the message queue and add the user choice with natural dialogue
-        messageQueue = [];
-        addMessage('user-choice', choice.userResponse);
-        document.getElementById('choices').style.display = 'none';
-        choicesReady = false;
-        
-        if (choice.waitTime && choice.waitTime > 0) {
-          const acknowledgments = [
-            "Understood. This will take some time, but I'll get it done right.",
-            "Copy that. Give me a few minutes to handle this properly.",
-            "Good call. I'll need some time for this, but it's worth doing right.",
-            "Roger. This is going to take a while, but I trust your judgment."
-          ];
-          const acknowledgment = acknowledgments[Math.floor(Math.random() * acknowledgments.length)];
-          
-          // Wait for user choice to finish typing, then start wait timer
-          setTimeout(() => {
-            startWaitTimer(choice.waitTime, acknowledgment, () => showScene(choice.nextScene));
-          }, choice.userResponse.length * 35 + 500);
-        } else {
-          // Wait for user choice to finish typing, then continue
-          setTimeout(() => {
-            showScene(choice.nextScene);
-          }, choice.userResponse.length * 35 + 500);
-        }
-      }
-
-      function startStory() {
-        console.log('startStory() called');
-        console.log('storyDatabase:', storyDatabase);
-        showScene('intro');  // Start with the intro scene from scene0
-      }
-
-      function showPaywall() {
-        document.getElementById('paywall').style.display = 'flex';
-      }
-
-      function unlockStory() {
-        gameState.isUnlocked = true;
-        document.getElementById('paywall').style.display = 'none';
-        addMessage('system', '🔓 Story unlocked! Continue guiding Emma through complex decisions with lasting consequences.');
-      }
-
-      function resetStory() {
-        if (confirm('Reset the entire story? This will lose all progress.')) {
-          location.reload();
-        }
-      }
-
-      // Initialize game
-      if (window.location.hash.includes('admin') || window.location.search.includes('admin')) {
-        document.getElementById('adminMode').checked = true;
-        toggleAdminMode();
-      }
-
-      // Make functions available globally for HTML onclick handlers
-      window.startStory = startStory;
-      window.showPaywall = showPaywall;
-      window.unlockStory = unlockStory;
-      window.resetStory = resetStory;
-      window.toggleAdminMode = toggleAdminMode;
-      window.toggleHistory = toggleHistory;
-
-      console.log('Functions attached to window:', {
-        startStory: typeof window.startStory,
-        showPaywall: typeof window.showPaywall,
-        unlockStory: typeof window.unlockStory
-      });
-
-    } catch (error) {
-      console.error('Error loading game:', error);
-      alert('Error loading game: ' + error.message);
+    function signOut() {
+      currentUser = null;
+      saveCurrentUser();
+      updateUI();
     }
 
-    // 5️⃣ Kick it off - REMOVED: initializeGame() call since function doesn't exist
+    function toggleAdminMode() {
+      const isAdminMode = document.getElementById('adminMode').checked;
+      document.getElementById('skipTimer').disabled = !isAdminMode;
+      document.getElementById('sceneNavigation').style.display = isAdminMode ? 'block' : 'none';
+      document.getElementById('adminControls').style.display = isAdminMode ? 'block' : 'none';
+    }
+
+    function resetStory() {
+      // Reload the page to restart the Final Seconds story
+      window.location.reload();
+    }
+
+    function jumpToScene() {
+      // If you want to manually jump to a scene (admin mode), implement here
+      const select = document.getElementById('sceneSelect');
+      const target = select.value;
+      if (target) {
+        startFromScene(target);
+      }
+    }
+
+    // ─── "Final Seconds" story logic ───────────────────────────────────────────
+    // The JSON tree you posted (from 4.5 Preview) is lengthy; typically you'd
+    // load it as a JavaScript object. For brevity, I'll show an outline:
+
+    // 1) Parse your JSON tree into a JS object.
+    // 2) Render `scene.content` in .message-area as either a "system" or "agent" message.
+    // 3) Render `scene.choices` as <button class="choice-button">…</button>.
+    // 4) Wire each button's onclick to advance to the next `sceneMap[childId]`.
+    // 5) If `isEnding === true`, hide choices and display an "End of story" prompt.
+
+    // Below is a massively simplified "engine" structure—replace `storyData` with your JSON.
+
+  // ─── DISCOVER & LOAD the JSON file at runtime ────────────────────────────
+  let storyData = null;     // we'll overwrite this once JSON arrives
+
+  // 1) Construct the path to your JSON file relative to final-seconds-index.html
+  const jsonPath = 'The Fourth Switch.json';
+
+  // 2) Use fetch() to load and parse that JSON
+  fetch(jsonPath)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: could not fetch ${jsonPath}`);
+      }
+      return response.json();
+    })
+    .then(json => {
+      // Your JSON file has a "tree" object at the top, e.g.:
+      // {
+      //   "title": "...",
+      //   "config": { … },
+      //   "stats": { … },
+      //   "structure": { … },
+      //   "createdAt": "...",
+      //   "tree": {
+      //     "rootSceneId": "...",
+      //     "sceneMap": { … }
+      //   }
+      // }
+      //
+      // Our engine expects storyData to be { rootSceneId: ..., sceneMap: {...} }.
+      storyData = json.tree;
+      // Now that storyData is loaded, we can start the story:
+      initializeStory();
+    })
+    .catch(err => {
+      console.error('Failed to load story JSON:', err);
+      appendMessage('system', 'Error: Could not load story data.');
+    });
+
+  // NOTE: remove any earlier "initializeStory()" calls, because we only invoke it here
+  // after the JSON has successfully arrived.
+
+    const messageArea = document.getElementById('messageArea');
+    const choicesContainer = document.getElementById('choicesContainer');
+    const historyToggle = document.getElementById('historyToggle');
+
+    function initializeStory() {
+      // Clear the loading message when story starts
+      messageArea.innerHTML = '';
+      
+      // If you inlined the JSON, do:
+      // storyData = { rootSceneId: 'scene_0_1', sceneMap: { … } };
+      //
+      // For example:
+      // storyData = JSON.parse(`{ "rootSceneId": "scene_0_1", "sceneMap": { … } }`);
+      //
+      // (Make sure you paste the entire JSON from "4.5 Preview Story.json" here.)
+
+      // For brevity, let's assume storyData is already populated:
+      currentSceneId = storyData.rootSceneId;
+      renderScene(currentSceneId);
+    }
+
+  /**
+   * Updated renderScene to:
+   *  1) "Type out" all of scene.content (awaiting appendMessage)
+   *  2) Only reveal choices (with a fade-in) once typing is complete
+   *  3) Handle endings by showing a "--- End of Path ---" message
+   */
+  async function renderScene(sceneId) {
+    const scene = storyData.sceneMap[sceneId];
+    if (!scene) return;
+
+    // 1) Clear out any existing choices before typing new content:
+    choicesContainer.innerHTML = '';
+
+    // 2) "Type" the scene's content.  await ensures we don't move on until all lines are done.
+    await appendMessage('agent', scene.content);
+
+    // 3) If this is an ending, show "--- End of Path ---" and return:
+    if (scene.isEnding) {
+      const endMsg = document.createElement('div');
+      endMsg.classList.add('message', 'system');
+      endMsg.innerHTML = '<p>--- End of Path ---</p>';
+      messageArea.appendChild(endMsg);
+      messageArea.scrollTop = messageArea.scrollHeight;
+      return;
+    }
+
+    // 4) Otherwise, build a wrapper <div class="choices"> so we can fade it in
+    const container = document.createElement('div');
+    container.classList.add('choices');
+    // Initially, container has opacity: 0 per our CSS. We'll add "visible" a moment later.
+
+    // 5) Create one <button> per choice, exactly as before
+    scene.choices.forEach((choiceText, idx) => {
+      const btn = document.createElement('button');
+      btn.classList.add('choice-button');
+      btn.textContent = choiceText;
+      btn.onclick = () => {
+        // When the player clicks a choice:
+        //   a) "Type" out the player's selection
+        appendMessage('user-choice', choiceText);
+        //   b) Proceed to the next scene
+        renderScene(scene.childrenIds[idx]);
+      };
+      container.appendChild(btn);
+    });
+
+    // 6) Append the (still-hidden) container to choicesContainer
+    choicesContainer.appendChild(container);
+
+    // 7) On the next tick, add the "visible" class so it fades in
+    setTimeout(() => {
+      container.classList.add('visible');
+    }, 0);
+
+    // 8) Always scroll to bottom after everything
+    messageArea.scrollTop = messageArea.scrollHeight;
+  }
+
+    function displayChoices(choices, childSceneIds) {
+    const choiceArea = document.getElementById('choiceArea');
+
+    // 1) Create a <div class="choices"> that will contain all buttons
+    const container = document.createElement('div');
+    container.classList.add('choices');
+    // Initially, container has opacity:0 (per our CSS).
+
+    // 2) For each choice, make a <button> exactly as before
+    for (let i = 0; i < choices.length; i++) {
+      const label = choices[i];
+      const nextScene = childSceneIds[i];
+
+      const btn = document.createElement('button');
+      btn.textContent = label;
+      btn.onclick = () => {
+        // Clear previous messages & choices before moving on, if that's your style:
+        document.getElementById('messageArea').innerHTML = '';
+        document.getElementById('choiceArea').innerHTML = '';
+        renderScene(nextScene);
+      };
+      container.appendChild(btn);
+    }
+
+    // 3) Append the container to the choiceArea (still invisible)
+    choiceArea.appendChild(container);
+
+    // 4) Now that it's in the DOM, trigger a fade-in by adding `.visible`
+    // We wrap in setTimeout(..., 0) so the browser registers the initial opacity=0 first.
+    setTimeout(() => {
+      container.classList.add('visible');
+    }, 0);
+  }
+
+  /**
+   * appendMessage(role, text) → Promise
+   *
+   * - 'role' is "agent" or "user-choice" or "system"
+   * - 'text' is the raw scene.content string from your JSON, which may contain "\n"
+   *
+   * This function types out ALL text character by character for an authentic CYOA feel.
+   * Different text types get different typing speeds:
+   * - Dialogue: Medium speed (60ms per character)
+   * - Narrator: Fast speed (30ms per character)
+   * - Signals: Medium speed with flicker effect
+   */
+  function appendMessage(role, text) {
+    return new Promise((resolve) => {
+      // 1) Build the wrapper and <p> element
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('message', role);
+      const p = document.createElement('p');
+      wrapper.appendChild(p);
+      document.getElementById('messageArea').appendChild(wrapper);
+      const messageArea = document.getElementById('messageArea');
+
+      // 2) Split raw text into lines wherever "\n" appears
+      const lines = text.split('\n').filter(line => line.trim() !== '');
+
+      // Typing speeds for different content types
+      const dialogueSpeed = 70;   // ms per character for dialogue
+      const narratorSpeed = 50;   // ms per character for narrator (faster)
+      const signalSpeed = 50;     // ms per character for signals
+      const linePause = 100;      // ms pause AFTER each line (reduced from 200)
+
+      let lineIndex = 0;
+
+      function processOneLine() {
+        if (lineIndex >= lines.length) {
+          // All lines have been processed
+          messageArea.scrollTop = messageArea.scrollHeight;
+          resolve(); // signal completion
+          return;
+        }
+
+        const rawLine = lines[lineIndex];
+        lineIndex++;
+
+        // Determine line type and typing speed
+        let cssClass = 'narrator';
+        let typingSpeed = narratorSpeed;
+        let addFlicker = false;
+        let useTyping = false; // New flag to control typing vs fade-in
+
+        // Define dialogue pattern for checking
+        const dialoguePattern = /^\s*[A-Za-z][^:]*:\s*/;
+
+        // Check for user-choice messages (special handling)
+        if (role === 'user-choice') {
+          cssClass = 'user-choice-text';
+          useTyping = false; // User choices appear instantly
+        }
+        // Check for dialogue (character name followed by colon)
+        else if (dialoguePattern.test(rawLine)) {
+          cssClass = 'dialogue';
+          typingSpeed = dialogueSpeed;
+          useTyping = true; // Dialogue gets typing animation
+        }
+        // Check for signal messages (bracketed content) - improved detection
+        else if (rawLine.trim().startsWith('[') && rawLine.includes(']')) {
+          // Extract the signal part and check if it's properly bracketed
+          const signalMatch = rawLine.match(/^\s*\[([^\]]+)\]/);
+          if (signalMatch) {
+            cssClass = 'signal';
+            typingSpeed = signalSpeed;
+            addFlicker = true;
+            useTyping = true; // Signals get typing animation
+          }
+        }
+        // Everything else is narrator - gets fade-in
+        else {
+          cssClass = 'narrator';
+          useTyping = false; // Narrator gets fade-in
+        }
+
+        const span = document.createElement('span');
+        span.classList.add(cssClass);
+        p.appendChild(span);
+
+        // Add subtle flicker effect for signals
+        if (addFlicker) {
+          span.style.animation = 'signalFlicker 0.6s ease-out';
+        }
+
+        // For narrator text, use fade-in animation instead of typing
+        if (!useTyping && cssClass === 'narrator') {
+          // Check for fade effects in narrator text and process them
+          let processedText = rawLine;
+          let additionalDelay = 0;
+          let hasUnstableEffect = false;
+          
+          // Handle fade out
+          if (processedText.includes('<fadeout>')) {
+            processedText = processedText.replace('<fadeout>', '');
+            wrapper.classList.add('fade-out-effect');
+            additionalDelay += 700;
+          }
+          
+          // Handle fade in
+          if (processedText.includes('<fadein>')) {
+            processedText = processedText.replace('<fadein>', '');
+            wrapper.classList.remove('fade-out-effect');
+            wrapper.classList.add('fade-in-effect');
+            additionalDelay += 700;
+          }
+          
+          // Handle unstable connection (3 fade cycles)
+          if (processedText.includes('<unstable>')) {
+            processedText = processedText.replace('<unstable>', '');
+            wrapper.classList.add('unstable-effect');
+            hasUnstableEffect = true;
+            additionalDelay = 6000; // Override other delays - just wait for animation
+          }
+          
+          span.textContent = processedText;
+          span.classList.add('narrator-fade-in');
+          messageArea.scrollTop = messageArea.scrollHeight;
+          
+          // Add break and move to next - different timing based on effects
+          setTimeout(() => {
+            if (lineIndex < lines.length) {
+              const br = document.createElement('br');
+              br.style.lineHeight = '0.8';
+              p.appendChild(br);
+            }
+            messageArea.scrollTop = messageArea.scrollHeight;
+            setTimeout(processOneLine, linePause);
+          }, hasUnstableEffect ? additionalDelay : (1800 + additionalDelay)); // No extra delay for unstable
+          return;
+        }
+
+        // For user-choice text, display instantly without fade animation
+        if (!useTyping && cssClass === 'user-choice-text') {
+          span.textContent = rawLine;
+          messageArea.scrollTop = messageArea.scrollHeight;
+          
+          setTimeout(() => {
+            if (lineIndex < lines.length) {
+              const br = document.createElement('br');
+              br.style.lineHeight = '0.8';
+              p.appendChild(br);
+            }
+            messageArea.scrollTop = messageArea.scrollHeight;
+            setTimeout(processOneLine, linePause);
+          }, 0); // No delay for user choices
+          return;
+        }
+
+        // Type out the line character by character (for dialogue and signals)
+        let charIndex = 0;
+        function typeChar() {
+          if (charIndex < rawLine.length) {
+            // Check for pause markers
+            if (rawLine.slice(charIndex, charIndex + 7) === '<pause>') {
+              charIndex += 7;
+              setTimeout(typeChar, 800); // Longer pause for dramatic effect
+            }
+            // Check for fade out markers
+            else if (rawLine.slice(charIndex, charIndex + 9) === '<fadeout>') {
+              charIndex += 9;
+              // Apply fade out effect to the entire message
+              wrapper.classList.add('fade-out-effect');
+              setTimeout(typeChar, 700); // Wait for fade out to complete
+            }
+            // Check for fade in markers
+            else if (rawLine.slice(charIndex, charIndex + 8) === '<fadein>') {
+              charIndex += 8;
+              // Apply fade in effect to the entire message
+              wrapper.classList.remove('fade-out-effect');
+              wrapper.classList.add('fade-in-effect');
+              setTimeout(typeChar, 700); // Wait for fade in to complete
+            }
+            // Check for unstable connection markers
+            else if (rawLine.slice(charIndex, charIndex + 10) === '<unstable>') {
+              charIndex += 10;
+              // Apply unstable connection effect (3 fade cycles)
+              wrapper.classList.add('unstable-effect');
+              setTimeout(typeChar, 3000); // Wait for 6-second animation to complete
+            }
+            else {
+              span.innerHTML += rawLine.charAt(charIndex);
+              charIndex++;
+              messageArea.scrollTop = messageArea.scrollHeight;
+              
+              // Vary typing speed slightly for more natural feel
+              const variation = Math.random() * 10 - 5; // ±5ms variation
+              setTimeout(typeChar, typingSpeed + variation);
+            }
+          } else {
+            // Line complete, add break and move to next (only if not the last line)
+            if (lineIndex < lines.length) {
+              const br = document.createElement('br');
+              br.style.lineHeight = '0.8'; // Reduce line break spacing
+              p.appendChild(br);
+            }
+            messageArea.scrollTop = messageArea.scrollHeight;
+            setTimeout(processOneLine, linePause);
+          }
+        }
+        
+        typeChar();
+      }
+
+      // Start processing the first line
+      processOneLine();
+    });
+  }
+
+    // 3) History toggle: simply toggle a CSS class to allow scrolling back
+    historyToggle.addEventListener('click', () => {
+      messageArea.classList.toggle('show-history');
+      historyToggle.textContent = messageArea.classList.contains('show-history')
+        ? 'Hide History'
+        : 'Show History';
+    });
+
+    // 4) If you want "jump to scene" in admin mode, define:
+    function startFromScene(sceneId) {
+      messageArea.innerHTML = '';
+      choicesContainer.innerHTML = '';
+      currentSceneId = sceneId;
+      renderScene(sceneId);
+    }
+
+    // 5) Paste your JSON somewhere below, e.g.:
+    // storyData = { "rootSceneId": "…", "sceneMap": { … } };
+
+    // ————————————————————————————————————————————————————————————————
+    // For the sake of brevity, *I have not pasted the entire 70-scene JSON* here.
+    // In practice, copy the contents of your `4.5 Preview Story.json` (all of
+    // "tree" → "sceneMap" and so on) into the variable `storyData` above.
+    // Then everything should "just work" once you call initializeStory().
+    // ————————————————————————————————————————————————————————————————
   </script>
 </body>
 </html>
