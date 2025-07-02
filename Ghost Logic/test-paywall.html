@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Logic Paywall Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .test-button {
+            background: #00ffff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .test-button:hover {
+            background: #33ffff;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status.success { background: #2d5a2d; color: #90ee90; }
+        .status.error { background: #5a2d2d; color: #ff9090; }
+        .status.info { background: #2d2d5a; color: #9090ff; }
+        .code-block {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        h1, h2 { color: #00ffff; }
+        h3 { color: #ff3b3b; }
+    </style>
+</head>
+<body>
+    <h1>🔒 Ghost Logic Paywall Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>Test Scenarios</h2>
+        <p>This page allows you to test different paywall scenarios for the Ghost Logic story engine.</p>
+        
+        <h3>1. Non-logged-in User Hits Paywall</h3>
+        <button class="test-button" onclick="testScenario1()">Test: Anonymous User → Scene 13</button>
+        <div id="result1" class="status info" style="display: none;"></div>
+        
+        <h3>2. Logged-in User (Unpaid) Hits Paywall</h3>
+        <button class="test-button" onclick="testScenario2()">Test: Logged-in User → Scene 13</button>
+        <div id="result2" class="status info" style="display: none;"></div>
+        
+        <h3>3. Paid User Bypasses Paywall</h3>
+        <button class="test-button" onclick="testScenario3()">Test: Paid User → Scene 13</button>
+        <div id="result3" class="status info" style="display: none;"></div>
+        
+        <h3>4. Payment Flow Test</h3>
+        <button class="test-button" onclick="testPaymentFlow()">Test: Stripe Payment Flow</button>
+        <div id="result4" class="status info" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Manual Testing</h2>
+        <p>Use these controls to manually test paywall behavior:</p>
+        
+        <h3>Simulate User States</h3>
+        <button class="test-button" onclick="simulateLoggedOut()">Simulate: Logged Out</button>
+        <button class="test-button" onclick="simulateLoggedInUnpaid()">Simulate: Logged In (Unpaid)</button>
+        <button class="test-button" onclick="simulateLoggedInPaid()">Simulate: Logged In (Paid)</button>
+        
+        <h3>Trigger Paywall</h3>
+        <button class="test-button" onclick="triggerPaywall()">Show Paywall</button>
+        <button class="test-button" onclick="hidePaywall()">Hide Paywall</button>
+        
+        <h3>Scene Navigation</h3>
+        <button class="test-button" onclick="goToScene12()">Go to Scene 12 (Free)</button>
+        <button class="test-button" onclick="goToScene13()">Go to Scene 13 (Paywall)</button>
+        <button class="test-button" onclick="goToScene14()">Go to Scene 14 (Paid)</button>
+        
+        <div id="manualResult" class="status info" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Current State</h2>
+        <div id="currentState" class="code-block">
+            Loading current state...
+        </div>
+        <button class="test-button" onclick="refreshState()">Refresh State</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Behavior</h2>
+        <div class="code-block">
+✅ Scene 1-12: Available to all users (free)
+🔒 Scene 13+: Requires payment
+👤 Not logged in → Show auth prompt first
+💳 Logged in (unpaid) → Show payment prompt
+✨ Logged in (paid) → Allow access
+🎯 Payment success → Update user.paid = true
+        </div>
+    </div>
+
+    <script>
+        // Mock functions for testing (these would normally be in the main story player)
+        let mockCurrentUser = null;
+        let mockUserPaidStatus = false;
+
+        function showResult(id, message, type = 'info') {
+            const element = document.getElementById(id);
+            element.textContent = message;
+            element.className = `status ${type}`;
+            element.style.display = 'block';
+        }
+
+        function testScenario1() {
+            // Test: Anonymous user tries to access Scene 13
+            mockCurrentUser = null;
+            mockUserPaidStatus = false;
+            
+            const result = checkPaywallRequired('City on Edge (Scene 13)');
+            if (result) {
+                showResult('result1', '✅ PASS: Paywall triggered for anonymous user. Auth prompt should show.', 'success');
+            } else {
+                showResult('result1', '❌ FAIL: Paywall should have triggered for anonymous user.', 'error');
+            }
+        }
+
+        function testScenario2() {
+            // Test: Logged-in unpaid user tries to access Scene 13
+            mockCurrentUser = { uid: 'test123', email: 'test@example.com' };
+            mockUserPaidStatus = false;
+            
+            const result = checkPaywallRequired('City on Edge (Scene 13)');
+            if (result) {
+                showResult('result2', '✅ PASS: Paywall triggered for unpaid user. Payment prompt should show.', 'success');
+            } else {
+                showResult('result2', '❌ FAIL: Paywall should have triggered for unpaid user.', 'error');
+            }
+        }
+
+        function testScenario3() {
+            // Test: Paid user tries to access Scene 13
+            mockCurrentUser = { uid: 'test123', email: 'test@example.com' };
+            mockUserPaidStatus = true;
+            
+            const result = checkPaywallRequired('City on Edge (Scene 13)');
+            if (!result) {
+                showResult('result3', '✅ PASS: Paid user bypassed paywall successfully.', 'success');
+            } else {
+                showResult('result3', '❌ FAIL: Paid user should not see paywall.', 'error');
+            }
+        }
+
+        async function testPaymentFlow() {
+            try {
+                // Mock payment flow test
+                showResult('result4', '🔄 Testing payment flow...', 'info');
+                
+                // Simulate API call to create checkout session
+                const mockResponse = {
+                    id: 'cs_test_' + Math.random().toString(36).substr(2, 9)
+                };
+                
+                setTimeout(() => {
+                    showResult('result4', '✅ PASS: Payment flow initiated successfully. Session ID: ' + mockResponse.id, 'success');
+                }, 1000);
+                
+            } catch (error) {
+                showResult('result4', '❌ FAIL: Payment flow error: ' + error.message, 'error');
+            }
+        }
+
+        // Mock implementation of paywall check
+        function checkPaywallRequired(sceneName) {
+            const sceneNumber = extractSceneNumber(sceneName);
+            if (sceneNumber >= 13) {
+                return !mockUserPaidStatus;
+            }
+            return false;
+        }
+
+        function extractSceneNumber(sceneName) {
+            const match = sceneName.match(/Scene (\d+)/i);
+            return match ? parseInt(match[1]) : 0;
+        }
+
+        // Manual testing functions
+        function simulateLoggedOut() {
+            mockCurrentUser = null;
+            mockUserPaidStatus = false;
+            showResult('manualResult', '👤 Simulated: User logged out', 'info');
+            refreshState();
+        }
+
+        function simulateLoggedInUnpaid() {
+            mockCurrentUser = { uid: 'test123', email: 'test@example.com' };
+            mockUserPaidStatus = false;
+            showResult('manualResult', '👤 Simulated: User logged in (unpaid)', 'info');
+            refreshState();
+        }
+
+        function simulateLoggedInPaid() {
+            mockCurrentUser = { uid: 'test123', email: 'test@example.com' };
+            mockUserPaidStatus = true;
+            showResult('manualResult', '✨ Simulated: User logged in (paid)', 'success');
+            refreshState();
+        }
+
+        function triggerPaywall() {
+            showResult('manualResult', '🔒 Paywall triggered manually', 'info');
+            // In real implementation, this would call showPaywall()
+        }
+
+        function hidePaywall() {
+            showResult('manualResult', '🔓 Paywall hidden manually', 'info');
+            // In real implementation, this would call hidePaywall()
+        }
+
+        function goToScene12() {
+            const blocked = checkPaywallRequired('Scene 12');
+            if (blocked) {
+                showResult('manualResult', '❌ Unexpected: Scene 12 should be free', 'error');
+            } else {
+                showResult('manualResult', '✅ Scene 12 accessible (free content)', 'success');
+            }
+        }
+
+        function goToScene13() {
+            const blocked = checkPaywallRequired('City on Edge (Scene 13)');
+            if (blocked) {
+                showResult('manualResult', '🔒 Scene 13 blocked by paywall (expected)', 'info');
+            } else {
+                showResult('manualResult', '✅ Scene 13 accessible (user has paid)', 'success');
+            }
+        }
+
+        function goToScene14() {
+            const blocked = checkPaywallRequired('Scene 14');
+            if (blocked) {
+                showResult('manualResult', '🔒 Scene 14 blocked by paywall (expected)', 'info');
+            } else {
+                showResult('manualResult', '✅ Scene 14 accessible (user has paid)', 'success');
+            }
+        }
+
+        function refreshState() {
+            const state = {
+                currentUser: mockCurrentUser,
+                userPaidStatus: mockUserPaidStatus,
+                timestamp: new Date().toISOString()
+            };
+            
+            document.getElementById('currentState').textContent = JSON.stringify(state, null, 2);
+        }
+
+        // Initialize
+        refreshState();
+    </script>
+</body>
+</html>

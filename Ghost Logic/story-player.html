@@ -41,6 +41,9 @@
         
         console.log('🔥 Firebase initialized successfully');
     </script>
+    
+    <!-- Stripe SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
             margin: 0;
@@ -495,6 +498,322 @@
             background-size: 4px 4px, 100% 100%, 100% 100%;
             animation: cyberpunkGlitchTransition 0.5s ease-in-out;
             backdrop-filter: blur(2px);
+        }
+
+        /* Paywall Styles */
+        .paywall-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.98) 0%, rgba(26, 14, 26, 0.98) 50%, rgba(15, 20, 25, 0.98) 100%);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .paywall-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+                 .paywall-container {
+             max-width: 500px;
+             background: linear-gradient(145deg, rgba(5, 5, 10, 0.98) 0%, rgba(15, 8, 15, 0.98) 100%);
+             border: 2px solid rgba(0, 255, 255, 0.6);
+             border-radius: 8px;
+             padding: 40px;
+             text-align: center;
+             box-shadow: 
+                 0 25px 80px rgba(0, 0, 0, 0.9),
+                 0 0 60px rgba(0, 255, 255, 0.2),
+                 inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                 inset 0 0 20px rgba(0, 255, 255, 0.05);
+             position: relative;
+             overflow: hidden;
+             backdrop-filter: blur(20px);
+         }
+
+        .paywall-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: paywallScan 3s infinite;
+        }
+
+        @keyframes paywallScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+                 .paywall-title {
+             font-family: 'Orbitron', sans-serif;
+             font-size: 32px;
+             font-weight: 700;
+             color: #00ffff;
+             margin-bottom: 20px;
+             text-shadow: 
+                 0 0 10px rgba(0, 255, 255, 0.8),
+                 0 0 20px rgba(0, 255, 255, 0.6),
+                 0 0 30px rgba(0, 255, 255, 0.4);
+             letter-spacing: 3px;
+             text-transform: uppercase;
+         }
+
+                 .paywall-subtitle {
+             font-size: 18px;
+             color: rgba(255, 255, 255, 0.9);
+             margin-bottom: 30px;
+             line-height: 1.6;
+             font-weight: 400;
+             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+         }
+
+                 .paywall-features {
+             text-align: left;
+             margin: 30px 0;
+             padding: 25px;
+             background: rgba(0, 0, 0, 0.5);
+             border: 1px solid rgba(0, 255, 255, 0.4);
+             border-radius: 6px;
+             box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
+         }
+
+        .paywall-features h3 {
+            color: #ff3b3b;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .paywall-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+                 .paywall-features li {
+             padding: 10px 0;
+             color: rgba(255, 255, 255, 0.95);
+             font-size: 15px;
+             font-weight: 400;
+             position: relative;
+             padding-left: 25px;
+             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+         }
+
+        .paywall-features li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00ffff;
+            font-size: 12px;
+        }
+
+        .paywall-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .paywall-btn {
+            padding: 15px 30px;
+            border: 2px solid;
+            border-radius: 8px;
+            background: transparent;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paywall-btn.primary {
+            border-color: #00ffff;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0.2));
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .paywall-btn.primary:hover {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 255, 0.3));
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .paywall-btn.secondary {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+                 .paywall-btn.secondary:hover {
+             border-color: rgba(255, 255, 255, 0.5);
+             background: rgba(255, 255, 255, 0.1);
+             color: #fff;
+         }
+
+         .paywall-btn.promo {
+             border-color: #ff3b3b;
+             background: linear-gradient(45deg, rgba(255, 59, 59, 0.1), rgba(255, 59, 59, 0.2));
+             color: #ff3b3b;
+             text-shadow: 0 0 10px rgba(255, 59, 59, 0.5);
+             padding: 12px 20px;
+             font-size: 14px;
+         }
+
+         .paywall-btn.promo:hover {
+             background: linear-gradient(45deg, rgba(255, 59, 59, 0.2), rgba(255, 59, 59, 0.3));
+             box-shadow: 0 0 20px rgba(255, 59, 59, 0.4);
+             transform: translateY(-1px);
+         }
+
+         .promo-section {
+             margin-top: 25px;
+             padding-top: 20px;
+             border-top: 1px solid rgba(0, 255, 255, 0.2);
+         }
+
+         .promo-toggle {
+             cursor: pointer;
+             color: rgba(255, 255, 255, 0.7);
+             font-size: 14px;
+             padding: 10px;
+             border-radius: 4px;
+             transition: all 0.3s ease;
+             text-align: center;
+         }
+
+         .promo-toggle:hover {
+             color: #00ffff;
+             background: rgba(0, 255, 255, 0.1);
+         }
+
+         .promo-input-container {
+             margin-top: 15px;
+             display: flex;
+             gap: 10px;
+             align-items: center;
+         }
+
+         .promo-input {
+             flex: 1;
+             padding: 12px 15px;
+             background: rgba(0, 0, 0, 0.6);
+             border: 2px solid rgba(0, 255, 255, 0.3);
+             border-radius: 6px;
+             color: #fff;
+             font-family: 'Fira Code', monospace;
+             font-size: 14px;
+             text-transform: uppercase;
+             letter-spacing: 1px;
+         }
+
+         .promo-input:focus {
+             outline: none;
+             border-color: rgba(0, 255, 255, 0.6);
+             box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+         }
+
+         .promo-input::placeholder {
+             color: rgba(255, 255, 255, 0.4);
+             text-transform: none;
+             letter-spacing: normal;
+         }
+
+         .promo-result {
+             margin-top: 15px;
+             padding: 12px;
+             border-radius: 6px;
+             font-size: 14px;
+             font-weight: 500;
+             text-align: center;
+         }
+
+         .promo-result.success {
+             background: rgba(0, 255, 0, 0.1);
+             border: 1px solid rgba(0, 255, 0, 0.3);
+             color: #00ff00;
+         }
+
+         .promo-result.error {
+             background: rgba(255, 59, 59, 0.1);
+             border: 1px solid rgba(255, 59, 59, 0.3);
+             color: #ff3b3b;
+         }
+
+         .promo-result.info {
+             background: rgba(0, 255, 255, 0.1);
+             border: 1px solid rgba(0, 255, 255, 0.3);
+             color: #00ffff;
+         }
+
+        .paywall-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 1;
+        }
+
+        .paywall-close:hover {
+            color: #ff3b3b;
+        }
+
+        .auth-prompt {
+            background: rgba(255, 59, 59, 0.1);
+            border: 1px solid rgba(255, 59, 59, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .auth-prompt h3 {
+            color: #ff3b3b;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .auth-prompt p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00ffff;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @keyframes cyberpunkGlitchTransition {
@@ -2362,7 +2681,7 @@
                 }
             }
 
-            startStory() {
+            async startStory() {
                 console.log('Story data loaded:', this.storyData);
                 
                 if (!this.storyData.passages || !Array.isArray(this.storyData.passages)) {
@@ -2372,7 +2691,7 @@
                 // Check if we have saved progress
                 if (this.currentPassage) {
                     console.log('Resuming from saved passage:', this.currentPassage.name);
-                    this.renderPassage();
+                    await this.renderPassage();
                     this.updateStateInfo();
                     return;
                 }
@@ -2425,7 +2744,7 @@
                 }, delay);
             }
 
-            goToPassage(passageName) {
+            async goToPassage(passageName) {
                 const passage = this.storyData.passages.find(p => p.name === passageName);
                 if (!passage) {
                     console.error('Passage not found:', passageName);
@@ -2443,7 +2762,7 @@
                     // Save progress
                     this.saveProgress();
                     
-                    this.renderPassage();
+                    await this.renderPassage();
                     this.updateStateInfo();
                     this.updateShowAllButton();
                     
@@ -2456,7 +2775,7 @@
                     }, 100);
                 } else {
                     // Normal scene transition for crawler mode
-                    this.triggerSceneTransition(() => {
+                    this.triggerSceneTransition(async () => {
                         this.currentPassage = passage;
                         this.passageHistory.push(passageName);
                         
@@ -2466,7 +2785,7 @@
                         // Save progress
                         this.saveProgress();
                         
-                        this.renderPassage();
+                        await this.renderPassage();
                         this.updateStateInfo();
                         this.updateShowAllButton();
                         window.scrollTo(0, 0);
@@ -2474,8 +2793,15 @@
                 }
             }
 
-            renderPassage() {
+            async renderPassage() {
                 console.log('Rendering passage:', this.currentPassage.name);
+                
+                // Check if paywall is required before rendering Scene 13 or later
+                const paywallRequired = await checkPaywallRequired(this.currentPassage.name);
+                if (paywallRequired) {
+                    console.log('Paywall required for:', this.currentPassage.name);
+                    return; // Don't render the scene
+                }
                 
                 // Stop any existing typing animation
                 this.stopTyping();
@@ -5059,6 +5385,347 @@
             console.log('💡 Debug commands: window.clearUserData() or window.forceSignOut()');
             
         }, 1000); // Give Firebase time to load
+    </script>
+
+    <!-- Paywall Overlay -->
+    <div id="paywallOverlay" class="paywall-overlay">
+        <div class="paywall-container">
+            <button class="paywall-close" onclick="hidePaywall()">&times;</button>
+            <h1 class="paywall-title">Unlock Ash's Mystery</h1>
+            <p class="paywall-subtitle">The conspiracy deepens. The truth awaits in the shadows of the city.</p>
+            
+            <div class="paywall-features">
+                <h3>Continue the Adventure</h3>
+                <ul>
+                    <li>Uncover the dark secrets of Project Helix</li>
+                    <li>Navigate the cyber-noir underworld of Arcadia</li>
+                    <li>Experience multiple branching storylines</li>
+                    <li>Discover the truth behind Ash's brother's death</li>
+                    <li>Face off against corporate conspiracies</li>
+                </ul>
+            </div>
+            
+            <div id="authPrompt" class="auth-prompt" style="display: none;">
+                <h3>Account Required</h3>
+                <p>Please sign up or log in to continue your journey through Ghost Logic.</p>
+                <div class="paywall-buttons">
+                    <button class="paywall-btn secondary" onclick="showAuthModal('signup')">Sign Up</button>
+                    <button class="paywall-btn secondary" onclick="showAuthModal('login')">Log In</button>
+                </div>
+            </div>
+            
+                         <div id="paymentPrompt" class="paywall-buttons">
+                 <button class="paywall-btn primary" onclick="initiatePayment()">
+                     <span id="paymentButtonText">Unlock Full Story - $4.99</span>
+                 </button>
+                 
+                 <div class="promo-section">
+                     <div class="promo-toggle" onclick="togglePromoCode()">
+                         <span id="promoToggleText">📋 Have a promo code?</span>
+                     </div>
+                     <div id="promoCodeInput" class="promo-input-container" style="display: none;">
+                         <input type="text" id="promoCodeField" placeholder="Enter promo code" class="promo-input">
+                         <button class="paywall-btn promo" onclick="applyPromoCode()">Apply Code</button>
+                     </div>
+                     <div id="promoResult" class="promo-result" style="display: none;"></div>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Stripe
+        stripe = Stripe('pk_live_51RPsDDF1PKUfyTKZ4hwMRPHzeW9Y8f3tBZ9dOv9P3wl1YoVh46Gahqxr1RdVpg85A65sJuYC6s28qdiEDsrdzZ1C00T7m6652p');
+        
+        // Paywall System
+        let userPaidStatus = false;
+
+        // Check if user has paid for the full story
+        async function checkUserPaidStatus() {
+            if (!currentUser) {
+                return false;
+            }
+            
+            try {
+                const userDoc = await window.firebase.getDoc(
+                    window.firebase.doc(window.firebase.db, 'users', currentUser.uid)
+                );
+                const userData = userDoc.data();
+                return userData?.paid === true || userData?.subscription === 'premium';
+            } catch (error) {
+                console.error('Error checking paid status:', error);
+                return false;
+            }
+        }
+
+        // Show paywall before Scene 13
+        async function checkPaywallRequired(sceneName) {
+            // Check if this is Scene 13 or later
+            const sceneNumber = extractSceneNumber(sceneName);
+            if (sceneNumber >= 13) {
+                const isPaid = await checkUserPaidStatus();
+                if (!isPaid) {
+                    showPaywall();
+                    return true; // Block scene rendering
+                }
+            }
+            return false; // Allow scene rendering
+        }
+
+        // Extract scene number from scene name
+        function extractSceneNumber(sceneName) {
+            const match = sceneName.match(/Scene (\d+)/i);
+            return match ? parseInt(match[1]) : 0;
+        }
+
+        // Show the paywall
+        function showPaywall() {
+            const paywallOverlay = document.getElementById('paywallOverlay');
+            const authPrompt = document.getElementById('authPrompt');
+            const paymentPrompt = document.getElementById('paymentPrompt');
+            
+            if (currentUser) {
+                // User is logged in, show payment prompt
+                authPrompt.style.display = 'none';
+                paymentPrompt.style.display = 'block';
+            } else {
+                // User not logged in, show auth prompt
+                authPrompt.style.display = 'block';
+                paymentPrompt.style.display = 'none';
+            }
+            
+            paywallOverlay.classList.add('active');
+        }
+
+        // Hide the paywall
+        function hidePaywall() {
+            const paywallOverlay = document.getElementById('paywallOverlay');
+            paywallOverlay.classList.remove('active');
+        }
+
+                 // Initiate Stripe payment
+         async function initiatePayment(promoCode = null) {
+             if (!currentUser) {
+                 showAuthModal('signup');
+                 return;
+             }
+
+             const paymentButton = document.getElementById('paymentButtonText');
+             const originalText = paymentButton.textContent;
+             
+             try {
+                 paymentButton.innerHTML = '<span class="loading-spinner"></span>Processing...';
+                 
+                 const requestBody = {
+                     userId: currentUser.uid,
+                     userEmail: currentUser.email,
+                     priceId: 'price_ghost_logic_full_story', // This would be your Stripe price ID
+                     successUrl: window.location.href + '?payment=success',
+                     cancelUrl: window.location.href + '?payment=cancelled'
+                 };
+
+                 // Add promo code if provided
+                 if (promoCode) {
+                     requestBody.promoCode = promoCode;
+                 }
+                 
+                 // Create checkout session
+                 const response = await fetch('/api/create-checkout-session', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify(requestBody)
+                 });
+
+                 if (!response.ok) {
+                     const errorData = await response.json();
+                     throw new Error(errorData.error || 'Failed to create checkout session');
+                 }
+
+                 const session = await response.json();
+                 
+                 // Redirect to Stripe Checkout
+                 const result = await stripe.redirectToCheckout({
+                     sessionId: session.id
+                 });
+
+                 if (result.error) {
+                     throw new Error(result.error.message);
+                 }
+                 
+             } catch (error) {
+                 console.error('Payment error:', error);
+                 paymentButton.textContent = originalText;
+                 
+                 // Show error in promo result if it's a promo code error
+                 if (promoCode && error.message.includes('coupon')) {
+                     showPromoResult(error.message, 'error');
+                 } else {
+                     alert('Payment failed. Please try again or contact support.');
+                 }
+             }
+         }
+
+         // Toggle promo code input
+         function togglePromoCode() {
+             const promoInput = document.getElementById('promoCodeInput');
+             const toggleText = document.getElementById('promoToggleText');
+             
+             if (promoInput.style.display === 'none') {
+                 promoInput.style.display = 'flex';
+                 toggleText.textContent = '❌ Cancel promo code';
+                 document.getElementById('promoCodeField').focus();
+             } else {
+                 promoInput.style.display = 'none';
+                 toggleText.textContent = '📋 Have a promo code?';
+                 hidePromoResult();
+             }
+         }
+
+         // Apply promo code
+         async function applyPromoCode() {
+             const promoField = document.getElementById('promoCodeField');
+             const promoCode = promoField.value.trim().toUpperCase();
+             
+             if (!promoCode) {
+                 showPromoResult('Please enter a promo code', 'error');
+                 return;
+             }
+
+             if (!currentUser) {
+                 showAuthModal('signup');
+                 return;
+             }
+
+             try {
+                 showPromoResult('Validating promo code...', 'info');
+                 
+                 // Validate promo code with Stripe
+                 const response = await fetch('/api/validate-promo-code', {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({
+                         promoCode: promoCode,
+                         userId: currentUser.uid
+                     })
+                 });
+
+                 const result = await response.json();
+                 
+                 if (response.ok && result.valid) {
+                     showPromoResult(`✅ Promo code applied! ${result.discount}`, 'success');
+                     // Update payment button text
+                     const paymentButton = document.getElementById('paymentButtonText');
+                     paymentButton.textContent = `Unlock Full Story - ${result.finalPrice}`;
+                     
+                     // Proceed with payment using the promo code
+                     setTimeout(() => {
+                         initiatePayment(promoCode);
+                     }, 1500);
+                     
+                 } else {
+                     showPromoResult(result.error || 'Invalid promo code', 'error');
+                 }
+                 
+             } catch (error) {
+                 console.error('Promo code validation error:', error);
+                 showPromoResult('Error validating promo code. Please try again.', 'error');
+             }
+         }
+
+         // Show promo result message
+         function showPromoResult(message, type) {
+             const promoResult = document.getElementById('promoResult');
+             promoResult.textContent = message;
+             promoResult.className = `promo-result ${type}`;
+             promoResult.style.display = 'block';
+         }
+
+         // Hide promo result message
+         function hidePromoResult() {
+             const promoResult = document.getElementById('promoResult');
+             promoResult.style.display = 'none';
+         }
+
+         // Handle Enter key in promo code input
+         document.addEventListener('DOMContentLoaded', function() {
+             const promoField = document.getElementById('promoCodeField');
+             if (promoField) {
+                 promoField.addEventListener('keypress', function(e) {
+                     if (e.key === 'Enter') {
+                         applyPromoCode();
+                     }
+                 });
+             }
+         });
+
+        // Handle payment success
+        async function handlePaymentSuccess() {
+            try {
+                // Update user's paid status in Firestore
+                await window.firebase.setDoc(
+                    window.firebase.doc(window.firebase.db, 'users', currentUser.uid),
+                    { 
+                        paid: true,
+                        paidAt: new Date(),
+                        subscription: 'premium'
+                    },
+                    { merge: true }
+                );
+                
+                userPaidStatus = true;
+                hidePaywall();
+                
+                // Show success message
+                if (typeof storyPlayer !== 'undefined' && storyPlayer.showSyncStatus) {
+                    storyPlayer.showSyncStatus('Payment successful! Full story unlocked ✨', 'success');
+                }
+                
+                // Continue with the story
+                if (typeof storyPlayer !== 'undefined' && storyPlayer.currentPassage) {
+                    storyPlayer.renderPassage();
+                }
+                
+            } catch (error) {
+                console.error('Error updating paid status:', error);
+                alert('Payment was successful, but there was an error updating your account. Please contact support.');
+            }
+        }
+
+        // Check for payment success on page load
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('payment') === 'success') {
+                // Clear the URL parameter
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Handle payment success
+                if (currentUser) {
+                    handlePaymentSuccess();
+                }
+            }
+        });
+
+        // Override auth state change to update paywall status
+        const originalHandleAuthStateChange = handleAuthStateChange;
+        handleAuthStateChange = async function(user) {
+            await originalHandleAuthStateChange(user);
+            
+            if (user) {
+                userPaidStatus = await checkUserPaidStatus();
+                
+                // If paywall is showing and user is now logged in, update the display
+                const paywallOverlay = document.getElementById('paywallOverlay');
+                if (paywallOverlay.classList.contains('active')) {
+                    showPaywall(); // Refresh paywall display
+                }
+            } else {
+                userPaidStatus = false;
+            }
+        };
     </script>
 </body>
 </html> 
