@@ -424,6 +424,8 @@
             padding: 0;
             margin-bottom: 15px;
             position: relative;
+            width: 100%; /* Ensure passage container takes full width */
+            box-sizing: border-box; /* Include padding/border in width calculation */
         }
 
         /* Line-by-line fading for crawler effect */
@@ -431,6 +433,9 @@
             margin: 8px 0;
             line-height: 1.6;
             transition: opacity 0.5s ease-out;
+            width: 100%; /* Ensure each paragraph takes full width immediately */
+            box-sizing: border-box; /* Include padding/border in width calculation */
+            display: block; /* Explicit block display to ensure full width behavior */
         }
 
         /* Gradient fade classes for different line positions */
