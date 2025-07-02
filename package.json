@@ -1,5 +1,33 @@
 {
+  "name": "odysiq-stories",
+  "version": "1.0.0",
+  "description": "Odysiq Interactive Stories with Payment Processing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "interactive-fiction",
+    "story",
+    "paywall",
+    "stripe"
+  ],
+  "author": "Odysiq",
+  "license": "MIT",
   "dependencies": {
-    "firebase": "^11.9.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^12.0.0",
+    "stripe": "^14.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
