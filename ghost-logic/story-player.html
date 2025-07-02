@@ -412,6 +412,7 @@
             position: relative;
             min-height: 0;
             overflow: visible; /* Let content flow naturally */
+            align-items: flex-start; /* Ensure content is left-aligned, not centered */
         }
 
         /* Removed top fade gradient overlay - user didn't want the dark box at the top */
@@ -436,6 +437,7 @@
             width: 100%; /* Ensure each paragraph takes full width immediately */
             box-sizing: border-box; /* Include padding/border in width calculation */
             display: block; /* Explicit block display to ensure full width behavior */
+            text-align: left; /* Explicitly ensure left alignment for each paragraph */
         }
 
         /* Gradient fade classes for different line positions */
@@ -452,6 +454,7 @@
             min-height: auto;
             width: 100%; /* Ensure consistent width from the start */
             box-sizing: border-box; /* Include padding in width calculation */
+            text-align: left; /* Explicitly ensure left alignment */
         }
 
         /* Show all mode - content flows from top */
