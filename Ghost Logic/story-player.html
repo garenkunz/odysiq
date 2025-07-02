@@ -8,14 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK v11.10.0 -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js';
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, query, where, connectFirestoreEmulator } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, connectAuthEmulator } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js';
         
-        // Your Firebase configuration
+        // Your Firebase configuration (latest from Firebase Console)
         const firebaseConfig = {
             apiKey: "AIzaSyC_SVhI753WR_w-_75I1Zvfa7D5YvR4dIs",
             authDomain: "odysiq-90653.firebaseapp.com",
@@ -32,18 +32,55 @@
         const auth = getAuth(app);
         const analytics = getAnalytics(app);
         
-        // Make Firebase available globally
+        // Add error handling for Firestore initialization
+        try {
+            // Test Firestore connection
+            console.log('🔥 Firebase initialized successfully');
+            console.log('📊 Firestore instance:', db);
+            console.log('🔐 Auth instance:', auth);
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+        }
+        
+        // Make Firebase available globally with better error handling
         window.firebase = { 
-            db, auth, getDoc, setDoc, doc, collection, query, where, getDocs, 
-            createUserWithEmailAndPassword, signInWithEmailAndPassword, 
-            onAuthStateChanged, signOut, updateProfile 
+            app,
+            db, 
+            auth, 
+            getDoc, 
+            setDoc, 
+            doc, 
+            collection, 
+            query, 
+            where, 
+            getDocs, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut, 
+            updateProfile 
         };
         
-        console.log('🔥 Firebase initialized successfully');
+        // Enhanced error handler for Firestore operations
+        window.firebaseErrorHandler = function(operation, error) {
+            console.error(`❌ Firebase ${operation} error:`, error);
+            if (error.code === 'permission-denied') {
+                console.log('🔒 Permission denied - check Firestore security rules');
+                console.log('💡 Make sure you are authenticated and rules allow access');
+            } else if (error.code === 'unauthenticated') {
+                console.log('🚫 User not authenticated - please sign in');
+            }
+            return false;
+        };
+        
+        console.log('✅ Firebase v11.10.0 ready with enhanced error handling');
     </script>
     
     <!-- Stripe SDK -->
     <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Configuration -->
+    <script src="config.js"></script>
     <style>
         * {
             margin: 0;
@@ -524,11 +561,11 @@
         }
 
                  .paywall-container {
-             max-width: 500px;
+             max-width: 450px;
              background: linear-gradient(145deg, rgba(5, 5, 10, 0.98) 0%, rgba(15, 8, 15, 0.98) 100%);
              border: 2px solid rgba(0, 255, 255, 0.6);
              border-radius: 8px;
-             padding: 40px;
+             padding: 25px;
              text-align: center;
              box-shadow: 
                  0 25px 80px rgba(0, 0, 0, 0.9),
@@ -558,44 +595,43 @@
 
                  .paywall-title {
              font-family: 'Orbitron', sans-serif;
-             font-size: 32px;
-             font-weight: 700;
+             font-size: 22px;
+             font-weight: 600;
              color: #00ffff;
-             margin-bottom: 20px;
+             margin-bottom: 12px;
              text-shadow: 
-                 0 0 10px rgba(0, 255, 255, 0.8),
-                 0 0 20px rgba(0, 255, 255, 0.6),
-                 0 0 30px rgba(0, 255, 255, 0.4);
-             letter-spacing: 3px;
+                 0 0 5px rgba(0, 255, 255, 0.4),
+                 0 0 10px rgba(0, 255, 255, 0.2);
+             letter-spacing: 1px;
              text-transform: uppercase;
          }
 
                  .paywall-subtitle {
-             font-size: 18px;
+             font-size: 15px;
              color: rgba(255, 255, 255, 0.9);
-             margin-bottom: 30px;
-             line-height: 1.6;
+             margin-bottom: 16px;
+             line-height: 1.4;
              font-weight: 400;
              text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
          }
 
                  .paywall-features {
              text-align: left;
-             margin: 30px 0;
-             padding: 25px;
+             margin: 16px 0;
+             padding: 16px;
              background: rgba(0, 0, 0, 0.5);
              border: 1px solid rgba(0, 255, 255, 0.4);
              border-radius: 6px;
              box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.1);
          }
 
-        .paywall-features h3 {
-            color: #ff3b3b;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
+                 .paywall-features h3 {
+             color: #ff3b3b;
+             font-family: 'Orbitron', sans-serif;
+             font-size: 15px;
+             margin-bottom: 10px;
+             text-align: center;
+         }
 
         .paywall-features ul {
             list-style: none;
@@ -603,12 +639,12 @@
         }
 
                  .paywall-features li {
-             padding: 10px 0;
+             padding: 4px 0;
              color: rgba(255, 255, 255, 0.95);
-             font-size: 15px;
+             font-size: 13px;
              font-weight: 400;
              position: relative;
-             padding-left: 25px;
+             padding-left: 18px;
              text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
          }
 
@@ -620,29 +656,29 @@
             font-size: 12px;
         }
 
-        .paywall-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
-        }
+                 .paywall-buttons {
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+             margin-top: 16px;
+         }
 
-        .paywall-btn {
-            padding: 15px 30px;
-            border: 2px solid;
-            border-radius: 8px;
-            background: transparent;
-            color: #fff;
-            font-family: 'Fira Code', monospace;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-        }
+                 .paywall-btn {
+             padding: 10px 20px;
+             border: 2px solid;
+             border-radius: 5px;
+             background: transparent;
+             color: #fff;
+             font-family: 'Fira Code', monospace;
+             font-size: 13px;
+             font-weight: 500;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             text-decoration: none;
+             display: inline-block;
+             position: relative;
+             overflow: hidden;
+         }
 
         .paywall-btn.primary {
             border-color: #00ffff;
@@ -684,16 +720,16 @@
          }
 
          .promo-section {
-             margin-top: 25px;
-             padding-top: 20px;
+             margin-top: 14px;
+             padding-top: 12px;
              border-top: 1px solid rgba(0, 255, 255, 0.2);
          }
 
          .promo-toggle {
              cursor: pointer;
              color: rgba(255, 255, 255, 0.7);
-             font-size: 14px;
-             padding: 10px;
+             font-size: 13px;
+             padding: 8px;
              border-radius: 4px;
              transition: all 0.3s ease;
              text-align: center;
@@ -705,21 +741,21 @@
          }
 
          .promo-input-container {
-             margin-top: 15px;
+             margin-top: 10px;
              display: flex;
-             gap: 10px;
+             gap: 8px;
              align-items: center;
          }
 
          .promo-input {
              flex: 1;
-             padding: 12px 15px;
+             padding: 10px 12px;
              background: rgba(0, 0, 0, 0.6);
              border: 2px solid rgba(0, 255, 255, 0.3);
-             border-radius: 6px;
+             border-radius: 5px;
              color: #fff;
              font-family: 'Fira Code', monospace;
-             font-size: 14px;
+             font-size: 13px;
              text-transform: uppercase;
              letter-spacing: 1px;
          }
@@ -737,10 +773,10 @@
          }
 
          .promo-result {
-             margin-top: 15px;
-             padding: 12px;
-             border-radius: 6px;
-             font-size: 14px;
+             margin-top: 10px;
+             padding: 10px;
+             border-radius: 5px;
+             font-size: 13px;
              font-weight: 500;
              text-align: center;
          }
@@ -4876,8 +4912,13 @@
                 }
                 
                 if (adminSceneTags) {
-                    const tags = this.currentPassage.tags || [];
-                    adminSceneTags.textContent = tags.length > 0 ? tags.join(', ') : 'none';
+                    const tags = this.currentPassage.tags;
+                    // Ensure tags is an array before calling join
+                    if (Array.isArray(tags) && tags.length > 0) {
+                        adminSceneTags.textContent = tags.join(', ');
+                    } else {
+                        adminSceneTags.textContent = 'none';
+                    }
                 }
             }
 
@@ -4975,16 +5016,26 @@
                     displayName: userData?.displayName || user.email.split('@')[0],
                     isAdmin: userData?.isAdmin || false,
                     photoURL: user.photoURL,
+                    emailVerified: user.emailVerified,
                     // Additional user data from Firestore
                     storiesPlayed: userData?.storiesPlayed || [],
+                    storiesOwned: userData?.storiesOwned || [],
                     totalPlayTime: userData?.totalPlayTime || 0,
                     subscription: userData?.subscription || 'free',
+                    paid: userData?.paid || false,
                     saveStates: userData?.saveStates || {},
                     preferences: userData?.preferences || {},
                     stats: userData?.stats || {},
                     createdAt: userData?.createdAt || new Date(),
                     lastSignIn: userData?.lastSignIn || new Date()
                 };
+                
+                console.log('👤 User loaded:', {
+                    uid: currentUser.uid,
+                    email: currentUser.email,
+                    storiesOwned: currentUser.storiesOwned,
+                    paid: currentUser.paid
+                });
                 
                 updateUI();
                 
@@ -5352,6 +5403,136 @@
             await signOut();
         };
 
+        // Debug helper to manually refresh payment status
+        window.refreshPaymentStatus = async function() {
+            console.log('🔄 Manually refreshing payment status...');
+            if (currentUser) {
+                userPaidStatus = await checkUserPaidStatus();
+                console.log('💳 Current payment status:', userPaidStatus);
+                
+                if (userPaidStatus) {
+                    console.log('✅ User has paid - hiding paywall');
+                    hidePaywall();
+                    
+                    // Try to continue story
+                    if (typeof storyPlayer !== 'undefined' && storyPlayer.currentPassage) {
+                        console.log('🎬 Continuing story...');
+                        storyPlayer.renderPassage();
+                    }
+                } else {
+                    console.log('❌ User has not paid - paywall remains');
+                }
+            } else {
+                console.log('❌ No user logged in');
+            }
+        };
+
+        // Debug helper to test Firebase connectivity
+        window.testFirebaseConnection = async function() {
+            console.log('🧪 Testing Firebase connection...');
+            
+            if (!currentUser) {
+                console.log('❌ No authenticated user - please sign in first');
+                return;
+            }
+            
+            try {
+                console.log('🔍 Testing Firestore read access...');
+                const userDocRef = window.firebase.doc(window.firebase.db, 'users', currentUser.uid);
+                const userDoc = await window.firebase.getDoc(userDocRef);
+                
+                if (userDoc.exists()) {
+                    console.log('✅ Firestore read successful!');
+                    console.log('📄 User document data:', userDoc.data());
+                } else {
+                    console.log('⚠️ User document does not exist');
+                }
+                
+                console.log('🔍 Testing Firestore write access...');
+                await window.firebase.setDoc(userDocRef, {
+                    lastConnectivityTest: new Date(),
+                    testStatus: 'success'
+                }, { merge: true });
+                
+                console.log('✅ Firestore write successful!');
+                console.log('🎉 Firebase connection is working properly');
+                
+            } catch (error) {
+                console.error('❌ Firebase connectivity test failed:', error);
+                window.firebaseErrorHandler('testFirebaseConnection', error);
+                
+                if (error.code === 'permission-denied') {
+                    console.log('🔧 SOLUTION: Update your Firestore security rules');
+                    console.log('📝 Go to Firebase Console > Firestore > Rules');
+                    console.log('🔗 https://console.firebase.google.com/project/odysiq-90653/firestore/rules');
+                } else if (error.code === 'unauthenticated') {
+                    console.log('🔧 SOLUTION: Make sure you are signed in');
+                }
+            }
+        };
+
+        // Debug helper to manually add Ghost Logic to owned stories
+        window.grantGhostLogicAccess = async function() {
+            console.log('🎁 Manually granting Ghost Logic access...');
+            if (!currentUser) {
+                console.log('❌ No user logged in');
+                return;
+            }
+            
+            try {
+                // Get current user data
+                const userDoc = await window.firebase.getDoc(
+                    window.firebase.doc(window.firebase.db, 'users', currentUser.uid)
+                );
+                
+                const userData = userDoc.exists() ? userDoc.data() : {};
+                const currentStoriesOwned = userData.storiesOwned || [];
+                
+                // Check if user already owns any variation of Ghost Logic
+                const ghostLogicVariations = ['ghost-logic', 'Ghost-Logic', 'Ghost Logic', 'ghost logic'];
+                const alreadyOwns = currentStoriesOwned.some(story => 
+                    ghostLogicVariations.some(variation => 
+                        story.toLowerCase() === variation.toLowerCase()
+                    )
+                );
+                
+                if (alreadyOwns) {
+                    console.log('✅ User already owns Ghost Logic');
+                    return;
+                }
+                
+                // Add ghost-logic to owned stories (using consistent lowercase format)
+                const updatedStoriesOwned = [...currentStoriesOwned, 'ghost-logic'];
+                
+                await window.firebase.setDoc(
+                    window.firebase.doc(window.firebase.db, 'users', currentUser.uid),
+                    { 
+                        storiesOwned: updatedStoriesOwned,
+                        // Also update these for consistency
+                        paid: true,
+                        subscription: 'premium'
+                    },
+                    { merge: true }
+                );
+                
+                console.log('✅ Ghost Logic access granted!');
+                console.log('📚 User now owns:', updatedStoriesOwned);
+                
+                // Update local user object
+                if (currentUser) {
+                    currentUser.storiesOwned = updatedStoriesOwned;
+                    currentUser.paid = true;
+                    currentUser.subscription = 'premium';
+                }
+                
+                // Refresh and hide paywall
+                await window.refreshPaymentStatus();
+                
+            } catch (error) {
+                console.error('❌ Error granting access:', error);
+            }
+        };
+
         // Complete initialization
         setTimeout(() => {
             initializeAuthForm();
@@ -5382,7 +5563,7 @@
                 }
             });
             
-            console.log('💡 Debug commands: window.clearUserData() or window.forceSignOut()');
+            console.log('💡 Debug commands: window.clearUserData(), window.forceSignOut(), window.refreshPaymentStatus(), window.grantGhostLogicAccess(), window.testFirebaseConnection()');
             
         }, 1000); // Give Firebase time to load
     </script>
@@ -5416,7 +5597,7 @@
             
                          <div id="paymentPrompt" class="paywall-buttons">
                  <button class="paywall-btn primary" onclick="initiatePayment()">
-                     <span id="paymentButtonText">Unlock Full Story - $4.99</span>
+                     <span id="paymentButtonText">Unlock Full Story - $2.99</span>
                  </button>
                  
                  <div class="promo-section">
@@ -5434,26 +5615,118 @@
     </div>
 
     <script>
-        // Initialize Stripe
-        stripe = Stripe('pk_live_51RPsDDF1PKUfyTKZ4hwMRPHzeW9Y8f3tBZ9dOv9P3wl1YoVh46Gahqxr1RdVpg85A65sJuYC6s28qdiEDsrdzZ1C00T7m6652p');
+        // Initialize Stripe - Replace with your actual Stripe publishable key
+        stripe = Stripe(window.STRIPE_PUBLISHABLE_KEY || 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY_HERE');
         
         // Paywall System
         let userPaidStatus = false;
 
-        // Check if user has paid for the full story
+        // Check server status
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) {
+                    console.log('✅ Server is running');
+                    return true;
+                } else {
+                    console.warn('⚠️ Server responded but with error status:', response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Server is not running:', error.message);
+                return false;
+            }
+        }
+
+        // Check if user owns the Ghost Logic story
         async function checkUserPaidStatus() {
             if (!currentUser) {
+                console.log('❌ No current user - cannot check payment status');
                 return false;
             }
             
+            // Note: localhost bypass removed for production deployment
+            
             try {
+                console.log('🔍 Checking payment status for user:', currentUser.uid);
+                console.log('🔑 User auth state:', {
+                    uid: currentUser.uid,
+                    email: currentUser.email,
+                    emailVerified: currentUser.emailVerified
+                });
+                
                 const userDoc = await window.firebase.getDoc(
                     window.firebase.doc(window.firebase.db, 'users', currentUser.uid)
                 );
+                
+                if (!userDoc.exists()) {
+                    console.log('❌ User document does not exist in Firebase');
+                    console.log('💡 This might be a new user or a Firestore access issue');
+                    return false;
+                }
+                
                 const userData = userDoc.data();
-                return userData?.paid === true || userData?.subscription === 'premium';
+                const storiesOwned = userData?.storiesOwned || [];
+                
+                // Check for Ghost Logic with case-insensitive matching
+                const ghostLogicVariations = ['ghost-logic', 'Ghost-Logic', 'Ghost Logic', 'ghost logic'];
+                const ownsGhostLogic = storiesOwned.some(story => 
+                    ghostLogicVariations.some(variation => 
+                        story.toLowerCase() === variation.toLowerCase()
+                    )
+                );
+                
+                console.log('📊 User payment data:', {
+                    uid: currentUser.uid,
+                    email: currentUser.email,
+                    storiesOwned: storiesOwned,
+                    ownsGhostLogic: ownsGhostLogic,
+                    // Also log legacy fields for debugging
+                    paid: userData?.paid,
+                    subscription: userData?.subscription
+                });
+                
+                // Primary check: Does user own Ghost Logic story (any variation)?
+                if (ownsGhostLogic) {
+                    console.log('✅ User owns Ghost Logic story');
+                    return true;
+                } else {
+                    console.log('❌ User does not own Ghost Logic story');
+                    console.log('🔍 Looking for any of:', ghostLogicVariations);
+                    console.log('📚 User currently owns:', storiesOwned);
+                    return false;
+                }
+                
             } catch (error) {
-                console.error('Error checking paid status:', error);
+                // Use enhanced error handler
+                window.firebaseErrorHandler('checkUserPaidStatus', error);
+                
+                console.log('🔄 Falling back to local user data check...');
+                
+                // Fallback: check local currentUser object
+                if (currentUser && currentUser.storiesOwned) {
+                    const localStoriesOwned = currentUser.storiesOwned || [];
+                    const ghostLogicVariations = ['ghost-logic', 'Ghost-Logic', 'Ghost Logic', 'ghost logic'];
+                    const ownsGhostLogic = localStoriesOwned.some(story => 
+                        ghostLogicVariations.some(variation => 
+                            story.toLowerCase() === variation.toLowerCase()
+                        )
+                    );
+                    
+                    console.log('🏠 Local user data check:', {
+                        storiesOwned: localStoriesOwned,
+                        ownsGhostLogic: ownsGhostLogic
+                    });
+                    
+                    return ownsGhostLogic;
+                }
+                
+                // If all else fails, check if this might be an admin override
+                if (currentUser && currentUser.isAdmin) {
+                    console.log('👑 Admin user detected - granting access');
+                    return true;
+                }
+                
                 return false;
             }
         }
@@ -5514,6 +5787,14 @@
              const originalText = paymentButton.textContent;
              
              try {
+                 paymentButton.innerHTML = '<span class="loading-spinner"></span>Checking server...';
+                 
+                 // Check if server is running first
+                 const serverRunning = await checkServerStatus();
+                 if (!serverRunning) {
+                     throw new Error('Server is not running. Please start the server with "npm start" and try again.');
+                 }
+                 
                  paymentButton.innerHTML = '<span class="loading-spinner"></span>Processing...';
                  
                  const requestBody = {
@@ -5558,12 +5839,21 @@
                  console.error('Payment error:', error);
                  paymentButton.textContent = originalText;
                  
-                 // Show error in promo result if it's a promo code error
-                 if (promoCode && error.message.includes('coupon')) {
+                 // More detailed error handling
+                 let errorMessage = 'Payment failed. Please try again or contact support.';
+                 
+                 if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                     errorMessage = 'Server connection failed. Please make sure the server is running and try again.';
+                 } else if (error.message.includes('404')) {
+                     errorMessage = 'Payment service not found. Server may not be running.';
+                 } else if (error.message.includes('500')) {
+                     errorMessage = 'Server error occurred. Please check server logs and try again.';
+                 } else if (promoCode && error.message.includes('coupon')) {
                      showPromoResult(error.message, 'error');
-                 } else {
-                     alert('Payment failed. Please try again or contact support.');
+                     return; // Don't show alert for promo code errors
                  }
+                 
+                 alert(errorMessage + '\n\nTechnical details: ' + error.message);
              }
          }
 
@@ -5665,49 +5955,159 @@
         // Handle payment success
         async function handlePaymentSuccess() {
             try {
-                // Update user's paid status in Firestore
+                console.log('🎉 Processing payment success for user:', currentUser.uid);
+                
+                // Get current user data
+                const userDoc = await window.firebase.getDoc(
+                    window.firebase.doc(window.firebase.db, 'users', currentUser.uid)
+                );
+                
+                let userData = {};
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                } else {
+                    console.log('⚠️ User document does not exist, will create it');
+                }
+                
+                const currentStoriesOwned = userData.storiesOwned || [];
+                
+                // Check if user already owns the story
+                if (currentStoriesOwned.includes('ghost-logic')) {
+                    console.log('✅ User already owns Ghost Logic story');
+                } else {
+                    console.log('📝 Adding Ghost Logic to user\'s owned stories');
+                }
+                
+                // Update storiesOwned array - primary field for access control
+                const updatedStoriesOwned = currentStoriesOwned.includes('ghost-logic') 
+                    ? currentStoriesOwned 
+                    : [...currentStoriesOwned, 'ghost-logic'];
+                
+                const updateData = { 
+                    storiesOwned: updatedStoriesOwned,
+                    // Also update these for completeness/legacy support
+                    paid: true,
+                    paidAt: new Date(),
+                    subscription: 'premium',
+                    lastPaymentDate: new Date()
+                };
+                
+                console.log('💾 Updating Firebase with:', updateData);
+                
                 await window.firebase.setDoc(
                     window.firebase.doc(window.firebase.db, 'users', currentUser.uid),
-                    { 
-                        paid: true,
-                        paidAt: new Date(),
-                        subscription: 'premium'
-                    },
+                    updateData,
                     { merge: true }
                 );
                 
-                userPaidStatus = true;
-                hidePaywall();
+                console.log('✅ Firebase updated successfully');
                 
-                // Show success message
-                if (typeof storyPlayer !== 'undefined' && storyPlayer.showSyncStatus) {
-                    storyPlayer.showSyncStatus('Payment successful! Full story unlocked ✨', 'success');
+                // Update local user object
+                if (currentUser) {
+                    currentUser.storiesOwned = updatedStoriesOwned;
+                    currentUser.paid = true;
+                    currentUser.subscription = 'premium';
                 }
                 
-                // Continue with the story
-                if (typeof storyPlayer !== 'undefined' && storyPlayer.currentPassage) {
-                    storyPlayer.renderPassage();
+                // Refresh payment status to verify the update worked
+                userPaidStatus = await checkUserPaidStatus();
+                console.log('🔄 Refreshed payment status:', userPaidStatus);
+                
+                if (userPaidStatus) {
+                    hidePaywall();
+                    
+                    // Show success message
+                    if (typeof storyPlayer !== 'undefined' && storyPlayer.showSyncStatus) {
+                        storyPlayer.showSyncStatus('Payment successful! Ghost Logic story unlocked ✨', 'success');
+                    }
+                    
+                    // Continue with the story
+                    setTimeout(() => {
+                        if (typeof storyPlayer !== 'undefined' && storyPlayer.currentPassage) {
+                            console.log('🎬 Continuing story after payment...');
+                            storyPlayer.renderPassage();
+                        } else {
+                            console.log('🔄 Refreshing page to continue story...');
+                            window.location.reload();
+                        }
+                    }, 1000);
+                } else {
+                    console.error('❌ Payment status check failed after update');
+                    alert('Payment was successful, but there was an issue verifying your access. Please refresh the page or contact support.');
                 }
                 
             } catch (error) {
-                console.error('Error updating paid status:', error);
-                alert('Payment was successful, but there was an error updating your account. Please contact support.');
+                window.firebaseErrorHandler('handlePaymentSuccess', error);
+                
+                // Try to save locally as fallback
+                try {
+                    if (currentUser) {
+                        const existingOwned = currentUser.storiesOwned || [];
+                        if (!existingOwned.some(story => story.toLowerCase().includes('ghost'))) {
+                            currentUser.storiesOwned = [...existingOwned, 'ghost-logic'];
+                            currentUser.paid = true;
+                            currentUser.subscription = 'premium';
+                            
+                            console.log('💾 Updated local user data as fallback');
+                            userPaidStatus = true;
+                            hidePaywall();
+                            
+                            alert('Payment successful! Your access has been granted locally. The system will try to sync with the server later.');
+                            return;
+                        }
+                    }
+                } catch (fallbackError) {
+                    console.error('❌ Fallback save also failed:', fallbackError);
+                }
+                
+                alert('Payment was successful, but there was an error updating your account. Please refresh the page or contact support.\n\nError: ' + error.message);
             }
         }
 
         // Check for payment success on page load
-        window.addEventListener('load', function() {
+        let paymentSuccessDetected = false;
+        
+        function checkForPaymentSuccess() {
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('payment') === 'success') {
+            if (urlParams.get('payment') === 'success' && !paymentSuccessDetected) {
+                console.log('💳 Payment success detected in URL');
+                paymentSuccessDetected = true;
+                
                 // Clear the URL parameter
                 window.history.replaceState({}, document.title, window.location.pathname);
                 
-                // Handle payment success
+                // Handle payment success - wait for user if needed
                 if (currentUser) {
+                    console.log('👤 User already loaded, processing payment success');
                     handlePaymentSuccess();
+                } else {
+                    console.log('⏳ Waiting for user authentication to complete...');
+                    // Wait for authentication to complete
+                    const checkUserInterval = setInterval(() => {
+                        if (currentUser) {
+                            console.log('👤 User loaded, processing payment success');
+                            clearInterval(checkUserInterval);
+                            handlePaymentSuccess();
+                        }
+                    }, 100); // Check every 100ms
+                    
+                    // Timeout after 10 seconds
+                    setTimeout(() => {
+                        clearInterval(checkUserInterval);
+                        if (!currentUser) {
+                            console.error('❌ Timeout waiting for user authentication');
+                            alert('Payment was successful, but there was an issue loading your account. Please refresh the page.');
+                        }
+                    }, 10000);
                 }
             }
-        });
+        }
+        
+        // Check on page load
+        window.addEventListener('load', checkForPaymentSuccess);
+        
+        // Also check when DOM is ready (earlier than load)
+        document.addEventListener('DOMContentLoaded', checkForPaymentSuccess);
 
         // Override auth state change to update paywall status
         const originalHandleAuthStateChange = handleAuthStateChange;
@@ -5716,6 +6116,12 @@
             
             if (user) {
                 userPaidStatus = await checkUserPaidStatus();
+                
+                // Check for pending payment success after user loads
+                if (paymentSuccessDetected && currentUser && !userPaidStatus) {
+                    console.log('🔄 User loaded after payment success - processing now');
+                    handlePaymentSuccess();
+                }
                 
                 // If paywall is showing and user is now logged in, update the display
                 const paywallOverlay = document.getElementById('paywallOverlay');
