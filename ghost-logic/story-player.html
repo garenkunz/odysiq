@@ -2876,14 +2876,23 @@
                 // Always clear and create fresh content area for new scenes
                 const contentArea = document.getElementById('contentArea');
                 contentArea.innerHTML = '';
+                // Explicitly ensure content area is at full width
+                contentArea.style.width = '100%';
+                contentArea.style.boxSizing = 'border-box';
                 
                 // Create new passage element
                 const passageElement = document.createElement('div');
                 passageElement.classList.add('passage');
+                // Explicitly force full width for passage container
+                passageElement.style.width = '100%';
+                passageElement.style.boxSizing = 'border-box';
                 
                 const passageText = document.createElement('div');
                 passageText.classList.add('passage-text');
                 passageText.id = 'passageText';
+                // Explicitly force full width for passage text container
+                passageText.style.width = '100%';
+                passageText.style.boxSizing = 'border-box';
                 
                 // Ensure clean state for crawler mode
                 if (!this.showAllMode) {
@@ -3818,6 +3827,11 @@
                         return;
                     }
                     
+                    // Explicitly force full width before adding to DOM
+                    p.style.width = '100%';
+                    p.style.boxSizing = 'border-box';
+                    p.style.display = 'block';
+                    
                     passageText.appendChild(p);
                     
                     // Check if typing is paused
@@ -3846,6 +3860,11 @@
                         resolve();
                         return;
                     }
+                    
+                    // Explicitly force full width before adding to DOM
+                    p.style.width = '100%';
+                    p.style.boxSizing = 'border-box';
+                    p.style.display = 'block';
                     
                     passageText.appendChild(p);
                     
