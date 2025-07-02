@@ -6,7 +6,7 @@ window.STRIPE_PUBLISHABLE_KEY = 'pk_live_51RPsDDF1PKUfyTKZ4hwMRPHzeW9Y8f3tBZ9dOv
 // Server configuration
 window.API_BASE_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000'  // Development
-    : '';  // Production (same domain)
+    : window.location.origin;  // Production (current domain)
 
 // Note: For production deployment:
 // 1. Replace pk_live_YOUR_STRIPE_PUBLISHABLE_KEY_HERE with your actual Stripe publishable key
