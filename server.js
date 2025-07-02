@@ -71,13 +71,15 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
-// Enhanced CORS configuration for Firebase
+// Enhanced CORS configuration for split hosting
 const corsOptions = {
     origin: [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-        'https://odysiq-90653.firebaseapp.com',
-        'https://odysiq-90653.web.app'
+        'http://localhost:5173',      // dev
+        'http://localhost:3000',      // dev  
+        'http://127.0.0.1:3000',      // dev
+        'https://odysiq.com',         // production static site
+        'https://www.odysiq.com',     // production static site (www)
+        'https://odysiq.vercel.app'   // vercel testing domain
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -197,8 +199,8 @@ app.post('/api/create-checkout-session', async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: successUrl || `${req.headers.origin}/story-player.html?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: cancelUrl || `${req.headers.origin}/story-player.html?payment=cancelled`,
+            success_url: successUrl || `https://odysiq.com/story-player.html?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: cancelUrl || `https://odysiq.com/story-player.html?payment=cancelled`,
             customer_email: userEmail,
             automatic_tax: {
                 enabled: true
