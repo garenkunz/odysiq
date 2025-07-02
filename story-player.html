@@ -5936,10 +5936,9 @@
                      const paymentButton = document.getElementById('paymentButtonText');
                      paymentButton.textContent = `Unlock Full Story - ${result.finalPrice}`;
                      
-                     // Proceed with payment using the promo code
-                     setTimeout(() => {
-                         initiatePayment(promoCode);
-                     }, 1500);
+                     // Proceed with payment immediately to maintain user interaction context
+                     // This prevents popup blockers from interfering with Stripe redirect
+                     await initiatePayment(promoCode);
                      
                  } else {
                      showPromoResult(result.error || 'Invalid promo code', 'error');
