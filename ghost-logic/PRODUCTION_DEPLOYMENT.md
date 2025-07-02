@@ -26,7 +26,7 @@ Your Ghost Logic story with paywall system has **two components** that need to b
    - Go to Vercel dashboard
    - Click "New Project"
    - Import your GitHub repository
-   - Select the `Ghost Logic` folder as root directory
+   - Select the `ghost-logic` folder as root directory
    - Deploy!
 
 ### 1.3 Configure Environment Variables
@@ -53,7 +53,7 @@ FIREBASE_PROJECT_ID=odysiq-90653
 
 ### 2.1 Commit Changes
 ```bash
-cd "Ghost Logic"
+cd ghost-logic
 git add .
 git commit -m "Add paywall system with production deployment"
 git push origin main
@@ -122,7 +122,7 @@ window.API_BASE_URL = window.location.hostname === 'localhost'
 
 ### File Structure
 ```
-Ghost Logic/
+ghost-logic/
 ├── server.js              # Node.js server (Vercel)
 ├── story-player.html      # Main story file (GitHub Pages)
 ├── config.js              # Configuration

@@ -11,9 +11,9 @@ This directory contains the Ghost Logic interactive story files.
 
 ### Option 1: Using Python Server (Recommended)
 1. Open Terminal/Command Prompt
-2. Navigate to the `Ghost Logic` directory:
+2. Navigate to the `ghost-logic` directory:
    ```bash
-   cd "Ghost Logic"
+   cd ghost-logic
    ```
 3. Run the Python server:
    ```bash
