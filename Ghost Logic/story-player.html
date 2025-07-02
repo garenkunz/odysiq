@@ -2832,7 +2832,7 @@
             async renderPassage() {
                 console.log('Rendering passage:', this.currentPassage.name);
                 
-                // Check if paywall is required before rendering Scene 13 or later
+                // Check if paywall is required for Scene 13 specifically
                 const paywallRequired = await checkPaywallRequired(this.currentPassage.name);
                 if (paywallRequired) {
                     console.log('Paywall required for:', this.currentPassage.name);
@@ -4967,8 +4967,11 @@
         let currentUser = null;
 
         // Initialize authentication on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             initializeAuth();
+            
+            // Don't automatically hide paywall on page load - let story logic handle it
+            console.log('🎮 Story player initialized - paywall will activate when needed');
         });
 
         function initializeAuth() {
@@ -4984,6 +4987,11 @@
             if (user) {
                 // User is signed in
                 await loadUserProfile(user);
+                
+                // Don't automatically hide paywall here - let the story logic handle it
+                console.log('🔍 User signed in - payment status will be checked when reaching paywall');
+                const isPaid = await checkUserPaidStatus();
+                console.log('💳 Payment status:', isPaid ? 'PAID' : 'NOT PAID');
                 
                 // Sync story progress after user profile is loaded
                 if (typeof storyPlayer !== 'undefined' && storyPlayer.syncOnAuthChange) {
@@ -5407,10 +5415,10 @@
         window.refreshPaymentStatus = async function() {
             console.log('🔄 Manually refreshing payment status...');
             if (currentUser) {
-                userPaidStatus = await checkUserPaidStatus();
-                console.log('💳 Current payment status:', userPaidStatus);
+                const isPaid = await checkUserPaidStatus();
+                console.log('💳 Current payment status:', isPaid);
                 
-                if (userPaidStatus) {
+                if (isPaid) {
                     console.log('✅ User has paid - hiding paywall');
                     hidePaywall();
                     
@@ -5471,6 +5479,32 @@
             }
         };
 
+        // Debug helper to test paywall logic
+        window.testPaywallLogic = async function() {
+            console.log('🧪 Testing Paywall Logic...');
+            
+            if (!currentUser) {
+                console.log('❌ No user signed in - sign in first to test');
+                return;
+            }
+            
+            console.log('👤 Current User:', {
+                uid: currentUser.uid,
+                email: currentUser.email,
+                storiesOwned: currentUser.storiesOwned
+            });
+            
+            const isPaid = await checkUserPaidStatus();
+            console.log('💳 Payment Status:', isPaid ? '✅ PAID' : '❌ NOT PAID');
+            
+            const paywallResult = await checkPaywallRequired('Scene 13');
+            console.log('🚪 Paywall Result for Scene 13:', paywallResult ? '🚫 BLOCKED' : '✅ ALLOWED');
+            
+            console.log('🎯 Expected behavior:');
+            console.log('  - If storiesOwned contains "ghost-logic": Should be PAID and ALLOWED');
+            console.log('  - If storiesOwned is empty: Should be NOT PAID and BLOCKED');
+        };
+
         // Debug helper to manually add Ghost Logic to owned stories
         window.grantGhostLogicAccess = async function() {
             console.log('🎁 Manually granting Ghost Logic access...');
@@ -5507,10 +5541,8 @@
                 await window.firebase.setDoc(
                     window.firebase.doc(window.firebase.db, 'users', currentUser.uid),
                     { 
-                        storiesOwned: updatedStoriesOwned,
-                        // Also update these for consistency
-                        paid: true,
-                        subscription: 'premium'
+                        storiesOwned: updatedStoriesOwned
+                        // Note: Only storiesOwned matters for access control
                     },
                     { merge: true }
                 );
@@ -5521,8 +5553,6 @@
                 // Update local user object
                 if (currentUser) {
                     currentUser.storiesOwned = updatedStoriesOwned;
-                    currentUser.paid = true;
-                    currentUser.subscription = 'premium';
                 }
                 
                 // Refresh and hide paywall
@@ -5563,7 +5593,7 @@
                 }
             });
             
-            console.log('💡 Debug commands: window.clearUserData(), window.forceSignOut(), window.refreshPaymentStatus(), window.grantGhostLogicAccess(), window.testFirebaseConnection()');
+            console.log('💡 Debug commands: window.clearUserData(), window.forceSignOut(), window.refreshPaymentStatus(), window.grantGhostLogicAccess(), window.testFirebaseConnection(), window.testPaywallLogic()');
             
         }, 1000); // Give Firebase time to load
     </script>
@@ -5618,13 +5648,12 @@
         // Initialize Stripe - Replace with your actual Stripe publishable key
         stripe = Stripe(window.STRIPE_PUBLISHABLE_KEY || 'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY_HERE');
         
-        // Paywall System
-        let userPaidStatus = false;
+        // Paywall System - simplified to only use storiesOwned array
 
         // Check server status
         async function checkServerStatus() {
             try {
-                const response = await fetch('/api/health');
+                const response = await fetch(`${window.API_BASE_URL}/api/health`);
                 if (response.ok) {
                     console.log('✅ Server is running');
                     return true;
@@ -5645,7 +5674,7 @@
                 return false;
             }
             
-            // Note: localhost bypass removed for production deployment
+            // Removed localhost bypass - paywall should work normally based on storiesOwned array
             
             try {
                 console.log('🔍 Checking payment status for user:', currentUser.uid);
@@ -5721,21 +5750,17 @@
                     return ownsGhostLogic;
                 }
                 
-                // If all else fails, check if this might be an admin override
-                if (currentUser && currentUser.isAdmin) {
-                    console.log('👑 Admin user detected - granting access');
-                    return true;
-                }
+                // No admin override during testing - pure payment logic only
                 
                 return false;
             }
         }
 
-        // Show paywall before Scene 13
+        // Show paywall only on Scene 13 specifically
         async function checkPaywallRequired(sceneName) {
-            // Check if this is Scene 13 or later
+            // Check if this is exactly Scene 13 (not later scenes)
             const sceneNumber = extractSceneNumber(sceneName);
-            if (sceneNumber >= 13) {
+            if (sceneNumber === 13) {
                 const isPaid = await checkUserPaidStatus();
                 if (!isPaid) {
                     showPaywall();
@@ -5811,7 +5836,7 @@
                  }
                  
                  // Create checkout session
-                 const response = await fetch('/api/create-checkout-session', {
+                 const response = await fetch(`${window.API_BASE_URL}/api/create-checkout-session`, {
                      method: 'POST',
                      headers: {
                          'Content-Type': 'application/json',
@@ -5892,7 +5917,7 @@
                  showPromoResult('Validating promo code...', 'info');
                  
                  // Validate promo code with Stripe
-                 const response = await fetch('/api/validate-promo-code', {
+                 const response = await fetch(`${window.API_BASE_URL}/api/validate-promo-code`, {
                      method: 'POST',
                      headers: {
                          'Content-Type': 'application/json',
@@ -6117,16 +6142,35 @@
             if (user) {
                 userPaidStatus = await checkUserPaidStatus();
                 
-                // Check for pending payment success after user loads
-                if (paymentSuccessDetected && currentUser && !userPaidStatus) {
-                    console.log('🔄 User loaded after payment success - processing now');
-                    handlePaymentSuccess();
-                }
+                            // Check for pending payment success after user loads
+            if (paymentSuccessDetected && currentUser) {
+                console.log('🔄 User loaded after payment success - processing now');
+                handlePaymentSuccess();
+            }
                 
                 // If paywall is showing and user is now logged in, update the display
                 const paywallOverlay = document.getElementById('paywallOverlay');
                 if (paywallOverlay.classList.contains('active')) {
-                    showPaywall(); // Refresh paywall display
+                    if (userPaidStatus) {
+                        // User has paid, hide paywall and continue story
+                        console.log('✅ Paid user detected on page load - hiding paywall');
+                        hidePaywall();
+                    } else {
+                        // User hasn't paid, refresh paywall display for correct user state
+                        showPaywall();
+                    }
+                }
+                
+                // If there's a current story scene loaded, re-render to check paywall status
+                // Only re-render if we're on Scene 13 or haven't paid yet
+                if (typeof storyPlayer !== 'undefined' && storyPlayer.currentPassage) {
+                    const currentSceneNumber = extractSceneNumber(storyPlayer.currentPassage.name);
+                    if (currentSceneNumber === 13 || !userPaidStatus) {
+                        console.log('🔄 Re-rendering scene after auth restore to check payment status');
+                        storyPlayer.renderPassage();
+                    } else {
+                        console.log('📖 Scene past paywall checkpoint - no re-render needed');
+                    }
                 }
             } else {
                 userPaidStatus = false;

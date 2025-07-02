@@ -200,6 +200,9 @@ app.post('/api/create-checkout-session', async (req, res) => {
             success_url: successUrl || `${req.headers.origin}?payment=success&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: cancelUrl || `${req.headers.origin}?payment=cancelled`,
             customer_email: userEmail,
+            automatic_tax: {
+                enabled: true
+            },
             metadata: {
                 userId: userId,
                 product: 'ghost_logic_full_story'
