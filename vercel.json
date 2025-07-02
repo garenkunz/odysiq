@@ -12,8 +12,12 @@
       "dest": "/server.js"
     },
     {
-      "src": "/story-player.html",
+      "src": "/story-player.html(.*)",
       "dest": "/story-player.html"
+    },
+    {
+      "src": "/ghost-logic/(.*)",
+      "dest": "/ghost-logic/$1"
     },
     {
       "src": "/",
@@ -21,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/$1"
     }
   ],
   "env": {

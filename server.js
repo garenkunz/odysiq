@@ -197,8 +197,8 @@ app.post('/api/create-checkout-session', async (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: successUrl || `${req.headers.origin}?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: cancelUrl || `${req.headers.origin}?payment=cancelled`,
+            success_url: successUrl || `${req.headers.origin}/story-player.html?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: cancelUrl || `${req.headers.origin}/story-player.html?payment=cancelled`,
             customer_email: userEmail,
             automatic_tax: {
                 enabled: true
