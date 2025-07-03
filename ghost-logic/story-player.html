@@ -2288,8 +2288,8 @@
 
             .story-container {
                 padding: 0 15px;
-                height: calc(100vh - 140px);
-                margin-top: 120px;
+                height: calc(100vh - 100px); /* Reduce height calculation to use top space */
+                margin-top: 80px; /* Reduce margin to move content up and use wasted space */
             }
             
             .story-container {
@@ -2297,8 +2297,8 @@
             }
             
             .choices {
-                min-height: 100px; /* Smaller minimum on mobile */
-                max-height: 140px; /* Smaller maximum on mobile */
+                min-height: 120px; /* Increased minimum on mobile */
+                max-height: 180px; /* Increased maximum on mobile */
                 padding: 10px 15px 20px 15px; /* Extra bottom padding for mobile */
                 gap: 6px;
                 position: sticky; /* Ensure choices stick to bottom of viewport */
@@ -2420,8 +2420,8 @@
                 max-width: 100%;
                 margin: 0;
                 border-radius: 0;
-                min-height: 140px !important; /* Ensure minimum height for choices */
-                max-height: 200px !important; /* Allow more height on small screens */
+                min-height: 160px !important; /* Ensure minimum height for choices */
+                max-height: 240px !important; /* Allow more height on small screens */
                 background: linear-gradient(to bottom, 
                     transparent 0%, 
                     rgba(10, 10, 15, 0.6) 10%,
@@ -2444,7 +2444,7 @@
             }
             
             .story-container {
-                padding-bottom: 220px !important; /* Extra space at bottom for larger fixed choices */
+                padding-bottom: 260px !important; /* Extra space at bottom for larger fixed choices */
             }
             
             .control-btn {
