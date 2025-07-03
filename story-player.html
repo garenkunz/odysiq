@@ -2426,8 +2426,12 @@
             .choices {
                 min-height: 100px; /* Smaller minimum on mobile */
                 max-height: 140px; /* Smaller maximum on mobile */
-                padding: 10px 15px 12px 15px;
+                padding: 10px 15px 20px 15px; /* Extra bottom padding for mobile */
                 gap: 6px;
+                position: sticky; /* Ensure choices stick to bottom of viewport */
+                bottom: 0;
+                z-index: 1000; /* Make sure it's above other content */
+                margin-bottom: env(safe-area-inset-bottom, 0px); /* Account for iOS safe area */
             }
             
             .passage {
@@ -2532,6 +2536,30 @@
             
             .logo {
                 font-size: 16px;
+            }
+            
+            /* Ensure choices are always accessible on very small screens */
+            .choices {
+                position: fixed !important;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+                background: linear-gradient(to bottom, 
+                    transparent 0%, 
+                    rgba(10, 10, 15, 0.6) 10%,
+                    rgba(10, 10, 15, 0.85) 30%, 
+                    rgba(10, 10, 15, 0.95) 50%, 
+                    rgba(10, 10, 15, 1) 100%
+                );
+                padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+            }
+            
+            .story-container {
+                padding-bottom: 160px; /* Extra space at bottom for fixed choices */
             }
             
             .control-btn {
