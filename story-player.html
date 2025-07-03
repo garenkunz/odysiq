@@ -2547,6 +2547,8 @@
                 max-width: 100%;
                 margin: 0;
                 border-radius: 0;
+                min-height: 140px !important; /* Ensure minimum height for choices */
+                max-height: 200px !important; /* Allow more height on small screens */
                 background: linear-gradient(to bottom, 
                     transparent 0%, 
                     rgba(10, 10, 15, 0.6) 10%,
@@ -2554,12 +2556,22 @@
                     rgba(10, 10, 15, 0.95) 50%, 
                     rgba(10, 10, 15, 1) 100%
                 );
-                padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+                padding: 15px 15px calc(25px + env(safe-area-inset-bottom, 0px)) 15px !important;
                 box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8);
+                overflow-y: auto; /* Allow scrolling if needed */
+            }
+            
+            .choice-button {
+                min-height: 48px !important; /* Ensure minimum touch target */
+                padding: 12px 15px !important;
+                font-size: 13px !important;
+                line-height: 1.4 !important;
+                white-space: normal !important; /* Allow text wrapping */
+                word-wrap: break-word !important;
             }
             
             .story-container {
-                padding-bottom: 160px; /* Extra space at bottom for fixed choices */
+                padding-bottom: 220px !important; /* Extra space at bottom for larger fixed choices */
             }
             
             .control-btn {
