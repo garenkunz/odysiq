@@ -75,8 +75,8 @@ const app = express();
 const corsOptions = {
     origin: [
         'http://localhost:5173',      // dev
-        'http://localhost:3000',      // dev  
-        'http://127.0.0.1:3000',      // dev
+        'http://localhost:3001',      // dev  
+        'http://127.0.0.1:3001',      // dev
         'https://odysiq.com',         // production static site
         'https://www.odysiq.com',     // production static site (www)
         'https://odysiq.vercel.app'   // vercel testing domain
@@ -349,7 +349,7 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`🚀 Ghost Logic server running on port ${PORT}`);
     console.log(`📖 Story available at http://localhost:${PORT}`);

@@ -7,7 +7,7 @@ window.STRIPE_PUBLISHABLE_KEY = 'pk_live_51RPsDDF1PKUfyTKZ4hwMRPHzeW9Y8f3tBZ9dOv
 // Root domain (odysiq.com) serves static files via GitHub Pages
 // API subdomain (api.odysiq.com) serves serverless functions via Vercel
 window.API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000'  // Development
+    ? 'http://localhost:3001'  // Development
     : 'https://api.odysiq.com'; // Production API subdomain
 
 console.log('🌐 API Base URL (Split Hosting):', window.API_BASE_URL);
