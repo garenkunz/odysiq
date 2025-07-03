@@ -2415,8 +2415,8 @@
 
             .story-container {
                 padding: 0 15px;
-                height: calc(100vh - 100px); /* Reduce height calculation to use top space */
-                margin-top: 80px; /* Reduce margin to move content up and use wasted space */
+                height: calc(100vh - 60px); /* More aggressive height to use top space */
+                margin-top: 40px; /* Much smaller margin to move content way up */
             }
             
             .story-container {
@@ -2424,8 +2424,8 @@
             }
             
             .choices {
-                min-height: 120px; /* Increased minimum on mobile */
-                max-height: 180px; /* Increased maximum on mobile */
+                min-height: 160px; /* Much taller minimum on mobile */
+                max-height: 220px; /* Much taller maximum on mobile */
                 padding: 10px 15px 20px 15px; /* Extra bottom padding for mobile */
                 gap: 6px;
                 position: sticky; /* Ensure choices stick to bottom of viewport */
@@ -2547,8 +2547,8 @@
                 max-width: 100%;
                 margin: 0;
                 border-radius: 0;
-                min-height: 160px !important; /* Ensure minimum height for choices */
-                max-height: 240px !important; /* Allow more height on small screens */
+                min-height: 200px !important; /* Much taller minimum height for choices */
+                max-height: 280px !important; /* Much taller maximum height on small screens */
                 background: linear-gradient(to bottom, 
                     transparent 0%, 
                     rgba(10, 10, 15, 0.6) 10%,
@@ -2571,7 +2571,7 @@
             }
             
             .story-container {
-                padding-bottom: 260px !important; /* Extra space at bottom for larger fixed choices */
+                padding-bottom: 300px !important; /* Extra space at bottom for much larger fixed choices */
             }
             
             .control-btn {
