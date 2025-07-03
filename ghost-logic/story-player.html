@@ -2106,6 +2106,50 @@
             }
         }
 
+        /* SYSTEM message formatting - cold, bureaucratic with blinking */
+        .system-message {
+            font-family: 'Fira Code', monospace;
+            background: rgba(128, 128, 128, 0.08);
+            border: 1px solid rgba(128, 128, 128, 0.25);
+            border-left: 4px solid #808080;
+            color: #b8b8b8;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 4px;
+            position: relative;
+            font-size: 13px;
+            line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(128, 128, 128, 0.1);
+            backdrop-filter: blur(2px);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            animation: system-blink 2s ease-in-out infinite;
+        }
+
+        .system-message .system-header {
+            color: #999999;
+            font-weight: 600;
+            text-shadow: 0 0 3px rgba(153, 153, 153, 0.3);
+        }
+
+        .system-message .system-emphasis {
+            color: #cccccc;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        @keyframes system-blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            75% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
         /* Purge flash effect - dramatic screen flash */
         .purge-flash {
             font-family: 'Fira Code', monospace;
@@ -2339,6 +2383,13 @@
                 margin: 12px 0;
             }
 
+            .system-message {
+                font-size: 12px;
+                padding: 10px 14px;
+                margin: 12px 0;
+                letter-spacing: 0.3px;
+            }
+
             .purge-flash {
                 font-size: 14px;
                 padding: 16px 20px;
@@ -2457,6 +2508,13 @@
                 margin: 10px 0;
             }
 
+            .system-message {
+                font-size: 11px;
+                padding: 8px 12px;
+                margin: 10px 0;
+                letter-spacing: 0.2px;
+            }
+
             .purge-flash {
                 font-size: 13px;
                 padding: 14px 16px;
@@ -2504,6 +2562,126 @@
                 animation: none;
                 opacity: 1;
             }
+        }
+
+        /* Review System Styles - Modal */
+        .review-modal-content {
+            padding: 0;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .star:hover,
+        .star.selected {
+            color: #ff3b3b;
+            text-shadow: 0 0 15px rgba(255, 59, 59, 0.6);
+            transform: scale(1.1);
+            animation: starPulse 0.3s ease;
+        }
+
+        .star:hover ~ .star {
+            color: rgba(255, 255, 255, 0.2);
+            transform: scale(1);
+        }
+
+        @keyframes starPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        .review-textarea {
+            width: 100%;
+            min-height: 80px;
+            max-height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            resize: vertical;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .review-textarea:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .review-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        .review-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-button-primary {
+            background: linear-gradient(135deg, #ff3b3b, #ff5722);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 59, 59, 0.3);
+        }
+
+        .review-button-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff5722, #ff3b3b);
+            box-shadow: 0 6px 20px rgba(255, 59, 59, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .review-button-primary:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .review-button-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .review-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .review-success {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
         }
     </style>
 </head>
@@ -2649,6 +2827,45 @@
                 <a href="#" onclick="toggleAuthMode()" id="authToggleLink">
                     Don't have an account? Sign up
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Rate Your Experience</h2>
+                <p class="modal-subtitle">How did you like this journey through Ghost Logic?</p>
+            </div>
+            
+            <div class="review-modal-content">
+                <div class="star-rating" id="starRating">
+                    <div class="star" data-rating="1" onclick="storyPlayer.setRating(1)">★</div>
+                    <div class="star" data-rating="2" onclick="storyPlayer.setRating(2)">★</div>
+                    <div class="star" data-rating="3" onclick="storyPlayer.setRating(3)">★</div>
+                    <div class="star" data-rating="4" onclick="storyPlayer.setRating(4)">★</div>
+                    <div class="star" data-rating="5" onclick="storyPlayer.setRating(5)">★</div>
+                </div>
+                
+                <textarea 
+                    class="review-textarea" 
+                    id="reviewComment" 
+                    placeholder="Share your thoughts about the story... (optional)"
+                    maxlength="500"
+                ></textarea>
+                
+                <div class="form-buttons">
+                    <button type="button" class="form-button secondary" onclick="storyPlayer.closeReviewModal()">Skip</button>
+                    <button type="button" class="form-button primary" id="submitReview" onclick="storyPlayer.submitReview()" disabled>
+                        <span id="submitText">Submit Review</span>
+                    </button>
+                </div>
+                
+                <div class="review-success" id="reviewSuccess" style="display: none;">
+                    <div style="color: #00ffff; font-size: 18px; margin-bottom: 8px;">✓ Review Submitted</div>
+                    <div style="color: #888; font-size: 14px;">Thank you for your feedback!</div>
+                </div>
             </div>
         </div>
     </div>
@@ -3138,6 +3355,17 @@
                     return `<div class="helix-message">${formattedContent}</div>`;
                 });
                 
+                // [SYSTEM]system content[/SYSTEM] - Cold system message format
+                processed = processed.replace(/\[SYSTEM\]([\s\S]*?)\[\/SYSTEM\]/g, (match, content) => {
+                    // Handle multi-line content and convert formatting
+                    const formattedContent = content
+                        .replace(/\\n/g, '<br>') // Convert \n to line breaks
+                        .replace(/''([^']+)''/g, '<strong class="system-header">$1</strong>') // Convert ''text'' to bold header
+                        .replace(/\/\/([^\/]+)\/\//g, '<em class="system-emphasis">$1</em>') // Convert //text// to italics
+                        .trim();
+                    return `<div class="system-message">${formattedContent}</div>`;
+                });
+                
                 // [PURGE]text[/PURGE] - Screen flash effect for dramatic system executions
                 processed = processed.replace(/\[PURGE\]([\s\S]*?)\[\/PURGE\]/g, (match, content) => {
                     const formattedContent = content
@@ -3391,12 +3619,35 @@
                 console.log('Rendering choices:', choices);
                 
                 if (choices.length === 0) {
-                    return `<div class="choices">
-                        <div style="text-align: center; color: #888; padding: 20px 20px 10px 20px;">End of story</div>
-                        <button class="choice-button restart-button" onclick="storyPlayer.confirmRestart()" style="margin: 0 auto; display: block; background: rgba(0, 255, 255, 0.1); border-color: rgba(0, 255, 255, 0.3); color: #00ffff;">
-                            ↻ Start Over
-                        </button>
-                    </div>`;
+                    // Check if this is one of the excluded endings
+                    const excludedEndings = ['TurnMyselfIn', 'Collateral (END B-)*'];
+                    const currentPassageName = this.currentPassage ? this.currentPassage.name : '';
+                    const isExcludedEnding = excludedEndings.some(ending => currentPassageName.includes(ending));
+                    
+                    if (isExcludedEnding) {
+                        // Show simple ending without review system for excluded endings
+                        return `<div class="choices">
+                            <div style="text-align: center; color: #888; padding: 20px 20px 10px 20px;">End of story</div>
+                            <button class="choice-button restart-button" onclick="storyPlayer.confirmRestart()" style="margin: 0 auto; display: block; background: rgba(0, 255, 255, 0.1); border-color: rgba(0, 255, 255, 0.3); color: #00ffff;">
+                                ↻ Start Over
+                            </button>
+                        </div>`;
+                    } else {
+                        // Show review button and restart for all other endings
+                        return `<div class="choices">
+                            <div style="text-align: center; color: #888; padding: 20px 20px 15px 20px;">End of story</div>
+                            
+                            <div style="display: flex; gap: 12px; justify-content: center; align-items: center;">
+                                <button class="choice-button review-trigger-button" onclick="storyPlayer.openReviewModal()" style="flex: 1; max-width: 180px; background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(0, 150, 255, 0.1)); border-color: rgba(0, 255, 255, 0.4); color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);">
+                                    ⭐ Rate Experience
+                                </button>
+                                
+                                <button class="choice-button restart-button" onclick="storyPlayer.confirmRestart()" style="flex: 1; max-width: 140px; background: rgba(0, 255, 255, 0.1); border-color: rgba(0, 255, 255, 0.3); color: #00ffff;">
+                                    ↻ Start Over
+                                </button>
+                            </div>
+                        </div>`;
+                    }
                 }
 
                 const choicesHtml = choices.map((choice, index) => 
@@ -4411,6 +4662,177 @@
             confirmRestart() {
                 if (confirm('Are you sure you want to start over? Your current progress will be lost.')) {
                     this.restart();
+                }
+            }
+            
+            // Review System Methods
+            openReviewModal() {
+                const modal = document.getElementById('reviewModal');
+                modal.style.display = 'flex';
+                modal.classList.add('show');
+                
+                // Reset form state
+                this.selectedRating = 0;
+                document.querySelectorAll('.star').forEach(star => star.classList.remove('selected'));
+                document.getElementById('reviewComment').value = '';
+                document.getElementById('submitReview').disabled = true;
+                document.getElementById('reviewSuccess').style.display = 'none';
+                document.querySelector('.review-modal-content').style.display = 'block';
+            }
+            
+            closeReviewModal() {
+                const modal = document.getElementById('reviewModal');
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+            
+            setRating(rating) {
+                console.log('Rating set to:', rating);
+                this.selectedRating = rating;
+                
+                // Update star display
+                const stars = document.querySelectorAll('#reviewModal .star');
+                stars.forEach((star, index) => {
+                    if (index < rating) {
+                        star.classList.add('selected');
+                    } else {
+                        star.classList.remove('selected');
+                    }
+                });
+                
+                // Enable submit button
+                const submitBtn = document.getElementById('submitReview');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                }
+            }
+            
+            async submitReview() {
+                if (!this.selectedRating) {
+                    alert('Please select a rating before submitting.');
+                    return;
+                }
+                
+                const submitBtn = document.getElementById('submitReview');
+                const originalText = submitBtn.textContent;
+                
+                try {
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Submitting...';
+                    
+                    const comment = document.getElementById('reviewComment').value.trim();
+                    const currentPassageName = this.currentPassage ? this.currentPassage.name : 'unknown';
+                    
+                    const reviewData = {
+                        rating: this.selectedRating,
+                        comment: comment || null,
+                        endingName: currentPassageName,
+                        userIP: this.userIP,
+                        userID: currentUser ? currentUser.uid : null,
+                        userEmail: currentUser ? currentUser.email : null,
+                        timestamp: new Date(),
+                        gameState: Object.keys(this.gameState).length > 0 ? this.gameState : null,
+                        passageHistory: this.passageHistory.slice(-5) // Last 5 passages for context
+                    };
+                    
+                    console.log('Submitting review:', reviewData);
+                    
+                    // Generate a unique review ID
+                    const reviewId = `review_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                    
+                    // Submit to Firebase
+                    if (window.firebase && window.firebase.db) {
+                        await window.firebase.setDoc(
+                            window.firebase.doc(window.firebase.db, 'story_reviews', reviewId),
+                            reviewData
+                        );
+                        console.log('✅ Review submitted to Firebase successfully');
+                    } else {
+                        console.warn('⚠️ Firebase not available, storing review locally');
+                        // Store locally as fallback
+                        const localReviews = JSON.parse(localStorage.getItem('ghost_logic_reviews') || '[]');
+                        localReviews.push({ id: reviewId, ...reviewData });
+                        localStorage.setItem('ghost_logic_reviews', JSON.stringify(localReviews));
+                    }
+                    
+                    // Show success state
+                    document.querySelector('.review-modal-content').style.display = 'none';
+                    document.getElementById('reviewSuccess').style.display = 'block';
+                    
+                    // Auto-close modal after 2 seconds
+                    setTimeout(() => {
+                        this.closeReviewModal();
+                    }, 2000);
+                    
+                    console.log('🎉 Review submitted successfully');
+                    
+                } catch (error) {
+                    console.error('❌ Error submitting review:', error);
+                    
+                    // Try to save locally as fallback
+                    try {
+                        const comment = document.getElementById('reviewComment').value.trim();
+                        const reviewData = {
+                            rating: this.selectedRating,
+                            comment: comment || null,
+                            endingName: this.currentPassage ? this.currentPassage.name : 'unknown',
+                            userIP: this.userIP,
+                            timestamp: new Date().toISOString(),
+                            fallback: true
+                        };
+                        
+                        const localReviews = JSON.parse(localStorage.getItem('ghost_logic_reviews') || '[]');
+                        localReviews.push(reviewData);
+                        localStorage.setItem('ghost_logic_reviews', JSON.stringify(localReviews));
+                        
+                        console.log('💾 Review saved locally as fallback');
+                        
+                        // Show success state
+                        document.querySelector('.review-modal-content').style.display = 'none';
+                        document.getElementById('reviewSuccess').style.display = 'block';
+                        
+                        // Auto-close modal after 2 seconds
+                        setTimeout(() => {
+                            this.closeReviewModal();
+                        }, 2000);
+                        
+                    } catch (fallbackError) {
+                        console.error('❌ Fallback save also failed:', fallbackError);
+                        alert('There was an error submitting your review. Please try again later.');
+                        
+                        // Reset button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                }
+            }
+            
+            skipReview() {
+                console.log('Review skipped by user');
+                this.closeReviewModal();
+                
+                // Track that review was skipped
+                try {
+                    const skipData = {
+                        action: 'review_skipped',
+                        endingName: this.currentPassage ? this.currentPassage.name : 'unknown',
+                        userIP: this.userIP,
+                        timestamp: new Date(),
+                        userID: currentUser ? currentUser.uid : null
+                    };
+                    
+                    if (window.firebase && window.firebase.db) {
+                        const skipId = `skip_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                        window.firebase.setDoc(
+                            window.firebase.doc(window.firebase.db, 'story_analytics', skipId),
+                            skipData
+                        );
+                    }
+                } catch (error) {
+                    console.log('Analytics tracking failed (non-critical):', error);
                 }
             }
             
@@ -5588,12 +6010,26 @@
                 });
             }
             
+            // Review modal event listeners
+            const reviewModal = document.getElementById('reviewModal');
+            if (reviewModal) {
+                reviewModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        storyPlayer.closeReviewModal();
+                    }
+                });
+            }
+            
             // Close modal on ESC key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
-                    const modal = document.getElementById('authModal');
-                    if (modal && modal.style.display === 'flex') {
+                    const authModalEl = document.getElementById('authModal');
+                    const reviewModalEl = document.getElementById('reviewModal');
+                    
+                    if (authModalEl && authModalEl.style.display === 'flex') {
                         closeAuthModal();
+                    } else if (reviewModalEl && reviewModalEl.style.display === 'flex') {
+                        storyPlayer.closeReviewModal();
                     }
                 }
                 
