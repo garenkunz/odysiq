@@ -2288,12 +2288,12 @@
 
             .story-container {
                 padding: 0 15px;
-                height: calc(100vh - 60px - 220px); /* Subtract choices height to prevent overlap */
+                height: calc(100vh - 60px); /* More aggressive height to use top space */
                 margin-top: 40px; /* Much smaller margin to move content way up */
             }
             
             .story-container {
-                padding: 15px; /* Mobile margins - no extra bottom padding needed */
+                padding: 15px; /* Mobile margins */
             }
             
             .choices {
@@ -2444,8 +2444,8 @@
             }
             
             .story-container {
-                height: calc(100vh - 60px - 280px) !important; /* Subtract choices height to prevent overlap */
-                padding-bottom: 0 !important; /* Remove padding since we're adjusting height */
+                height: calc(100vh - 280px) !important; /* Subtract fixed choices height from viewport */
+                padding-bottom: 20px !important; /* Minimal padding since choices are fixed */
             }
             
             .control-btn {
